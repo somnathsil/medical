@@ -1,0 +1,228 @@
+/* SCSS Partials */
+@import 'partials';
+
+.main-header {
+	@include transition;
+	margin-left: 250px;
+	box-shadow: 0 0.3rem 1rem 0 rgba(44, 51, 73, 0.1);
+}
+.navbar-white {
+	background-color: $color-white;
+	color: $color-black-200;
+}
+.main-header {
+	z-index: 1034;
+}
+.navbar-expand {
+	flex-flow: row nowrap;
+	justify-content: $justify-start;
+}
+.navbar {
+	position: $relative;
+	display: $flex;
+	flex-wrap: $flex-wrap;
+	align-items: $items-center;
+	justify-content: $justify-between;
+	padding: 0px 17px;
+	height: 70px;
+}
+.header-top-start {
+	display: $flex;
+	align-items: $items-center;
+}
+.header-toggle-button {
+	cursor: $cursor-pointer;
+	margin-right: 12px;
+}
+.header-toggle-button i {
+	color: $color-gray-800;
+	font-size: $text-2xl;
+	line-height: $leading-none;
+	display: $inline-block;
+	vertical-align: $align-middle;
+	height: 22px;
+	@include transition;
+}
+.header-toggle-button:hover i {
+	color: $color-primary;
+}
+.header-top-end ul {
+	display: $flex;
+	align-items: $items-center;
+	justify-content: $justify-end;
+}
+.header-top-end ul li {
+	position: $relative;
+}
+.header-top-end ul li:not(:first-child) {
+	margin-left: 30px;
+}
+.header-top-end ul li a {
+	cursor: $cursor-pointer;
+}
+.header-action-buttons {
+	position: $relative;
+}
+.header-action-buttons i {
+	font-size: 22px;
+	color: $color-gray-800;
+	@include transition;
+}
+.header-action-buttons i:hover {
+	color: $color-primary;
+}
+.header-action-buttons span {
+	width: 18px;
+	height: 18px;
+	border-radius: $rounded-full;
+	color: $color-white;
+	font-size: $text-xxs;
+	font-weight: $font-semibold;
+	background: $error-message;
+	display: $block;
+	position: $absolute;
+	top: -9px;
+	right: -5px;
+	text-align: $text-center;
+	line-height: 2rem;
+	z-index: $z-10;
+	box-shadow: 0 0 6px #ff4961;
+}
+.user-profile {
+	display: $flex;
+	align-items: $items-center;
+	cursor: $cursor-pointer;
+}
+.user-profile-image {
+	width: 32px;
+	height: 32px;
+	border-radius: $rounded-half;
+	overflow: $overflow-hidden;
+	display: $flex;
+	align-items: $items-center;
+	justify-content: $justify-center;
+	background: $color-primary;
+	margin-right: 8px;
+}
+.user-profile-image h5 {
+	font-size: $text-xs;
+	font-weight: $font-semibold;
+	color: $color-white;
+	margin: $no-px;
+	text-transform: $uppercase;
+}
+.user-profile-info {
+	margin-right: 5px;
+}
+.user-profile-info p {
+	font-size: $text-md;
+	font-weight: $font-semibold;
+}
+.user-profile-info span {
+	display: $block;
+	font-size: $text-xxs;
+	font-weight: $font-medium;
+	line-height: $leading-none;
+}
+.user-profile-dropdown i {
+	font-size: $text-xl;
+	line-height: $leading-none;
+	color: $color-black-200;
+	display: $inline-block;
+	@include transition;
+}
+.user-profile-dropdown.profile-dropdown i {
+	transform: rotate(90deg);
+}
+.search-block {
+	width: 180px;
+	position: $absolute;
+	bottom: -38px;
+	right: -5px;
+}
+.inner-search-area {
+	position: $relative;
+}
+.inner-search-area input.search {
+	width: $full;
+	border: $border $border-solid $color-gray-250;
+	padding: 8px 10px 10px 10px;
+	border-radius: $rounded-3xl;
+	height: 32px;
+	font-size: $text-sm;
+	font-weight: $font-medium;
+	color: $color-black-200;
+}
+.inner-search-area input.search::placeholder {
+	color: $color-gray-800;
+}
+.inner-search-area input.search::-webkit-placeholder {
+	color: $color-gray-800;
+}
+.inner-search-area input.search::-moz-placeholder {
+	color: $color-gray-800;
+}
+.inner-search-area input.search::-o-placeholder {
+	color: $color-gray-800;
+}
+.inner-search-area input.search::-ms-placeholder {
+	color: $color-gray-800;
+}
+input[type='search']::-webkit-search-cancel-button {
+	display: $hidden;
+}
+.inner-search-area button {
+	background: $color-transparent;
+	border: $none;
+	position: $absolute;
+	right: 6px;
+	top: 50%;
+	transform: translateY(-50%);
+	cursor: $cursor-pointer;
+}
+.inner-search-area button i {
+	font-size: $text-lg;
+	color: $color-gray-800;
+}
+.profile-overlay-box {
+	max-width: 235px;
+	min-width: 215px;
+	padding: $no-px;
+	padding-bottom: 4px;
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+	border-radius: $rounded;
+	position: $absolute;
+	top: 155%;
+	right: $no-px;
+	background: $color-white;
+	z-index: $z-10;
+}
+.profile-box-inner a {
+	font-size: $text-sm;
+	color: $color-black-100;
+	font-weight: $font-semibold;
+	line-height: $leading-6;
+	padding: 12px 16px 12px 22px;
+	display: $flex;
+	align-items: $items-center;
+	// justify-content: $justify-center;
+	border-bottom: $border $border-solid $color-gray-100;
+	text-align: $text-center;
+	@include transition;
+}
+.profile-box-inner a:last-child {
+	border-bottom: $none;
+}
+.profile-box-inner a i {
+	margin-right: 8px;
+	font-size: $text-base;
+	color: $color-gray-800;
+	@include transition;
+}
+.profile-box-inner a i.icon-person-outline {
+	font-size: $text-lg;
+}
+.profile-box-inner a:hover,
+.profile-box-inner a:hover i {
+	color: $color-primary;
+}

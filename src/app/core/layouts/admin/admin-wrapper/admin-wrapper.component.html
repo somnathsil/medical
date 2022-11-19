@@ -1,0 +1,22 @@
+<div class="admin-layout-container">
+	<admin-leftbar></admin-leftbar>
+	<admin-topbar></admin-topbar>
+
+	<div class="admin-content-wrapper">
+		<ng-scrollbar
+			[visibility]="'always'"
+			[viewClass]="'custom-sidebar-scroll'"
+			[thumbClass]="'custom-sidebar-scroll-thumb'"
+			[trackClass]="'custom-sidebar-scroll-track'"
+		>
+			<div class="admin-content-box">
+				<div class="admin-content-titlebar">
+					<admin-title-bar></admin-title-bar>
+				</div>
+				<div class="admin-content">
+					<router-outlet></router-outlet>
+				</div>
+			</div>
+		</ng-scrollbar>
+	</div>
+</div>

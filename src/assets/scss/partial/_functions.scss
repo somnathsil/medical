@@ -1,0 +1,19 @@
+/*
+    *Converting hex to rgb
+    *
+    @param: $hexcolor -> color value
+    @param: $opacity -> opacity
+    *
+    Eample:@include hex(#f5f5f5, 0.5);
+*/
+@function hex($hexcolor, $opacity) {
+	$red: red($hexcolor);
+	$green: green($hexcolor);
+	$blue: blue($hexcolor);
+	$alpha: alpha($hexcolor);
+	@if $opacity == 1 or $opacity == 100% {
+		@return unquote('rgba(#{$red},#{$green},#{$blue},#{$alpha})');
+	} @else {
+		@return unquote('rgba(#{$red},#{$green},#{$blue},#{$opacity})');
+	}
+}

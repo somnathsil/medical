@@ -1,0 +1,97 @@
+<div class="dashboard-header">
+	<div class="header-inner">
+		<div class="header-left">
+			<form>
+				<div class="sort-block">
+					<select class="formcontrol">
+						<option value="">Sort By</option>
+						<option value="ASC">A-Z</option>
+						<option value="DESC">Z-A</option>
+						<option value="rcnt">Most Recent</option>
+					</select>
+					<i class="icon-chevron-down-outline"></i>
+				</div>
+				<div class="status-block">
+					<select class="formcontrol">
+						<option value="">Filter BY</option>
+						<option value="A">Active</option>
+						<option value="I">Inactive</option>
+					</select>
+					<i class="icon-chevron-down-outline"></i>
+				</div>
+				<div class="search-block">
+					<input
+						type="text"
+						class="formcontrol"
+						placeholder="Search by Name, Email, Phone Number"
+					/>
+
+					<i class="icon-search-outline"></i>
+				</div>
+				<div class="reset-block">
+					<i class="icon-refresh-outline"></i>
+				</div>
+			</form>
+		</div>
+		<div class="header-right">
+			<a
+				class="btn btn-primary-outline"
+				[routerLink]="['/appointments/add']"
+				>Add Appointment</a
+			>
+		</div>
+	</div>
+</div>
+
+<!-- Table Area -->
+<!-- Main content -->
+<section class="content">
+	<div class="list-area">
+		<table class="table list-table mb-0">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Phone Number</th>
+					<th>Service</th>
+					<th>Appointment Date</th>
+					<th>Gender</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let appointment of appointments">
+					<td>
+						<div class="name-area">
+							{{ appointment.name }}
+						</div>
+					</td>
+					<td>{{ appointment.email }}</td>
+					<td>{{ appointment.phone_number }}</td>
+					<td>{{ appointment.service }}</td>
+					<td>
+						{{ appointment.appointment_date | date: 'dd/MM/yyyy' }}
+					</td>
+					<td>{{ appointment.gender }}</td>
+					<td>
+						<a
+							title="Edit"
+							class="edit-icon"
+							[routerLink]="['/appointments/edit/' + 1]"
+							><i class="icon-edit-outline"></i
+						></a>
+						<a title="Delete" class="delete-icon"
+							><i class="icon-trash-2-outline"></i
+						></a>
+					</td>
+				</tr>
+			</tbody>
+			<!-- <tbody *ngIf="!userExits">
+                        <tr>
+                            <td colspan="5"><h6 class="text-center p-4">No Reords Found</h6></td>
+                        </tr>
+                    </tbody> -->
+		</table>
+	</div>
+</section>
+<!-- Main content End -->

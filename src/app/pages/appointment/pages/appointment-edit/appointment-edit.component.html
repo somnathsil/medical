@@ -1,0 +1,240 @@
+<section class="content">
+	<div class="form-block">
+		<form
+			[formGroup]="appointmentEditForm"
+			(ngSubmit)="onAppointmentSubmit()"
+		>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group-block">
+						<label for="">Name <sup>*</sup></label>
+						<div class="formcontrol-wrapper">
+							<input
+								#inputFocus
+								type="text"
+								class="formcontrol"
+								placeholder="Enter Your Name"
+								[autocompleteOff]="'off'"
+								formControlName="name"
+								[class.invalid-control]="
+									hasFormControlError('name')
+								"
+							/>
+						</div>
+						<ng-container *ngIf="hasFormControlError('name')">
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="formcontrol['name'].hasError('required')"
+							>
+								<p>Please Enter Your Name</p>
+							</div>
+							<div
+								[@fadeAnimation]
+								class="error-message"
+								*ngIf="formcontrol['name'].hasError('pattern')"
+							>
+								<p>Please Enter a Valid Name</p>
+							</div>
+						</ng-container>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group-block">
+						<label for="">Email <sup>*</sup></label>
+						<div class="formcontrol-wrapper">
+							<input
+								type="email"
+								class="formcontrol"
+								placeholder="Enter Your Email"
+								[autocompleteOff]="'off'"
+								formControlName="email"
+								[ngClass]="{
+									'invalid-control':
+										hasFormControlError('email')
+								}"
+								onkeydown="if(event.key===' '){event.preventDefault();}"
+							/>
+						</div>
+						<ng-container *ngIf="hasFormControlError('email')">
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="
+									formcontrol['email'].hasError('required')
+								"
+							>
+								<p>Please Enter Your Email</p>
+							</div>
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="formcontrol['email'].hasError('pattern')"
+							>
+								<p>Please Enter a Valid Email</p>
+							</div>
+						</ng-container>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group-block">
+						<label for="">Phone Number <sup>*</sup></label>
+						<div class="formcontrol-wrapper">
+							<input
+								type="text"
+								class="formcontrol"
+								placeholder="Enter Your Phone Number"
+								[autocompleteOff]="'off'"
+								formControlName="phone_number"
+								[ngClass]="{
+									'invalid-control':
+										hasFormControlError('phone_number')
+								}"
+								onkeydown="if(event.key===' '){event.preventDefault();}"
+							/>
+						</div>
+						<ng-container
+							*ngIf="hasFormControlError('phone_number')"
+						>
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="
+									formcontrol['phone_number'].hasError(
+										'required'
+									)
+								"
+							>
+								<p>Please Enter Your Phone Number</p>
+							</div>
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="
+									formcontrol['phone_number'].hasError(
+										'pattern'
+									)
+								"
+							>
+								<p>Please Enter a Valid Phone Number</p>
+							</div>
+						</ng-container>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group-block">
+						<label for="">Service <sup>*</sup></label>
+						<div class="formcontrol-wrapper">
+							<select
+								class="formcontrol"
+								formControlName="service"
+								[ngClass]="{
+									'invalid-control':
+										hasFormControlError('service')
+								}"
+							>
+								<option selected [value]="null">
+									Select Service
+								</option>
+								<option
+									*ngFor="let service of services"
+									[value]="service.label"
+								>
+									{{ service.label }}
+								</option>
+							</select>
+							<i class="icon-chevron-down-outline"></i>
+						</div>
+						<ng-container *ngIf="hasFormControlError('service')">
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="
+									formcontrol['service'].hasError('required')
+								"
+							>
+								<p>Please Select Your Service</p>
+							</div>
+						</ng-container>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group-block">
+						<label for="">Appointment Date <sup>*</sup></label>
+						<div class="formcontrol-wrapper">
+							<input
+								type="text"
+								placeholder="Select Appointment Date"
+								class="formcontrol"
+								formControlName="appointment_date"
+								[ngClass]="{
+									'invalid-control':
+										hasFormControlError('appointment_date')
+								}"
+								bsDatepicker
+								[bsConfig]="{
+									customTodayClass: 'custom-today-date',
+									dateInputFormat: 'DD/MM/YYYY'
+								}"
+							/>
+							<i class="icon-calendar-outline"></i>
+						</div>
+						<ng-container
+							*ngIf="hasFormControlError('appointment_date')"
+						>
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="
+									formcontrol['appointment_date'].hasError(
+										'required'
+									)
+								"
+							>
+								<p>Please Select Your Appointment Date</p>
+							</div>
+						</ng-container>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group-block form-group-block-gender">
+						<label for="">Gender <sup>*</sup></label>
+						<div class="formcontrol-wrapper">
+							<div
+								class="custom-radio-button"
+								*ngFor="let data of gender"
+							>
+								<input
+									type="radio"
+									name="gender"
+									id="{{ data.label }}"
+									value="{{ data.label }}"
+									formControlName="gender"
+								/>
+								<label for="{{ data.label }}">{{
+									data.label
+								}}</label>
+							</div>
+						</div>
+						<ng-container *ngIf="hasFormControlError('gender')">
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="
+									formcontrol['gender'].hasError('required')
+								"
+							>
+								<p>Please Select Your Gender</p>
+							</div>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+
+			<div class="footer-submit">
+				<button type="submit" class="btn btn-primary">Submit</button>
+				<button type="button" class="btn btn-danger">Cancel</button>
+			</div>
+		</form>
+	</div>
+</section>

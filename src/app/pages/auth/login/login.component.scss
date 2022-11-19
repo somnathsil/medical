@@ -1,0 +1,54 @@
+@import 'partials';
+
+.auth-heading {
+	margin-bottom: 35px;
+	text-align: $text-center;
+	h1 {
+		margin-bottom: 15px;
+		font-family: $font-primary;
+		font-weight: $font-semibold;
+		font-size: $text-4xl;
+		line-height: $leading-8;
+		text-transform: $capitalize;
+		color: $color-black;
+	}
+	h4 {
+		color: $color-primary;
+		font-weight: $font-semibold;
+		font-size: $text-2xl;
+		line-height: $leading-7;
+	}
+}
+.auth-formcontrol-wrapper span {
+	position: $absolute;
+	right: 1.2rem;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: $text-lg;
+	line-height: $leading-none;
+	color: $color-gray-400;
+	cursor: $cursor-pointer;
+	@include transition;
+}
+.auth-formcontrol-wrapper span:hover {
+	color: $color-primary-dark;
+}
+.auth-formcontrol-wrapper span.icon-email-outline {
+	cursor: $cursor-default;
+}
+.auth-formcontrol-wrapper span.icon-email-outline:hover {
+	color: $color-gray-400;
+}
+.end-block {
+	margin-top: 32px;
+	text-align: center;
+}
+.end-block p {
+	color: $color-black-100;
+	font-size: 15px;
+	font-weight: $font-medium;
+	line-height: 23px;
+}
+.end-block p a {
+	text-decoration: $underline;
+}

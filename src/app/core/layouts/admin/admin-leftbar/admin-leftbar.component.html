@@ -1,0 +1,112 @@
+<div class="main-sidebar sidebar-light sidebar-fixed sidebar-expanded">
+	<div class="sidebar-header">
+		<div class="sidebar-brand">
+			<a [routerLink]="['/dashboard']">
+				<img
+					src="./assets/images/logo.png"
+					alt="Logo"
+					width="220"
+					height="179"
+					loading="lazy"
+				/>
+			</a>
+			<p>Medical</p>
+		</div>
+	</div>
+	<div class="sidebar-body">
+		<div class="sidebar-menu">
+			<ng-scrollbar
+				[visibility]="'always'"
+				[viewClass]="'custom-sidebar-scroll'"
+				[thumbClass]="'custom-sidebar-scroll-thumb'"
+				[trackClass]="'custom-sidebar-scroll-track'"
+			>
+				<nav>
+					<ul class="sidebar-nav sidebar-nav-pills">
+						<ng-container *ngFor="let menu of menus">
+							<li
+								class="nav-list"
+								[class.submenu-expanded]="menu.isSubMenuOpen"
+								routerLinkActive="active"
+								[routerLinkActiveOptions]="{ exact: true }"
+								rou
+							>
+								<!--  -->
+								<ng-container
+									*ngIf="
+										menu.subMenus.length > 0;
+										else withoutDropdownBlock
+									"
+								>
+									<a
+										(click)="toggleSubMenu($event, menu.id)"
+										class="nav-list-item"
+									>
+										<i
+											class="nav-icon"
+											[ngClass]="menu.icon"
+										></i>
+										<p>{{ menu.label | titlecase }}</p>
+										<ng-container
+											*ngIf="menu.subMenus.length > 0"
+										>
+											<i
+												class="icon-chevron-down-outline toggle-icon"
+											></i>
+										</ng-container>
+									</a>
+								</ng-container>
+								<ng-template #withoutDropdownBlock>
+									<a
+										(click)="toggleSubMenu($event, menu.id)"
+										class="nav-list-item"
+										[routerLink]="menu.URl"
+									>
+										<i
+											class="nav-icon"
+											[ngClass]="menu.icon"
+										></i>
+										<p>{{ menu.label | titlecase }}</p>
+									</a>
+								</ng-template>
+
+								<ng-container
+									*ngIf="
+										menu.isSubMenuOpen &&
+										menu.subMenus.length > 0
+									"
+								>
+									<ul [@slideInOut] class="submenu-treeview">
+										<li
+											class="submenu-list"
+											*ngFor="
+												let submenu of menu.subMenus
+											"
+										>
+											<a
+												[routerLink]="submenu.URl"
+												class="submenu-item"
+											>
+												<p>{{ submenu.label }}</p>
+											</a>
+										</li>
+									</ul>
+								</ng-container>
+							</li>
+						</ng-container>
+					</ul>
+				</nav>
+			</ng-scrollbar>
+		</div>
+		<div class="sidebar-footer">
+			<div class="footer-content">
+				<div class="footer-copyright">
+					<p>c</p>
+				</div>
+				<div class="footer-info">
+					<p>2022 Dashboard. <span>All Rights Reserved.</span></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

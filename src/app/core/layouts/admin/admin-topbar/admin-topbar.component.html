@@ -1,0 +1,79 @@
+<div class="main-header navbar navbar-expand navbar-white">
+	<div class="header-top-start">
+		<div class="header-toggle-button" (click)="toggleSidebar($event)">
+			<i class="icon-menu-2-outline"></i>
+		</div>
+		<!-- <div class="header-title"><h1>Custom Admin</h1></div> -->
+		<!-- <div class="search-block">
+			<div class="inner-search-area">
+				<input type="search" class="search" placeholder="Search.." />
+				<button><i class="icon-search-outline"></i></button>
+			</div>
+		</div> -->
+	</div>
+	<div class="header-top-end">
+		<ul>
+			<li>
+				<a>
+					<div class="header-action-buttons">
+						<i class="icon-bell-outline"></i>
+						<span>5</span>
+					</div>
+				</a>
+			</li>
+			<li clickoutside (clickOutside)="searchDropdown = false">
+				<a (click)="getSearchDropdown()">
+					<div class="header-action-buttons">
+						<i class="icon-search-outline"></i>
+					</div>
+				</a>
+				<ng-container *ngIf="searchDropdown">
+					<div class="search-block" [@fadeInOut]>
+						<div class="inner-search-area">
+							<input
+								type="search"
+								class="search"
+								placeholder="Search.."
+							/>
+						</div>
+					</div>
+				</ng-container>
+			</li>
+			<li clickoutside (clickOutside)="profileDropdown = false">
+				<a (click)="getProfileDropdown()">
+					<div class="user-profile">
+						<div class="user-profile-image">
+							<h5>RD</h5>
+						</div>
+						<div class="user-profile-info">
+							<p>Ritesh Doloi</p>
+						</div>
+						<div
+							class="user-profile-dropdown"
+							[ngClass]="
+								profileDropdown ? 'profile-dropdown' : ''
+							"
+						>
+							<i class="icon-chevron-down-outline"></i>
+						</div>
+					</div>
+				</a>
+				<ng-container *ngIf="profileDropdown">
+					<div class="profile-overlay-box" [@fadeInOut]>
+						<div class="profile-box-inner">
+							<a [routerLink]="['/profile/my-profile']"
+								><i class="icon-person-outline"></i>My
+								Profile</a
+							>
+							<a [routerLink]="['/profile/change-password']"
+								><i class="icon-unlock-outline"></i>Change
+								Password</a
+							>
+							<a><i class="icon-power-outline"></i>Logout</a>
+						</div>
+					</div>
+				</ng-container>
+			</li>
+		</ul>
+	</div>
+</div>

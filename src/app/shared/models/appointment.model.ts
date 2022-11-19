@@ -1,0 +1,39 @@
+export interface IAppointmentList {
+	id: number;
+	name: string;
+	email: string;
+	phone_number: number;
+	service: string;
+	appointment_date: string;
+	gender: string;
+}
+
+export interface IService {
+	id: number;
+	label: string;
+}
+
+export interface IDisease {
+	id: number;
+	label: string;
+}
+
+export interface IGender {
+	id: number;
+	label: 'Male' | 'Female';
+}
+
+export interface ICity {
+	id: number;
+	label: string;
+}
+
+export interface IBloodGroup {
+	id: number;
+	label: string;
+}
+
+export interface IVisit {
+	id: number;
+	label: 'Yes' | 'No';
+}

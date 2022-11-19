@@ -1,0 +1,177 @@
+<div class="auth-heading">
+	<h1>Sign Up</h1>
+</div>
+<form [formGroup]="registrationForm" (ngSubmit)="registrationSubmit()">
+	<div class="auth-form-group">
+		<label>Name</label>
+		<div class="auth-formcontrol-wrapper">
+			<input
+				#inputFocus
+				type="text"
+				class="auth-formcontrol"
+				placeholder="Enter Your Name"
+				[autocompleteOff]="'off'"
+				formControlName="name"
+				[ngClass]="{
+					'auth-invalid-control': hasFormControlError('name')
+				}"
+			/>
+			<span class="icon-person-outline icon-both"></span>
+		</div>
+		<ng-container *ngIf="hasFormControlError('name')">
+			<div
+				[@fadeInOut]
+				class="auth-error-message"
+				*ngIf="formcontrol['name'].hasError('required')"
+			>
+				<p>Please Enter Your Name</p>
+			</div>
+			<div
+				[@fadeAnimation]
+				class="auth-error-message"
+				*ngIf="formcontrol['name'].hasError('pattern')"
+			>
+				<p>Please Enter a Valid Name</p>
+			</div>
+		</ng-container>
+	</div>
+	<div class="auth-form-group">
+		<label>Email</label>
+		<div class="auth-formcontrol-wrapper">
+			<input
+				type="text"
+				class="auth-formcontrol"
+				placeholder="Enter Your Email"
+				[autocompleteOff]="'off'"
+				formControlName="email"
+				[ngClass]="{
+					'auth-invalid-control': hasFormControlError('email')
+				}"
+				onkeydown="if(event.key===' '){event.preventDefault();}"
+			/>
+			<span class="icon-email-outline icon-both"></span>
+		</div>
+		<ng-container *ngIf="hasFormControlError('email')">
+			<div
+				[@fadeInOut]
+				class="auth-error-message"
+				*ngIf="formcontrol['email'].hasError('required')"
+			>
+				<p>Please Enter Your Email</p>
+			</div>
+			<div
+				[@fadeInOut]
+				class="auth-error-message"
+				*ngIf="formcontrol['email'].hasError('pattern')"
+			>
+				<p>Please Enter a Valid Email</p>
+			</div>
+		</ng-container>
+	</div>
+	<div class="auth-form-group form-group-pass-left">
+		<label>Password</label>
+		<div class="auth-formcontrol-wrapper">
+			<input
+				class="auth-formcontrol"
+				placeholder="Enter Password"
+				[autocompleteOff]="'off'"
+				formControlName="password"
+				[type]="toggleInputType ? 'text' : 'password'"
+				[ngClass]="{
+					'auth-invalid-control': hasFormControlError('password')
+				}"
+				onkeydown="if(event.key===' '){event.preventDefault();}"
+			/>
+			<span
+				[class]="
+					toggleInputType
+						? 'icon-eye-off-outline'
+						: 'icon-eye-outline'
+				"
+				(click)="toggleInputType = !toggleInputType"
+			></span>
+		</div>
+		<ng-container *ngIf="hasFormControlError('password')">
+			<div
+				[@fadeInOut]
+				class="auth-error-message"
+				*ngIf="formcontrol['password'].hasError('required')"
+			>
+				<p>Please Enter Password</p>
+			</div>
+		</ng-container>
+	</div>
+	<div class="auth-form-group form-group-pass-right">
+		<label>Confirm Password</label>
+		<div class="auth-formcontrol-wrapper">
+			<input
+				class="auth-formcontrol"
+				placeholder="Enter Confirm Password"
+				[autocompleteOff]="'off'"
+				formControlName="con_password"
+				[type]="toggleInputTypeConfirm ? 'text' : 'password'"
+				[ngClass]="{
+					'auth-invalid-control': hasFormControlError('con_password')
+				}"
+				onkeydown="if(event.key===' '){event.preventDefault();}"
+			/>
+			<span
+				[class]="
+					toggleInputTypeConfirm
+						? 'icon-eye-off-outline'
+						: 'icon-eye-outline'
+				"
+				(click)="toggleInputTypeConfirm = !toggleInputTypeConfirm"
+			></span>
+		</div>
+		<ng-container *ngIf="hasFormControlError('con_password')">
+			<div
+				[@fadeInOut]
+				class="auth-error-message"
+				*ngIf="formcontrol['con_password'].hasError('required')"
+			>
+				<p>Please Enter Confirm Password</p>
+			</div>
+			<div
+				[@fadeInOut]
+				class="auth-error-message"
+				*ngIf="formcontrol['con_password'].hasError('mustMatch')"
+			>
+				<p>Passwords Must Match.</p>
+			</div>
+		</ng-container>
+	</div>
+	<div class="auth-form-group">
+		<label>User Type</label>
+		<div class="auth-formcontrol-wrapper">
+			<select
+				class="auth-formcontrol"
+				formControlName="user_type"
+				[ngClass]="{
+					'auth-invalid-control': hasFormControlError('user_type')
+				}"
+			>
+				<option value="">Select User Type</option>
+				<option *ngFor="let user of userType" [value]="user">
+					{{ user.name }}
+				</option>
+			</select>
+			<span class="icon-chevron-down-outline dropdown-icon"></span>
+		</div>
+		<ng-container *ngIf="hasFormControlError('user_type')">
+			<div
+				[@fadeInOut]
+				class="auth-error-message"
+				*ngIf="formcontrol['user_type'].hasError('required')"
+			>
+				<p>Please Select User Type</p>
+			</div>
+		</ng-container>
+	</div>
+	<div class="auth-form-submit">
+		<button type="submit">Sign Up</button>
+	</div>
+</form>
+<div class="back-to-login">
+	<a [routerLink]="['/login']">Back To Login</a>
+</div>

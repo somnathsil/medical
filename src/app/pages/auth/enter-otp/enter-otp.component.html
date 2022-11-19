@@ -1,0 +1,100 @@
+<div class="auth-heading">
+	<h1>Verification</h1>
+	<p>
+		A One Time Password has been sent to Your Email Address
+		<span>somnath@mailinator.com</span>
+	</p>
+</div>
+<form [formGroup]="enterOtpForm" (ngSubmit)="enterOtpSubmit()">
+	<div class="auth-form-group">
+		<div class="auth-formcontrol-wrapper">
+			<input
+				type="text"
+				maxlength="1"
+				#text1
+				(keyup)="move(text1, text2)"
+				formControlName="otp1"
+				[ngClass]="{
+					'auth-invalid-control': hasFormControlError('otp1')
+				}"
+			/>
+		</div>
+		<div class="auth-formcontrol-wrapper">
+			<input
+				type="text"
+				maxlength="1"
+				#text2
+				(keyup)="move(text2, text3)"
+				formControlName="otp2"
+				[ngClass]="{
+					'auth-invalid-control': hasFormControlError('otp2')
+				}"
+			/>
+		</div>
+		<div class="auth-formcontrol-wrapper">
+			<input
+				type="text"
+				maxlength="1"
+				#text3
+				(keyup)="move(text3, text4)"
+				formControlName="otp3"
+				[ngClass]="{
+					'auth-invalid-control': hasFormControlError('otp3')
+				}"
+			/>
+		</div>
+		<div class="auth-formcontrol-wrapper">
+			<input
+				type="text"
+				maxlength="1"
+				#text4
+				formControlName="otp4"
+				[ngClass]="{
+					'auth-invalid-control': hasFormControlError('otp4')
+				}"
+			/>
+		</div>
+		<ng-container *ngIf="hasFormControlError('otp1')">
+			<div
+				[@fadeInOut]
+				class="auth-error-message"
+				*ngIf="formcontrol['otp1'].hasError('required')"
+			>
+				<p>Please Enter Your OTP</p>
+			</div>
+		</ng-container>
+		<ng-container *ngIf="hasFormControlError('otp2')">
+			<div
+				[@fadeInOut]
+				class="auth-error-message"
+				*ngIf="formcontrol['otp2'].hasError('required')"
+			>
+				<p>Please Enter Your OTP</p>
+			</div>
+		</ng-container>
+		<ng-container *ngIf="hasFormControlError('otp3')">
+			<div
+				[@fadeInOut]
+				class="auth-error-message"
+				*ngIf="formcontrol['otp3'].hasError('required')"
+			>
+				<p>Please Enter Your OTP</p>
+			</div>
+		</ng-container>
+		<ng-container *ngIf="hasFormControlError('otp4')">
+			<div
+				[@fadeInOut]
+				class="auth-error-message"
+				*ngIf="formcontrol['otp4'].hasError('required')"
+			>
+				<p>Please Enter Your OTP</p>
+			</div>
+		</ng-container>
+	</div>
+	<div class="auth-form-submit">
+		<button type="submit">Verify</button>
+	</div>
+</form>
+<div class="back-to-login">
+	<a [routerLink]="['/login']">Back To Login</a>
+</div>

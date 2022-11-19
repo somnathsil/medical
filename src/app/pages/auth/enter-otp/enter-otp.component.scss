@@ -1,0 +1,51 @@
+@import 'partials';
+
+.auth-heading {
+	margin-bottom: 35px;
+	text-align: $text-center;
+	h1 {
+		margin-bottom: 40px;
+		font-family: $font-primary;
+		font-weight: $font-semibold;
+		font-size: $text-4xl;
+		line-height: $leading-8;
+		text-transform: $capitalize;
+		color: $color-primary;
+	}
+	p {
+		color: $color-black-100;
+		font-weight: $font-medium;
+		font-size: $text-md;
+		line-height: $leading-5;
+		span {
+			display: $block;
+		}
+	}
+}
+.auth-form-group {
+	display: $flex;
+	align-items: $items-center;
+	justify-content: $justify-center;
+}
+.auth-formcontrol-wrapper {
+	width: 20%;
+	max-width: 75px;
+}
+.auth-formcontrol-wrapper:not(:first-child) {
+	margin-left: 6%;
+}
+.auth-formcontrol-wrapper input {
+	width: $full;
+	height: 46px;
+	font-size: $text-base;
+	text-align: $text-center;
+	border-radius: $rounded-md;
+	border-width: $border;
+	border-style: $border-solid;
+	border-color: #e3e3e3;
+	box-shadow: 0px 2px 10px rgb(0 0 0 / 15%);
+}
+
+.auth-form-submit button {
+	font-size: $text-lg;
+}

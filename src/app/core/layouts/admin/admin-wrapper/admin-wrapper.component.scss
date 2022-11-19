@@ -1,0 +1,27 @@
+/* SCSS Partials */
+@import 'partials';
+
+.admin-layout-container {
+	position: $relative;
+	min-height: $h-screen;
+	overflow-x: $overflow-hidden;
+}
+.admin-content-wrapper {
+	background: $color-gray-150;
+	width: calc(100vw - 250px);
+	height: calc(100vh - 70px);
+	margin-left: 250px;
+	@include transition;
+}
+.admin-content-box {
+	padding: 25px 30px 20px;
+}
+.admin-content-titlebar {
+	margin-bottom: 30px;
+}
+.admin-content {
+	// height: calc(100vh - 165px);
+	// background: $color-white;
+	width: $full;
+	// border-radius: $rounded;
+}

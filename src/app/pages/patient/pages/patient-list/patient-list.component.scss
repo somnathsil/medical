@@ -1,0 +1,23 @@
+@import 'partials';
+
+.list-table thead tr th,
+.list-table tbody tr td {
+	width: 13%;
+}
+.list-table thead tr th:first-child,
+.list-table tbody tr td:first-child {
+	width: 17%;
+}
+.list-table thead tr th:nth-child(2),
+.list-table tbody tr td:nth-child(2) {
+	width: 15%;
+}
+.list-table thead tr th:last-child,
+.list-table tbody tr td:last-child {
+	width: 12%;
+}
+
+.list-table thead tr th:nth-last-child(3),
+.list-table tbody tr td:nth-last-child(3) {
+	width: 12%;
+}

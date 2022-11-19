@@ -1,0 +1,51 @@
+<!-- <ng-container *ngIf="pageTitle !== 'dashboard'">
+	<div class="title-wrapper">
+		<div class="title-info">
+			<div class="page-title">
+				<h2>{{ pageTitle }}</h2>
+			</div>
+			<div class="page-breadcrumbs">
+				<ul>
+					<ng-container *ngIf="pageTitle !== 'dashboard'">
+						<li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+					</ng-container>
+
+					<ng-container *ngFor="let breadcrumb of breadcrumbs">
+						<li
+							[routerLink]="[breadcrumb.url]"
+							routerLinkActive="active"
+						>
+							{{ breadcrumb.label }}
+						</li>
+					</ng-container>
+				</ul>
+			</div>
+		</div>
+	</div>
+</ng-container> -->
+
+<ng-container *ngIf="breadcrumbData.breadcrumb !== 'dashboard'">
+	<div class="title-wrapper">
+		<div class="title-info">
+			<div class="page-title">
+				<h2>{{ breadcrumbData.title }}</h2>
+			</div>
+			<div class="page-breadcrumbs">
+				<!-- <ng-container *ngIf="breadcrumbData.breadcrumb === 'dashboard'">
+					<ul>
+						<li>{{ breadcrumbData.breadcrumb }}</li>
+					</ul>
+				</ng-container> -->
+
+				<ng-container>
+					<ul>
+						<li>{{ breadcrumbData.data }}</li>
+						<li>
+							{{ breadcrumbData.breadcrumb }}
+						</li>
+					</ul>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+</ng-container>

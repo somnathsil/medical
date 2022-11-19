@@ -1,0 +1,78 @@
+@import 'partials';
+
+.content {
+	background: $color-transparent !important;
+	box-shadow: $none !important;
+	display: $flex;
+}
+.form-block {
+	width: $full;
+	padding: 25px 35px;
+	position: $relative;
+	background: $color-white;
+	border-radius: 0.4rem;
+	box-shadow: 0 2px 18px 1px rgb(49 53 72 / 10%);
+	width: 55%;
+}
+.formcontrol-wrapper span {
+	position: $absolute;
+	right: 1.2rem;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: $text-lg;
+	line-height: $leading-none;
+	color: $color-gray-400;
+	cursor: $cursor-pointer;
+	@include transition;
+}
+.footer-submit {
+	padding-top: 20px;
+}
+
+.add-image-area {
+	width: 42%;
+	margin-left: 3%;
+	background: $color-white;
+	border-radius: 0.4rem;
+	box-shadow: 0 2px 18px 1px rgb(49 53 72 / 10%);
+	padding: 25px 30px 30px;
+	display: $flex;
+	align-items: $items-center;
+	justify-content: $justify-center;
+}
+.upload-inner-block {
+	position: $relative;
+	width: 250px;
+	height: 250px;
+	margin: 0px auto;
+}
+.upload-img-block {
+	width: 250px;
+	height: 250px;
+	overflow: $overflow-hidden;
+	border-radius: 50%;
+}
+.upload-img-block img {
+	width: $full;
+	height: $full !important;
+	object-fit: $object-cover;
+}
+.upload-inner-block label {
+	width: 70px;
+	height: 70px;
+	border-radius: 50px;
+	box-shadow: 0px 1px 5px rgba(162, 162, 162, 0.3);
+	background: $color-white;
+	position: $absolute;
+	bottom: 20px;
+	left: 0px;
+	text-align: $text-center;
+	line-height: 66px;
+	cursor: $cursor-pointer;
+}
+.upload-inner-block label img {
+	cursor: $cursor-pointer;
+}
+input[type='file'] {
+	display: $none;
+}

@@ -1,0 +1,35 @@
+@import 'partials';
+
+.notfount-area {
+	height: 100vh;
+	display: $flex;
+	align-items: $items-center;
+	justify-content: $justify-center;
+}
+.notfount-block {
+	text-align: $text-center;
+}
+.notfount-block h1 {
+	font-size: 18rem;
+	line-height: 16.4rem;
+	font-weight: $font-bold;
+	color: $color-primary;
+}
+.notfount-block h4 {
+	font-size: $text-3xl;
+	font-weight: $font-semibold;
+	text-transform: $uppercase;
+	margin-top: 14px;
+	margin-bottom: 15px;
+}
+.notfount-block p {
+	margin-bottom: 28px;
+	font-size: $text-base;
+}
+.button-area {
+	display: $flex;
+	justify-content: $justify-center;
+}
+.button-area a {
+	min-width: 210px;
+}

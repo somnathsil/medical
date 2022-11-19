@@ -1,0 +1,99 @@
+<div class="dashboard-header">
+	<div class="header-inner">
+		<div class="header-left">
+			<form>
+				<div class="sort-block">
+					<select class="formcontrol">
+						<option value="">Sort By</option>
+						<option value="ASC">A-Z</option>
+						<option value="DESC">Z-A</option>
+						<option value="rcnt">Most Recent</option>
+					</select>
+					<i class="icon-chevron-down-outline"></i>
+				</div>
+				<div class="status-block">
+					<select class="formcontrol">
+						<option value="">Filter BY</option>
+						<option value="A">Active</option>
+						<option value="I">Inactive</option>
+					</select>
+					<i class="icon-chevron-down-outline"></i>
+				</div>
+				<div class="search-block">
+					<input
+						type="text"
+						class="formcontrol"
+						placeholder="Search by Name, Phone Number"
+					/>
+
+					<i class="icon-search-outline"></i>
+				</div>
+				<div class="reset-block">
+					<i class="icon-refresh-outline"></i>
+				</div>
+			</form>
+		</div>
+		<div class="header-right">
+			<a
+				class="btn btn-primary-outline"
+				[routerLink]="['/admin-users/add']"
+				>Add Admin User</a
+			>
+		</div>
+	</div>
+</div>
+
+<!-- Table Area -->
+<!-- Main content -->
+<section class="content">
+	<div class="list-area">
+		<table class="table list-table mb-0">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Phone Number</th>
+					<th>Status</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let user of users">
+					<td>
+						<div class="name-area">
+							<div class="group-image">
+								<img [src]="user.image" alt="" />
+								<!-- <span>AD</span> -->
+							</div>
+							<p>{{ user.name }}</p>
+						</div>
+					</td>
+					<td>{{ user.email }}</td>
+					<td>{{ user.phone_number }}</td>
+					<td>
+						<div
+							class="list-status-block"
+							[ngClass]="{
+								'status-active': user.status === 1,
+								'status-inactive': user.status === 0
+							}"
+						></div>
+						{{ user.status == 1 ? 'Active' : 'Inactive' }}
+					</td>
+					<td>
+						<a
+							title="Edit"
+							class="edit-icon"
+							[routerLink]="['/admin-users/edit/' + 1]"
+							><i class="icon-edit-outline"></i
+						></a>
+						<a title="Delete" class="delete-icon"
+							><i class="icon-trash-2-outline"></i
+						></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</section>
+<!-- Main content End -->

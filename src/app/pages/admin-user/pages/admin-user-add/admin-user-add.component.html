@@ -1,0 +1,143 @@
+<section class="content">
+	<div class="form-block">
+		<form [formGroup]="addAdminUserForm" (ngSubmit)="addAdminUserSubmit()">
+			<div class="form-group-block">
+				<label for="">Name <sup>*</sup></label>
+				<div class="formcontrol-wrapper">
+					<input
+						#inputFocus
+						type="text"
+						class="formcontrol"
+						placeholder="Enter Your Name"
+						[autocompleteOff]="'off'"
+						formControlName="name"
+						[class.invalid-control]="hasFormControlError('name')"
+					/>
+				</div>
+				<ng-container *ngIf="hasFormControlError('name')">
+					<div
+						[@fadeInOut]
+						class="error-message"
+						*ngIf="formcontrol['name'].hasError('required')"
+					>
+						<p>Please Enter Your Name</p>
+					</div>
+					<div
+						[@fadeInOut]
+						class="error-message"
+						*ngIf="formcontrol['name'].hasError('pattern')"
+					>
+						<p>Please Enter a Valid Name</p>
+					</div>
+				</ng-container>
+			</div>
+			<div class="form-group-block">
+				<label for="">Email <sup>*</sup></label>
+				<div class="formcontrol-wrapper">
+					<input
+						type="text"
+						class="formcontrol"
+						placeholder="Enter Your Email"
+						[autocompleteOff]="'off'"
+						formControlName="email"
+						[ngClass]="{
+							'invalid-control': hasFormControlError('email')
+						}"
+						onkeydown="if(event.key===' '){event.preventDefault();}"
+					/>
+				</div>
+				<ng-container *ngIf="hasFormControlError('email')">
+					<div
+						[@fadeInOut]
+						class="error-message"
+						*ngIf="formcontrol['email'].hasError('required')"
+					>
+						<p>Please Enter Your Email</p>
+					</div>
+					<div
+						[@fadeInOut]
+						class="error-message"
+						*ngIf="formcontrol['email'].hasError('pattern')"
+					>
+						<p>Please Enter a Valid Email</p>
+					</div>
+				</ng-container>
+			</div>
+			<div class="form-group-block">
+				<label for="">Phone Number <sup>*</sup></label>
+				<div class="formcontrol-wrapper">
+					<input
+						type="text"
+						class="formcontrol"
+						placeholder="Enter Your Phone Number"
+						[autocompleteOff]="'off'"
+						formControlName="phone_number"
+						[class.invalid-control]="
+							hasFormControlError('phone_number')
+						"
+						onkeydown="if(event.key===' '){event.preventDefault();}"
+					/>
+				</div>
+				<ng-container *ngIf="hasFormControlError('phone_number')">
+					<div
+						[@fadeInOut]
+						class="error-message"
+						*ngIf="formcontrol['phone_number'].hasError('required')"
+					>
+						<p>Please Enter Your Phone Number</p>
+					</div>
+					<div
+						[@fadeInOut]
+						class="error-message"
+						*ngIf="formcontrol['phone_number'].hasError('pattern')"
+					>
+						<p>Please Enter a Valid Phone Number</p>
+					</div>
+				</ng-container>
+			</div>
+			<div class="form-group-block status-group-block">
+				<label for="">Status <sup>*</sup></label>
+				<div class="formcontrol-wrapper">
+					<div class="switch-container">
+						<input
+							type="checkbox"
+							id="switch"
+							formControlName="status"
+						/>
+						<label for="switch" class="switch-label">
+							<div class="switch-rail">
+								<div class="switch-slider"></div>
+							</div>
+						</label>
+					</div>
+				</div>
+				<ng-container *ngIf="hasFormControlError('status')">
+					<div
+						[@fadeInOut]
+						class="error-message"
+						*ngIf="formcontrol['status'].hasError('required')"
+					>
+						<p>Please Select Your Status</p>
+					</div>
+				</ng-container>
+			</div>
+			<div class="footer-submit">
+				<button type="submit" class="btn btn-primary">Submit</button>
+				<button type="button" class="btn btn-danger">Cancel</button>
+			</div>
+		</form>
+	</div>
+	<div class="add-image-area">
+		<div class="upload-inner-block">
+			<div class="upload-img-block">
+				<img src="./assets/images/profile-pic.jpg" />
+			</div>
+			<label class="custom-file-upload">
+				<input type="file" />
+				<abbr title="Upload Image"
+					><img src="assets/images/browse-icon.png"
+				/></abbr>
+			</label>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,55 @@
+@import 'partials';
+
+.auth-heading {
+	margin-bottom: 35px;
+	text-align: $text-center;
+	h1 {
+		margin-bottom: 15px;
+		font-family: $font-primary;
+		font-weight: $font-semibold;
+		font-size: $text-4xl;
+		line-height: $leading-8;
+		text-transform: $capitalize;
+		color: $color-primary;
+	}
+}
+.auth-form-group {
+	margin-bottom: 2px;
+}
+.auth-formcontrol-wrapper span {
+	position: $absolute;
+	right: 1.2rem;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: $text-lg;
+	line-height: $leading-none;
+	color: $color-gray-400;
+	cursor: $cursor-pointer;
+	@include transition;
+}
+.auth-formcontrol-wrapper span:hover {
+	color: $color-primary-dark;
+}
+.auth-formcontrol-wrapper span.icon-both {
+	cursor: $cursor-default;
+}
+.auth-formcontrol-wrapper span.icon-both:hover {
+	color: $color-gray-400;
+}
+.auth-form-submit {
+	margin-top: 2.6rem;
+}
+
+.form-group-pass-left,
+.form-group-pass-right {
+	width: 48%;
+	display: $inline-block;
+	vertical-align: $align-top;
+}
+.form-group-pass-right {
+	margin-left: 4%;
+}
+.dropdown-icon {
+	pointer-events: none;
+	font-size: $text-2xl !important;
+}

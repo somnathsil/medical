@@ -1,0 +1,256 @@
+/* SCSS Partials */
+@import 'partials';
+
+.main-sidebar {
+	height: $h-screen;
+	overflow-y: $overflow-hidden;
+	overflow-x: $overflow-hidden;
+	z-index: 1038;
+	height: $full;
+	min-height: $full;
+	position: $absolute;
+	top: $no-px;
+	@include transition;
+}
+.sidebar-light {
+	background: $color-white;
+}
+.sidebar-fixed {
+	position: $fixed;
+	left: $no-px;
+	top: $no-px;
+}
+.sidebar-expanded {
+	width: 250px;
+}
+.sidebar-header {
+	padding: 0px 17px 0px;
+	border-bottom: $border $border-solid $color-gray-100;
+	white-space: normal;
+	height: 70px;
+	display: $flex;
+	align-items: $items-center;
+	text-align: $text-center;
+	justify-content: $justify-center;
+	position: $relative;
+	box-shadow: 0 0.3rem 1rem 0 rgba(44, 51, 73, 0.1);
+}
+.sidebar-brand {
+	@include transition;
+	display: $flex;
+	align-items: $items-center;
+}
+.sidebar-brand a {
+	display: $block;
+	width: 64px;
+	margin: 0 auto;
+}
+.sidebar-brand a img {
+	width: $full;
+	height: $full;
+	object-fit: $object-cover;
+}
+.sidebar-brand p {
+	color: $color-primary;
+	font-family: $font-primary;
+	font-size: $text-xl;
+	font-weight: $font-semibold;
+	text-transform: $capitalize;
+	margin-left: 12px;
+}
+// .sidebar-brand h2 {
+// 	font-weight: $font-bold;
+// 	color: $color-primary;
+// 	font-size: $text-2xl;
+// }
+.main-sidebar .sidebar-body {
+	height: calc(100% - 70px);
+	box-shadow: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.1);
+}
+.sidebar-menu {
+	height: calc(100vh - (140px + 1px));
+	overflow-x: $overflow-hidden;
+	overflow-y: initial;
+	padding-bottom: 10px;
+	padding-left: $no-px;
+	padding-right: $no-px;
+	padding-top: 10px;
+	position: $relative;
+}
+.sidebar-nav {
+	white-space: nowrap;
+	position: $relative;
+	display: $flex;
+	flex-wrap: $flex-wrap;
+	flex-direction: $flex-col;
+	padding-left: $no-px;
+	margin-bottom: $no-px;
+	list-style: $list-none;
+}
+.nav-list {
+	margin-bottom: $no-px;
+	border-bottom: $border $border-solid $color-gray-100;
+	position: $relative;
+}
+.nav-list:last-child {
+	border-bottom: $no-px;
+}
+.nav-sidebar .nav-list > .nav-list-item {
+	position: $relative;
+	white-space: nowrap;
+	outline: $none;
+	@include transition;
+}
+.nav-list > .nav-list-item {
+	display: $flex;
+	align-items: $items-center;
+}
+.nav-list-item {
+	border-radius: $rounded;
+	display: $block;
+	padding: 12px 17px;
+	color: $color-black-100;
+	font-family: $font-primary;
+	font-size: $text-sm;
+	font-weight: $font-semibold;
+	line-height: $leading-6;
+}
+.nav-list-item:after {
+	position: $absolute;
+	left: $no-px;
+	height: $no-px;
+	width: 4px;
+	background: $color-primary;
+	content: '';
+	@include transition-out;
+}
+.nav-list-item p {
+	color: $color-black-100;
+	font-family: $font-primary;
+	font-size: $text-sm;
+	font-weight: $font-semibold;
+	text-transform: $capitalize;
+	margin: $no-px;
+	white-space: nowrap;
+	display: $inline;
+	width: $full;
+	@include transition;
+}
+.nav-list-item:hover p,
+.nav-list-item:hover i.nav-icon {
+	color: $color-primary-light;
+	cursor: $cursor-pointer;
+}
+.nav-list-item:hover:after {
+	height: 50px;
+}
+.nav-list-item i.nav-icon {
+	color: $color-gray-800;
+	font-size: $text-xl;
+	margin-right: 8px;
+	width: 24px;
+	line-height: $leading-none;
+	@include transition;
+}
+.nav-list i.toggle-icon {
+	color: $color-gray-800;
+	font-size: 21px;
+	@include transition;
+}
+.nav-list.submenu-expanded i.toggle-icon {
+	transform: rotate(90deg);
+}
+.nav-list.active .nav-list-item p,
+.nav-list.active .nav-list-item i.nav-icon {
+	color: $color-primary;
+}
+.nav-list.active .nav-list-item:after {
+	position: $absolute;
+	left: $no-px;
+	height: 50px;
+	width: 4px;
+	background: $color-primary;
+	content: '';
+}
+.submenu-treeview {
+	list-style-type: $list-none;
+	overflow: $overflow-hidden;
+	background-color: $color-transparent;
+	margin: $no-px;
+	padding: 0px 17px;
+	@include transition;
+}
+
+.submenu-treeview .submenu-list {
+	border-bottom: $border $border-solid $color-gray-150;
+}
+.submenu-treeview .submenu-list:first-child {
+	border-top: $border $border-solid $color-gray-150;
+}
+.submenu-treeview .submenu-list:last-child {
+	border-bottom: $none;
+}
+.submenu-treeview .submenu-list .submenu-item {
+	color: $color-black-100;
+	font-family: $font-primary;
+	font-size: $text-sm;
+	font-weight: $font-semibold;
+	line-height: $leading-6;
+	padding: 12px 25px;
+	display: $block;
+}
+.submenu-treeview .submenu-list .submenu-item p {
+	color: $color-black-100;
+	font-family: $font-primary;
+	font-size: $text-sm;
+	font-weight: $font-medium;
+	line-height: $leading-6;
+}
+.submenu-treeview .submenu-list .submenu-item p:hover {
+	color: $color-primary-light;
+}
+.sidebar-footer {
+	height: 50px;
+	width: $full;
+	position: $relative;
+}
+.footer-content {
+	padding: 0px 17px;
+	padding-top: 5px;
+	display: $flex;
+	align-items: $items-start;
+	height: $full;
+}
+.footer-copyright {
+	width: 18px;
+	height: 18px;
+	border-radius: $rounded-half;
+	border: $border $border-solid $color-black-100;
+	margin-right: 6px;
+	display: $flex;
+	align-items: $items-center;
+	justify-content: $justify-center;
+}
+.footer-copyright p {
+	color: $color-black-100;
+	font-family: $font-primary;
+	font-size: $text-md;
+	font-weight: $font-medium;
+	line-height: $leading-none;
+	height: 17px;
+}
+.footer-info p {
+	color: $color-primary;
+	font-family: $font-primary;
+	font-size: $text-md;
+	font-weight: $font-medium;
+	line-height: 14px;
+	display: $inline;
+	white-space: nowrap;
+}
+.footer-info p span {
+	display: $block;
+	color: $color-black-100;
+	font-size: $text-xxs;
+	font-weight: $font-regular;
+}

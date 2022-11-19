@@ -1,0 +1,237 @@
+<section class="content">
+	<div class="form-block">
+		<form [formGroup]="paymentEditForm" (ngSubmit)="onEditPaymentSubmit()">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group-block">
+						<label for="">Patient Name <sup>*</sup></label>
+						<div class="formcontrol-wrapper">
+							<input
+								#inputFocus
+								type="text"
+								class="formcontrol"
+								placeholder="Enter Patient Name"
+								[autocompleteOff]="'off'"
+								formControlName="patient_name"
+								[class.invalid-control]="
+									hasFormControlError('patient_name')
+								"
+							/>
+						</div>
+						<ng-container
+							*ngIf="hasFormControlError('patient_name')"
+						>
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="
+									formcontrol['patient_name'].hasError(
+										'required'
+									)
+								"
+							>
+								<p>Please Enter Patient Name</p>
+							</div>
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="
+									formcontrol['patient_name'].hasError(
+										'pattern'
+									)
+								"
+							>
+								<p>Please Enter a Valid Name</p>
+							</div>
+						</ng-container>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group-block">
+						<label for="">Disease <sup>*</sup></label>
+						<div class="formcontrol-wrapper">
+							<select
+								class="formcontrol"
+								formControlName="disease"
+								[ngClass]="{
+									'invalid-control':
+										hasFormControlError('disease')
+								}"
+							>
+								<option disabled selected [value]="null">
+									Select Disease
+								</option>
+								<option
+									*ngFor="let disease of diseases"
+									[value]="disease.label"
+								>
+									{{ disease.label }}
+								</option>
+							</select>
+							<i class="icon-chevron-down-outline"></i>
+						</div>
+						<ng-container *ngIf="hasFormControlError('disease')">
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="
+									formcontrol['disease'].hasError('required')
+								"
+							>
+								<p>Please Select Disease</p>
+							</div>
+						</ng-container>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group-block">
+						<label for="">Payment Date <sup>*</sup></label>
+						<div class="formcontrol-wrapper">
+							<input
+								type="text"
+								placeholder="Select Payment Date"
+								class="formcontrol"
+								formControlName="payment_date"
+								[ngClass]="{
+									'invalid-control':
+										hasFormControlError('payment_date')
+								}"
+								bsDatepicker
+								[bsConfig]="{
+									customTodayClass: 'custom-today-date',
+									dateInputFormat: 'DD/MM/YYYY'
+								}"
+							/>
+							<i class="icon-calendar-outline"></i>
+						</div>
+						<ng-container
+							*ngIf="hasFormControlError('payment_date')"
+						>
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="
+									formcontrol['payment_date'].hasError(
+										'required'
+									)
+								"
+							>
+								<p>Please Select Payment Date</p>
+							</div>
+						</ng-container>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group-block">
+						<label for="">Total Amount <sup>*</sup></label>
+						<div class="formcontrol-wrapper">
+							<input
+								type="text"
+								class="formcontrol"
+								placeholder="Enter Total Amount"
+								[autocompleteOff]="'off'"
+								formControlName="total_amount"
+								[ngClass]="{
+									'invalid-control':
+										hasFormControlError('total_amount')
+								}"
+								onkeydown="if(event.key===' '){event.preventDefault();}"
+							/>
+						</div>
+						<ng-container
+							*ngIf="hasFormControlError('total_amount')"
+						>
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="
+									formcontrol['total_amount'].hasError(
+										'required'
+									)
+								"
+							>
+								<p>Please Enter Your Amount</p>
+							</div>
+						</ng-container>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group-block">
+						<label for="">Payment Mode <sup>*</sup></label>
+						<div class="formcontrol-wrapper">
+							<select
+								class="formcontrol"
+								formControlName="payment_mode"
+								[ngClass]="{
+									'invalid-control':
+										hasFormControlError('payment_mode')
+								}"
+							>
+								<option disabled selected [value]="null">
+									Select Payment Mode
+								</option>
+								<option
+									*ngFor="let payment of paymentMode"
+									[value]="payment.label"
+								>
+									{{ payment.label }}
+								</option>
+							</select>
+							<i class="icon-chevron-down-outline"></i>
+						</div>
+						<ng-container
+							*ngIf="hasFormControlError('payment_mode')"
+						>
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="
+									formcontrol['payment_mode'].hasError(
+										'required'
+									)
+								"
+							>
+								<p>Please Select Payment Mode</p>
+							</div>
+						</ng-container>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group-block status-group-block">
+						<label for="">Status <sup>*</sup></label>
+						<div class="formcontrol-wrapper">
+							<div class="switch-container">
+								<input
+									type="checkbox"
+									id="switch"
+									formControlName="status"
+								/>
+								<label for="switch" class="switch-label">
+									<div class="switch-rail">
+										<div class="switch-slider"></div>
+									</div>
+								</label>
+							</div>
+						</div>
+						<ng-container *ngIf="hasFormControlError('status')">
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="
+									formcontrol['status'].hasError('required')
+								"
+							>
+								<p>Please Select Your Status</p>
+							</div>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+
+			<div class="footer-submit">
+				<button type="submit" class="btn btn-primary">Save</button>
+				<button type="button" class="btn btn-danger">Cancel</button>
+			</div>
+		</form>
+	</div>
+</section>

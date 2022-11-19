@@ -1,0 +1,42 @@
+@import 'partials';
+
+.form-block {
+	width: $full;
+	padding: 25px 35px;
+}
+.formcontrol-wrapper span {
+	position: $absolute;
+	right: 1.2rem;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: $text-lg;
+	line-height: $leading-none;
+	color: $color-gray-400;
+	cursor: $cursor-pointer;
+	@include transition;
+}
+.footer-submit {
+	padding-top: 20px;
+}
+.formcontrol-wrapper i {
+	position: $absolute;
+	right: 1.2rem;
+	top: 50%;
+	transform: translateY(-50%);
+	color: $color-gray-400;
+	cursor: $cursor-pointer;
+	pointer-events: none;
+	font-size: $text-2xl;
+}
+.form-group-block-gender .error-message {
+	left: 0;
+	right: auto !important;
+}
+.formcontrol-wrapper i.icon-calendar-outline {
+	font-size: $text-xl;
+}
+.status-group-block .error-message {
+	right: auto;
+	left: 0 !important;
+	bottom: -28px !important;
+}

@@ -1,0 +1,53 @@
+/* SCSS Partials */
+@import 'partials';
+
+.title-info {
+	display: $flex;
+	align-items: $items-center;
+	justify-content: $justify-between;
+}
+.page-title h2 {
+	color: $color-black-100;
+	font-size: $text-lg;
+	font-weight: $font-semibold;
+	text-transform: $capitalize;
+	line-height: $leading-none;
+}
+.page-breadcrumbs ul {
+	display: $flex;
+	align-items: $items-center;
+	justify-content: $justify-center;
+}
+.page-breadcrumbs ul li {
+	position: $relative;
+	padding: 0px 12px 0px 7px;
+	outline: $none;
+}
+.page-breadcrumbs ul li:before {
+	position: $absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	right: $no-px;
+	content: '/';
+}
+.page-breadcrumbs ul li:last-child {
+	padding-right: $no-px;
+}
+.page-breadcrumbs ul li:last-child:before {
+	content: $none;
+}
+.page-breadcrumbs ul li,
+.page-breadcrumbs ul li a {
+	color: $color-black-100;
+	font-size: $text-sm;
+	font-weight: $font-medium;
+	text-transform: $capitalize;
+}
+.page-breadcrumbs ul li a {
+	cursor: $cursor-pointer;
+	outline: $none;
+	@include transition;
+}
+.page-breadcrumbs ul li a:hover {
+	color: $color-primary;
+}

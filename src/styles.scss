@@ -1,1 +1,1304 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* SCSS Partials */
+@import './assets/scss/partial/partials';
+
+@import './assets/scss/icons.css';
+@import '~normalize.css';
+@import '~@ng-select/ng-select/themes/default.theme.css';
+
+html {
+	font-size: $html-text-size;
+}
+
+body {
+	font-size: $text-md;
+	color: $color-black-100;
+	font-weight: $font-regular;
+	font-family: $font-primary;
+	background: $color-gray-350;
+}
+
+p {
+	font-size: $text-md;
+	color: $color-black-100;
+	font-family: $font-primary;
+	margin: 0;
+}
+
+ol,
+ul {
+	list-style: $none;
+	padding: $no-px;
+	margin: $no-px;
+	font-family: $font-primary;
+}
+
+a,
+a:hover {
+	text-decoration: $none;
+	font-family: $font-primary;
+	@include transition;
+}
+img {
+	max-width: $full;
+	height: auto;
+}
+
+button {
+	outline: $none;
+	font-family: $font-primary;
+	@include transition;
+}
+
+input {
+	outline: $none;
+	font-family: $font-primary;
+}
+
+input:focus {
+	outline: $none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: $no-px;
+	font-family: $font-primary;
+}
+/* 
+ * *Layout Toggle Style
+ *
+ * @date: 30 Aug 2022
+ * @developer: Somnath Sil 
+ */
+
+.admin-layout-container.sidebar-collapse .sidebar-expanded {
+	width: 60px;
+}
+
+.admin-layout-container.sidebar-collapse .main-header {
+	margin-left: 60px;
+}
+
+.admin-layout-container.sidebar-collapse .admin-content-wrapper {
+	width: calc(100vw - 60px);
+	margin-left: 60px;
+}
+
+.admin-layout-container.sidebar-collapse .sidebar-brand {
+	width: 18px;
+	overflow: $overflow-hidden;
+}
+
+.admin-layout-container.sidebar-collapse .nav-list-item p {
+	width: $no-px;
+	visibility: $overflow-hidden;
+}
+
+.admin-layout-container.sidebar-collapse .footer-inner p {
+	font-size: $text-lg !important;
+}
+
+.admin-layout-container.sidebar-collapse .footer-info {
+	width: $no-px;
+	visibility: $overflow-hidden;
+}
+.content {
+	background: $color-white;
+	border-radius: $rounded;
+	box-shadow: 0 2px 18px 1px rgb(49 53 72 / 10%);
+}
+
+/* 
+ * *Auth Form Layout Style
+ *
+ * @date: 30 Aug 2022
+ * @developer: Somnath Sil 
+ */
+.auth-container router-outlet ~ * {
+	position: absolute;
+	width: auto;
+	height: max-content;
+	right: 0;
+	top: 50%;
+	z-index: 30;
+	transform: translateY(-50%);
+	width: 100%;
+	max-width: 470px;
+}
+.auth-form-group {
+	padding-bottom: 16px;
+	margin-bottom: 16px;
+	position: $relative;
+	width: $full;
+}
+.auth-form-group label {
+	font-size: 1.5rem;
+	font-weight: $font-semibold;
+	margin-bottom: 10px;
+	display: $inline-block;
+	line-height: $leading-none;
+	color: $color-black-100;
+}
+.auth-formcontrol-wrapper {
+	position: $relative;
+}
+.auth-formcontrol {
+	display: $block;
+	width: $full;
+	height: 45px;
+	border: $border $border-solid $color-gray-700;
+	padding: 10px 14px;
+	border-radius: $rounded;
+	padding-right: 34px;
+	font-family: $font-primary;
+	font-size: $text-md;
+	font-weight: $font-medium;
+	color: $color-black-100;
+	box-sizing: border-box;
+	@include transition;
+}
+
+select.auth-formcontrol {
+	background-color: $color-white;
+	-webkit-appearance: $none;
+}
+.auth-formcontrol:focus,
+select.auth-formcontrol:focus {
+	border: $border $border-solid $color-gray-700;
+	outline: $none;
+}
+.auth-formcontrol::-webkit-input-placeholder {
+	font-family: $font-primary;
+	font-weight: $font-medium;
+	font-size: $text-md;
+	color: $color-gray-450;
+}
+.auth-formcontrol:-moz-placeholder {
+	font-family: $font-primary;
+	font-weight: $font-medium;
+	font-size: $text-md;
+	color: $color-gray-450;
+	opacity: 1;
+}
+.auth-formcontrol:-ms-input-placeholder {
+	font-family: $font-primary;
+	font-weight: $font-medium;
+	font-size: $text-base;
+	color: $color-gray-450;
+	opacity: 1;
+}
+.auth-formcontrol::placeholder {
+	font-family: $font-primary;
+	font-weight: $font-medium;
+	font-size: $text-md;
+	color: $color-gray-450;
+	opacity: 1;
+}
+.auth-formcontrol:-webkit-autofill {
+	font-family: $font-primary;
+	font-weight: $font-medium;
+	font-size: $text-md;
+	color: $color-gray-450;
+	box-shadow: 0 0 0 50px white inset;
+	-webkit-box-shadow: 0 0 0 50px white inset;
+	-webkit-text-fill-color: #666666;
+}
+.auth-formcontrol:-webkit-autofill:focus {
+	font-family: $font-primary;
+	font-weight: $font-medium;
+	font-size: $text-md;
+	color: $color-gray-450;
+	box-shadow: 0 0 0 50px white inset;
+	-webkit-box-shadow: 0 0 0 50px white inset;
+	-webkit-text-fill-color: #666666;
+}
+.forget-pass-remember-me {
+	display: $flex;
+	align-items: $items-center;
+	justify-content: $justify-between;
+	margin-bottom: 16px;
+}
+.remember-me label {
+	display: $flex;
+	align-items: $items-center;
+	justify-content: $justify-between;
+	cursor: $cursor-pointer;
+}
+.remember-me label input {
+	display: $hidden;
+}
+.remember-me label span {
+	width: 2rem;
+	height: 2rem;
+	border-radius: $rounded;
+	margin-right: 1.2rem;
+	position: $relative;
+	background: $color-white;
+	border-width: $border;
+	border-style: $border-solid;
+	border-color: $color-gray-300;
+	display: $inline-block;
+	@include transition;
+}
+.remember-me label span:after {
+	content: '\e9c1';
+	font-size: $text-md;
+	line-height: $leading-none;
+	font-family: 'icomoon' !important;
+	opacity: 0;
+	position: $absolute;
+	width: auto;
+	height: auto;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	color: $color-white;
+	@include transition;
+}
+.remember-me label p {
+	font-family: $font-primary;
+	color: $color-black-100;
+	font-size: $text-sm;
+	line-height: $leading-none;
+	font-weight: $font-medium;
+	@include transition;
+}
+.remember-me label:hover p {
+	color: $color-primary-dark;
+}
+.remember-me label input:checked + span {
+	background: $color-primary;
+	border-color: $color-primary;
+}
+.remember-me label input:checked + span:after {
+	opacity: 1;
+}
+.forget-password a {
+	font-size: $text-sm;
+	font-family: $font-primary;
+	line-height: $leading-none;
+	color: $color-black-100;
+	font-weight: $font-medium;
+	text-decoration: $underline;
+	@include transition;
+}
+.forget-password a:hover {
+	color: $color-primary-dark;
+}
+.auth-form-submit {
+	margin-top: 3.6rem;
+	width: $full;
+	button {
+		width: $full;
+		display: $block;
+		border: $none;
+		text-transform: $uppercase;
+		text-align: $text-center;
+		padding: 1.4rem;
+		background: $color-primary;
+		color: $color-white;
+		border-radius: $rounded;
+		font-weight: $font-semibold;
+		font-family: $font-primary;
+		font-size: $text-xl;
+		cursor: $cursor-pointer;
+		@include transition;
+	}
+	button:hover {
+		background: $color-primary-dark;
+	}
+}
+
+.back-to-login {
+	margin-top: 2.5rem;
+	text-align: $text-center;
+	a {
+		font-size: $text-md;
+		font-family: $font-primary;
+		line-height: $leading-none;
+		display: $inline-block;
+		color: $color-gray-900;
+		font-weight: $font-medium;
+		text-decoration: $underline;
+		cursor: $cursor-pointer;
+		@include transition;
+	}
+	a:hover {
+		color: $color-primary-dark;
+	}
+}
+
+/* 
+ * *Auth Error Message Style
+ *
+ * @date: 31 Aug 2022
+ * @developer: Somnath Sil 
+ */
+.auth-error-message {
+	position: $absolute;
+	width: auto;
+	height: auto;
+	right: $no-px;
+	bottom: -19px;
+	text-align: $text-right;
+	padding: 6px 10px;
+	border-radius: $rounded-sm;
+	background: #fff2f3;
+	border: $border $border-solid $error-message;
+	z-index: 10;
+}
+.auth-error-message::after,
+.auth-error-message::before {
+	bottom: $full;
+	left: 84%;
+	border: $border-solid $color-transparent;
+	content: '';
+	height: $no-px;
+	width: $no-px;
+	position: $absolute;
+	pointer-events: $none;
+}
+.auth-error-message:after {
+	border-color: rgba(255, 242, 243, 0);
+	border-bottom-color: #fff2f3;
+	border-width: 8px;
+	margin-left: -16px;
+}
+.auth-error-message:before {
+	border-color: rgba(206, 37, 37, 0);
+	border-bottom-color: $error-message;
+	border-width: 9px;
+	margin-left: -17px;
+}
+.auth-error-message p {
+	color: $error-message;
+	font-size: $text-xs;
+	font-weight: $font-regular;
+	line-height: $leading-none;
+}
+.auth-invalid-control {
+	border-width: $border !important;
+	border-style: $border-solid !important;
+	border-color: $error-message !important;
+}
+
+/* 
+ * *Menu Scrollbar Style
+ *
+ * @date: 1 Sep 2022
+ * @developer: Somnath Sil 
+ */
+.ng-scroll-content {
+	display: $block !important;
+}
+.sidebar-menu .custom-sidebar-scroll-track {
+	width: 4px !important;
+	background: $color-transparent;
+}
+
+.sidebar-menu .custom-sidebar-scroll-thumb {
+	background: rgba(205, 209, 218, 0.6) !important;
+}
+
+.sidebar-menu .scrollbar-control {
+	right: -2px !important;
+}
+
+/* 
+ * *Ng Select Custom Style
+ *
+ * @date: 6 Sep 2022
+ * @developer: Somnath Sil 
+ */
+.custom-select {
+	outline: $none;
+	box-shadow: $none;
+}
+
+.custom-select .ng-select-container {
+	border-width: $border;
+	border-style: $border-solid;
+	border-color: $color-gray-700;
+	height: 48px !important;
+	min-height: 48px !important;
+	box-shadow: $none !important;
+}
+
+.custom-select .ng-placeholder {
+	font-family: $font-primary;
+	font-weight: $font-regular !important;
+	font-size: $text-base;
+	color: $color-gray-500 !important;
+	display: $flex;
+	align-items: $items-center;
+}
+.custom-select .ng-has-value .ng-placeholder {
+	// display: $hidden;
+}
+.custom-select .ng-value-container {
+	padding-left: 14px !important;
+}
+
+.custom-select .ng-value {
+	font-size: $text-base;
+	color: $color-black-100;
+	padding-top: 10px;
+}
+
+.custom-select .ng-input {
+	// display: $hidden;
+}
+
+.custom-select .ng-input input {
+	height: 36px;
+	font-size: $text-base;
+	color: $color-black-100;
+}
+
+.custom-select .ng-option {
+	font-size: $text-base;
+	color: $color-black-100;
+}
+
+.custom-select .ng-option-selected {
+	background-color: $color-primary !important;
+	color: $color-white !important;
+}
+
+.custom-select .ng-option-marked {
+	background-color: $color-gray-100 !important;
+	color: $color-black-100 !important;
+}
+
+.custom-select .ng-clear-wrapper {
+	// display: $hidden;
+}
+
+.custom-select .ng-arrow-wrapper {
+	display: $flex;
+	align-items: $items-center;
+	padding-bottom: 4px;
+	padding-right: 20px;
+}
+
+.custom-select .ng-arrow-wrapper .ng-arrow {
+	border-style: $border-solid;
+	border-color: $color-gray-400;
+	border-width: 0 2px 2px 0 !important;
+	padding: 4px;
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+}
+
+.custom-select.ng-select-opened > .ng-select-container .ng-arrow {
+	transform: rotate(225deg);
+	-webkit-transform: rotate(225deg);
+	border-style: $border-solid;
+	border-color: $color-black-100;
+	border-width: 0 2px 2px 0 !important;
+	padding: 2px;
+	top: 3px;
+}
+
+.select-invalid-control .ng-select-container {
+	border-width: $border !important;
+	border-style: $border-solid !important;
+	border-color: $error-message !important;
+}
+
+/* 
+ * *Admin Form Layout Style
+ *
+ * @date: 04 Oct 2022
+ * @developer: Somnath Sil 
+ */
+.form-group-block {
+	padding-bottom: 16px;
+	margin-bottom: 16px;
+	position: $relative;
+	width: $full;
+}
+.form-group-block label {
+	font-size: 1.5rem;
+	font-weight: $font-semibold;
+	margin-bottom: 10px;
+	display: $inline-block;
+	line-height: $leading-none;
+	color: $color-black-100;
+}
+.form-group-block label sup {
+	color: $error-message !important;
+	font-size: $text-lg;
+	top: -3px;
+}
+.formcontrol-wrapper {
+	position: $relative;
+}
+textarea.formcontrol {
+	resize: $none;
+	min-height: 90px;
+}
+.formcontrol {
+	display: $block;
+	width: $full;
+	height: 45px;
+	border: $border $border-solid $color-gray-700;
+	padding: 10px 14px;
+	border-radius: $rounded;
+	padding-right: 34px;
+	font-family: $font-primary;
+	font-size: $text-md;
+	font-weight: $font-medium;
+	color: $color-black-100;
+	box-sizing: border-box;
+	@include transition;
+}
+select.formcontrol {
+	background-color: $color-white;
+	-webkit-appearance: $none;
+}
+.formcontrol:disabled {
+	cursor: not-allowed;
+	background: #f4f4f4;
+}
+.formcontrol:focus,
+select.formcontrol:focus {
+	border: $border $border-solid $color-gray-700;
+	outline: $none;
+}
+.formcontrol::-webkit-input-placeholder {
+	font-family: $font-primary;
+	font-weight: $font-medium;
+	font-size: $text-md;
+	color: $color-gray-450;
+}
+.formcontrol:-moz-placeholder {
+	font-family: $font-primary;
+	font-weight: $font-medium;
+	font-size: $text-md;
+	color: $color-gray-450;
+	opacity: 1;
+}
+.formcontrol:-ms-input-placeholder {
+	font-family: $font-primary;
+	font-weight: $font-medium;
+	font-size: $text-base;
+	color: $color-gray-450;
+	opacity: 1;
+}
+.formcontrol::placeholder {
+	font-family: $font-primary;
+	font-weight: $font-medium;
+	font-size: $text-md;
+	color: $color-gray-450;
+	opacity: 1;
+}
+.formcontrol:-webkit-autofill {
+	font-family: $font-primary;
+	font-weight: $font-medium;
+	font-size: $text-md;
+	color: $color-gray-450;
+	box-shadow: 0 0 0 50px white inset;
+	-webkit-box-shadow: 0 0 0 50px white inset;
+	-webkit-text-fill-color: #666666;
+}
+.formcontrol:-webkit-autofill:focus {
+	font-family: $font-primary;
+	font-weight: $font-medium;
+	font-size: $text-md;
+	color: $color-gray-450;
+	box-shadow: 0 0 0 50px white inset;
+	-webkit-box-shadow: 0 0 0 50px white inset;
+	-webkit-text-fill-color: #666666;
+}
+
+.auth-form-submit {
+	margin-top: 3.6rem;
+	width: $full;
+	.btn {
+		width: $full;
+		display: $block;
+		border: $none;
+		text-transform: $uppercase;
+		text-align: $text-center;
+		padding: 1.4rem;
+		background: $color-primary;
+		color: $color-white;
+		border-radius: $rounded;
+		font-weight: $font-semibold;
+		font-family: $font-primary;
+		font-size: $text-xl;
+		cursor: $cursor-pointer;
+		@include transition;
+	}
+	button:hover {
+		background: $color-primary-dark;
+	}
+}
+
+/* 
+ * *Button global styles
+ *
+ * @date: 04 Oct 2022
+ * @developer: 
+ */
+.btn {
+	min-width: 115px;
+	border: $none;
+	text-transform: $uppercase;
+	text-align: $text-center;
+	padding: 1.4rem;
+	color: $color-white;
+	border-radius: $rounded;
+	font-weight: $font-semibold;
+	font-family: $font-primary;
+	font-size: 15px;
+	line-height: $leading-none;
+	cursor: $cursor-pointer;
+	display: $flex;
+	align-items: $items-center;
+	justify-content: $justify-center;
+	border-width: $border;
+	border-style: $border-solid;
+	border-color: transparent;
+	@include transition;
+}
+.btn:focus {
+	box-shadow: none !important;
+}
+.btn-primary {
+	background: $color-primary;
+	border-color: $color-primary;
+	color: $color-white;
+	&:hover {
+		background: $color-primary-dark;
+	}
+}
+.btn-primary-outline {
+	background: $color-transparent;
+	border-color: $color-primary;
+	color: $color-primary;
+	&:hover {
+		background: $color-primary-dark;
+		color: $color-white;
+	}
+}
+.btn-danger {
+	background: $color-danger;
+	border-color: $color-danger;
+	color: $color-white;
+	margin-left: 12px;
+	&:hover {
+		background: $color-danger-dark;
+	}
+}
+.btn-secondary {
+	background: $color-secondary;
+	border-color: $color-secondary;
+	color: $color-white;
+	margin-left: 12px;
+	&:hover {
+		background: $color-secondary-dark;
+	}
+}
+.footer-submit {
+	display: $flex;
+}
+
+/* 
+ * *Admin Error Message Style
+ *
+ * @date: 5 Oct 2022
+ * @developer: Somnath Sil 
+ */
+.error-message {
+	position: $absolute;
+	width: auto;
+	height: auto;
+	right: $no-px;
+	bottom: -19px;
+	text-align: $text-right;
+	padding: 6px 10px;
+	border-radius: $rounded-sm;
+	background: #fff2f3;
+	border: $border $border-solid $error-message;
+	z-index: 10;
+}
+.error-message::after,
+.error-message::before {
+	bottom: $full;
+	left: 84%;
+	border: $border-solid $color-transparent;
+	content: '';
+	height: $no-px;
+	width: $no-px;
+	position: $absolute;
+	pointer-events: $none;
+}
+.error-message:after {
+	border-color: rgba(255, 242, 243, 0);
+	border-bottom-color: #fff2f3;
+	border-width: 8px;
+	margin-left: -16px;
+}
+.error-message:before {
+	border-color: rgba(206, 37, 37, 0);
+	border-bottom-color: $error-message;
+	border-width: 9px;
+	margin-left: -17px;
+}
+.error-message p {
+	color: $error-message;
+	font-size: $text-xs;
+	font-weight: $font-regular;
+	line-height: $leading-none;
+}
+.invalid-control {
+	border-width: $border !important;
+	border-style: $border-solid !important;
+	border-color: $error-message !important;
+}
+
+/* 
+ * *Custom Style
+ *
+ * @date: 5 Oct 2022
+ * @developer: Somnath Sil 
+ */
+
+.row {
+	margin-right: -12px !important;
+	margin-left: -12px !important;
+}
+.col-md-1,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-md-10,
+.col-md-11,
+.col-md-12 {
+	padding-right: 12px !important;
+	padding-left: 12px !important;
+}
+
+/* 
+ * *Custom Radio Button Style
+ *
+ * @date: 5 Oct 2022
+ * @developer: Somnath Sil 
+ */
+
+.custom-radio-button {
+	display: $inline-block;
+	vertical-align: $align-middle;
+	margin-top: 5px;
+}
+.custom-radio-button input[type='radio'] {
+	display: $hidden;
+}
+.custom-radio-button label:before {
+	content: '';
+	display: $block;
+	position: $absolute;
+	width: 16px;
+	height: 16px;
+	left: 0;
+	top: 50%;
+	margin-top: -8px;
+	border: $border;
+	border-style: $border-solid;
+	border-color: $color-black-100;
+	border-radius: $rounded-lg;
+}
+.custom-radio-button label {
+	position: $relative;
+	cursor: $cursor-pointer;
+	margin-right: 18px;
+	margin-bottom: 0;
+	padding-left: 28px;
+	font-size: 1.5rem;
+	font-weight: $font-medium;
+	line-height: $leading-none;
+	color: $color-black-100;
+}
+.custom-radio-button label:after {
+	content: '';
+	display: $block;
+	position: $absolute;
+	width: 0;
+	height: 0;
+	top: 50%;
+	left: 8px;
+	margin-top: 0;
+	background: $color-primary;
+	border-radius: 4px;
+	@include transition;
+}
+.custom-radio-button :checked + label:after {
+	height: 8px;
+	width: 8px;
+	margin-top: -4px;
+	left: 4px;
+}
+.custom-radio-button :checked + label:before {
+	border: $border;
+	border-style: $border-solid;
+	border-color: $color-primary;
+}
+
+/* 
+ * *Custom Datepicker Style
+ *
+ * @date: 14 Oct 2022
+ * @developer: Somnath Sil 
+ */
+
+.theme-green .bs-datepicker-head {
+	background: $color-primary !important;
+}
+.theme-green .bs-datepicker-body table td span.selected {
+	background: $color-primary !important;
+}
+.bs-datepicker-body table th {
+	color: $color-black-300 !important;
+	width: 58px !important;
+	height: 38px !important;
+}
+.bs-datepicker-body table td span.custom-today-date {
+	background: $color-primary-light !important;
+	color: $color-white !important;
+}
+
+/* 
+ * *Custom List Header Style
+ *
+ * @date: 16 Oct 2022
+ * @developer: Somnath Sil 
+ */
+.dashboard-header {
+	margin-bottom: 20px;
+}
+.header-inner {
+	display: $flex;
+	align-items: $items-center;
+	justify-content: $justify-between;
+	padding: 20px;
+	width: $full;
+	background: $color-white;
+	border-radius: $rounded;
+	box-shadow: 0 2px 18px 1px rgb(49 53 72 / 10%);
+	@include transition;
+}
+.header-left {
+	width: calc(100% - 230px);
+}
+.header-inner form {
+	width: $full;
+}
+.sort-block {
+	width: 17%;
+	display: $inline-block;
+	position: $relative;
+	margin-right: 20px;
+	vertical-align: $align-top;
+}
+.sort-block i,
+.status-block i {
+	position: $absolute;
+	right: 1rem;
+	top: 50%;
+	transform: translateY(-50%);
+	color: $color-gray-400;
+	cursor: $cursor-pointer;
+	pointer-events: $none;
+	font-size: $text-2xl;
+}
+.status-block {
+	width: 18%;
+	display: $inline-block;
+	position: $relative;
+	margin-right: 20px;
+	vertical-align: $align-top;
+}
+.search-block {
+	width: 45%;
+	display: $inline-block;
+	position: $relative;
+	margin-right: 20px;
+	vertical-align: $align-top;
+}
+.search-block i {
+	position: $absolute;
+	right: 1.2rem;
+	top: 50%;
+	transform: translateY(-50%);
+	color: $color-gray-400;
+	cursor: $cursor-pointer;
+	font-size: $text-1xl;
+}
+.sort-block .formcontrol,
+.status-block .formcontrol,
+.search-block .formcontrol {
+	height: 40px;
+	padding-right: 28px;
+}
+.reset-block {
+	display: $inline-block;
+	vertical-align: $align-top;
+	height: 40px;
+	border: $border $border-solid $color-gray-700;
+	padding: 5px 12px;
+	border-radius: $rounded;
+	font-family: $font-primary;
+	font-size: $text-xl;
+	line-height: $leading-8;
+	font-weight: $font-medium;
+	color: $color-gray-400;
+	box-sizing: border-box;
+	cursor: $cursor-pointer;
+	background: $color-transparent;
+	@include transition;
+}
+.reset-block:hover {
+	background: $color-primary;
+	color: $color-white;
+	border-color: $color-primary;
+}
+
+/* 
+ * *Custom Table Style
+ *
+ * @date: 14 Oct 2022
+ * @developer: Somnath Sil 
+ */
+.list-area {
+	border-radius: 7px 7px 0px 0px;
+	box-shadow: 0 0px 10px -4px rgb(0 0 0 / 15%);
+	background-color: $color-white;
+	margin-bottom: 0px;
+	border: $border-0;
+}
+.list-table thead tr th {
+	color: $color-primary;
+	font-size: 15px;
+	font-weight: $font-semibold;
+	border-top: $none;
+	vertical-align: $align-top;
+	padding: 18px 14px 14px 25px;
+	border-bottom-width: $border;
+	border-bottom-style: $border-solid;
+	border-bottom-color: $color-gray-650;
+}
+.list-table tbody tr td {
+	color: #252422;
+	font-size: $text-md;
+	font-weight: $font-medium;
+	padding: 12px 14px 12px 25px;
+	vertical-align: $align-middle;
+	border-bottom-width: $border;
+	border-bottom-style: $border-solid;
+	border-bottom-color: #f1f1f1;
+	word-break: break-all;
+}
+.list-table tbody tr:nth-child(even) {
+	background-color: #fbfbfb;
+}
+.list-table tbody tr td p {
+	color: #252422;
+	font-size: $text-md;
+	font-weight: $font-medium;
+}
+.list-table tbody tr:hover {
+	background-color: #f1f1f1 !important;
+}
+.list-table tbody tr td a.edit-icon,
+.list-table tbody tr td a.delete-icon,
+.list-table tbody tr td a.profile-icon {
+	font-size: $text-lg;
+	cursor: pointer;
+}
+.list-table tbody tr td a.edit-icon {
+	color: $color-green-100;
+	font-size: $text-xl;
+	margin-right: 12px;
+}
+.list-table tbody tr td a.delete-icon {
+	color: $color-danger;
+}
+.list-table tbody tr td a.profile-icon {
+	color: $color-orange-100;
+	margin-left: 10px;
+	font-size: 19px;
+}
+.name-area {
+	display: $flex;
+	align-items: $items-center;
+}
+.group-image {
+	width: 38px;
+	height: 38px;
+	overflow: $overflow-hidden;
+	border-radius: $rounded-full;
+	margin-right: 12px;
+	background-color: #e4e4ea;
+	display: $flex;
+	align-items: $items-center;
+	justify-content: $justify-center;
+}
+.group-image img {
+	width: $full;
+	height: $full;
+	object-fit: $object-cover;
+}
+.group-image span {
+	color: #838383;
+	font-size: $text-sm;
+	font-weight: $font-bold;
+}
+.list-status-block {
+	width: 12px;
+	height: 12px;
+	border-radius: $rounded-full;
+	display: $inline-block;
+	vertical-align: $align-middle;
+	background: $color-gray-550;
+	margin-right: 8px;
+}
+.status-active {
+	background: $color-green-100;
+}
+.status-inactive {
+	background: $color-danger;
+}
+
+/* 
+ * *Custom Patient Tab Style
+ *
+ * @date: 23 Oct 2022
+ * @developer: Somnath Sil 
+ */
+.wrapper-box {
+	padding: 30px 30px 32px 30px;
+	position: $relative;
+}
+.sidebar-tab-header ul {
+	display: $table;
+	width: $full;
+	table-layout: $fixed;
+}
+.sidebar-tab-header ul li {
+	display: table-cell;
+	width: auto;
+	vertical-align: $align-top;
+	text-align: $text-center;
+	position: $relative;
+}
+.sidebar-tab-header ul li a {
+	cursor: $cursor-pointer;
+	position: $relative;
+	padding-top: 60px;
+	margin-top: 0px;
+	margin-bottom: 40px;
+	display: $block;
+}
+.sidebar-tab-header ul li a .step {
+	width: 40px;
+	height: 40px;
+	line-height: 48px;
+	font-size: 1.3rem;
+	border-radius: 15%;
+	background-color: #f4f5fa;
+	display: $inline-block;
+	position: $absolute;
+	top: 0;
+	left: 50%;
+	margin-left: -24px;
+	z-index: $z-10;
+	text-align: $text-center;
+}
+.sidebar-tab-header ul li a .step:after {
+	content: '';
+	width: 0;
+	height: 0;
+	position: $absolute;
+	bottom: 0;
+	left: 50%;
+	margin-left: -8px;
+	margin-bottom: -8px;
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	border-top: 8px solid #f4f5fa;
+}
+.sidebar-tab-header ul li a .step i {
+	font-size: $text-xl;
+	color: #ababad;
+}
+.sidebar-tab-header ul li.active:after,
+.sidebar-tab-header ul li.active ~ li:after,
+.sidebar-tab-header ul li.active ~ li:before {
+	background-color: #f4f5fa;
+}
+.sidebar-tab-header ul li:after,
+.sidebar-tab-header ul li:before {
+	top: 26px;
+	width: 50%;
+	height: 2px;
+	background-color: $color-primary;
+	content: '';
+	z-index: 9;
+	display: $block;
+	position: $absolute;
+}
+.sidebar-tab-header ul li:before {
+	left: 0;
+}
+.sidebar-tab-header ul li:after {
+	right: 0;
+}
+.sidebar-tab-header ul li:first-child::before {
+	height: 0;
+}
+.sidebar-tab-header ul li:last-child::after {
+	height: 0;
+}
+.sidebar-tab-header ul li a p {
+	font-size: 1.5rem;
+	font-weight: $font-medium;
+	line-height: $leading-none;
+	color: #999;
+}
+.sidebar-tab-header ul li.active .step {
+	border-width: $border-2;
+	border-style: $border-solid;
+	border-color: $color-primary;
+	color: $color-primary;
+	line-height: 44px !important;
+	background-color: $color-white !important;
+}
+.sidebar-tab-header ul li.active .step:after {
+	border-top-color: $color-primary !important;
+}
+.sidebar-tab-header ul li.active a .step i {
+	color: $color-primary !important;
+}
+.sidebar-tab-header ul li.active a p {
+	color: $color-black-100;
+}
+
+/* Form Style */
+.sidebar-tab-area label {
+	font-weight: $font-medium;
+}
+.formcontrol-wrapper i {
+	position: $absolute;
+	right: 1.2rem;
+	top: 50%;
+	transform: translateY(-50%);
+	color: $color-gray-400;
+	cursor: $cursor-pointer;
+	pointer-events: none;
+	font-size: $text-2xl;
+}
+.footer-submit {
+	margin-top: 15px;
+	display: $flex;
+	justify-content: $justify-end;
+}
+.footer-submit button:last-child {
+	margin-left: 12px;
+}
+
+/*  Upload File Style */
+.custom-image-upload {
+	border: 1px dashed #7c7db3;
+	border-radius: $rounded;
+	position: $relative;
+	max-width: $full;
+	margin-top: 5px;
+	padding: 26px 20px 30px;
+	transition: 0.2s;
+	input[type='file'] {
+		margin-left: 6px !important;
+		margin-top: 14px !important;
+		&::-webkit-file-upload-button {
+			display: $none;
+		}
+		&::file-selector-button {
+			display: $none;
+		}
+	}
+	label {
+		border-radius: $rounded !important;
+		color: $color-white;
+		margin-bottom: 0;
+	}
+}
+
+/* 
+ * * Custom Toggle Style
+ *
+ * @date: 29 Oct 2022
+ * @developer: Somnath Sil 
+ */
+
+.status-group-block {
+	padding-top: 6px;
+}
+.status-group-block label {
+	vertical-align: $align-middle;
+}
+.status-group-block .formcontrol-wrapper {
+	display: $inline-block;
+	vertical-align: $align-middle;
+	margin-left: 23px;
+}
+.switch-container {
+	margin-top: -25px;
+	input[type='checkbox'] {
+		display: $none;
+	}
+	.switch-label {
+		position: $relative;
+		cursor: $cursor-pointer;
+		margin: 0;
+		.switch-rail {
+			transition: all 0.2s ease-in-out;
+			position: $absolute;
+			width: 54px;
+			height: 25px;
+			background: #cccccc;
+			border-radius: 50px;
+			overflow: $hidden;
+			.switch-slider {
+				transition: all 0.2s ease-in-out;
+				position: absolute;
+				top: 4px;
+				left: 4px;
+				width: 17px;
+				height: 17px;
+				border-radius: 50%;
+				background: $color-white;
+			}
+		}
+	}
+	#switch:checked + .switch-label {
+		.switch-rail {
+			transition: all 0.2s ease-in-out;
+			background: $color-primary;
+			.switch-slider {
+				transition: all 0.2s ease-in-out;
+				transform: translateX(28px);
+			}
+		}
+	}
+}

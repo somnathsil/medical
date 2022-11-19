@@ -1,0 +1,197 @@
+/* Google font family */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* Font Family */
+$font-primary: 'Montserrat', sans-serif;
+
+/* Base Font Size */
+$html-text-size: 62.5%;
+$text-xxs: 1rem;
+$text-xs: 1.2rem;
+$text-sm: 1.3rem;
+$text-md: 1.4rem;
+$text-base: 1.6rem;
+$text-lg: 1.8rem;
+$text-xl: 2rem;
+$text-1xl: 2.2rem;
+$text-2xl: 2.4rem;
+$text-3xl: 2.7rem;
+$text-4xl: 3rem;
+$text-5xl: 3.3rem;
+$text-6xl: 3.6rem;
+$text-7xl: 4rem;
+$text-8xl: 4.3rem;
+$text-9xl: 4.6rem;
+$text-10xl: 5rem;
+
+/* Base Font Weight */
+$font-thin: 100;
+$font-extralight: 200;
+$font-light: 300;
+$font-regular: 400;
+$font-medium: 500;
+$font-semibold: 600;
+$font-bold: 700;
+$font-extrabold: 800;
+$font-black: 900;
+
+/* Base Line Height */
+$leading-none: 1;
+$leading-tight: 1.25;
+$leading-3: 12px;
+$leading-4: 16px;
+$leading-5: 20px;
+$leading-6: 24px;
+$leading-7: 28px;
+$leading-8: 32px;
+$leading-9: 36px;
+$leading-10: 40px;
+
+/* Base List Style */
+$list-none: none;
+$list-disc: disc;
+$list-decimal: decimal;
+
+/* Base Text Align */
+$text-left: left;
+$text-center: center;
+$text-right: right;
+$text-justify: justify;
+
+/* Base Text Decoration */
+$underline: underline;
+$line-through: line-through;
+$none: none;
+
+/* Base Text Transform */
+$uppercase: uppercase;
+$lowercase: lowercase;
+$capitalize: capitalize;
+$normal-case: none;
+
+/* Base Vertical Align */
+$align-baseline: baseline;
+$align-top: top;
+$align-middle: middle;
+$align-bottom: bottom;
+$align-text-top: text-top;
+$align-text-bottom: text-bottom;
+
+/* Base Display */
+$hidden: none;
+$block: block;
+$inline-block: inline-block;
+$inline: inline;
+$flex: flex;
+$inline-flex: inline-flex;
+$table: table;
+
+/* Base Flex Direction */
+$flex-row: row;
+$flex-col: column;
+
+/* Base Flex Wrap */
+$flex-wrap: wrap;
+
+/* Base Justify Content */
+$justify-start: flex-start;
+$justify-end: flex-end;
+$justify-center: center;
+$justify-between: space-between;
+$justify-around: space-around;
+$justify-evenly: space-evenly;
+
+/* Base Align Items */
+$items-stretch: stretch;
+$items-start: flex-start;
+$items-center: center;
+$items-end: flex-end;
+$items-baseline: baseline;
+
+/* Base Border Radius */
+$rounded-none: 0px;
+$rounded-sm: 0.2rem;
+$rounded: 0.4rem;
+$rounded-md: 0.6rem;
+$rounded-lg: 0.8rem;
+$rounded-xl: 1.2rem;
+$rounded-2xl: 1.6rem;
+$rounded-3xl: 2.4rem;
+$rounded-half: 50%;
+$rounded-full: 9999px;
+
+/* Base Border Width */
+$border-0: 0px;
+$border: 1px;
+$border-2: 2px;
+$border-3: 3px;
+$border-4: 4px;
+$border-5: 5px;
+$border-6: 6px;
+$border-7: 7px;
+$border-8: 8px;
+$border-9: 9px;
+$border-10: 10px;
+
+/* Base Border Color */
+// $border-transparent: transparent;
+// $border-black: #000000;
+// $border-white: #ffffff;
+
+/* Base Border Style */
+$border-solid: solid;
+$border-dashed: dashed;
+$border-dotted: dotted;
+$border-double: double;
+$border-none: none;
+
+/* Base Cursor Effect */
+$cursor-auto: auto;
+$cursor-default: default;
+$cursor-pointer: pointer;
+$cursor-cursor-not-allowed: not-allowed;
+
+/* Base Float */
+$float-right: right;
+$float-left: left;
+$float-none: none;
+
+/* Base Object Fit */
+$object-contain: contain;
+$object-cover: cover;
+$object-fill: fill;
+$object-none: none;
+$object-scale-down: scale-down;
+
+/* Base Overflow */
+$overflow-auto: auto;
+$overflow-hidden: hidden;
+$overflow-visible: visible;
+$overflow-scroll: scroll;
+// $overflow-x-auto: auto;
+// $overflow-y-auto: auto;
+// $overflow-x-hidden: hidden;
+// $overflow-y-hidden: hidden;
+
+/* Base Position */
+$static: static;
+$fixed: fixed;
+$absolute: absolute;
+$relative: relative;
+$sticky: sticky;
+
+/* Base Z-Index */
+$z-0: 0;
+$z-10: 10;
+$z-20: 20;
+$z-30: 30;
+$z-40: 40;
+$z-50: 50;
+$z-full: 9999;
+$z-auto: auto;
+
+/* Base Width Height */
+$full: 100%;
+$w-screen: 100vw;
+$h-screen: 100vh;
+$no-px: 0px;

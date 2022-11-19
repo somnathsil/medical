@@ -1,0 +1,11 @@
+@import 'partials';
+
+.page-heading {
+	margin-bottom: 48px;
+}
+.page-heading h4 {
+	color: $color-black-100;
+	font-size: 17px;
+	font-weight: $font-medium;
+	line-height: $leading-none;
+}

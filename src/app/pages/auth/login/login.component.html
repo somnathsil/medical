@@ -1,0 +1,98 @@
+<div class="auth-heading">
+	<h1>Admin</h1>
+	<h4>Sign In</h4>
+</div>
+<form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+	<div class="auth-form-group">
+		<label>Email</label>
+		<div class="auth-formcontrol-wrapper">
+			<input
+				#inputFocus
+				type="text"
+				class="auth-formcontrol"
+				placeholder="Enter Your Email"
+				[autocompleteOff]="'off'"
+				formControlName="email"
+				[class.auth-invalid-control]="hasFormControlError('email')"
+				onkeydown="if(event.key===' '){event.preventDefault();}"
+				name="email"
+				[(ngModel)]="email"
+			/>
+			<span class="icon-email-outline"></span>
+		</div>
+		<ng-container *ngIf="hasFormControlError('email')">
+			<div
+				[@fadeInOut]
+				class="auth-error-message"
+				*ngIf="formcontrol['email'].hasError('required')"
+			>
+				<p>Please Enter Your Email</p>
+			</div>
+			<div
+				[@fadeInOut]
+				class="auth-error-message"
+				*ngIf="formcontrol['email'].hasError('pattern')"
+			>
+				<p>Please Enter a Valid Email</p>
+			</div>
+		</ng-container>
+	</div>
+	<div class="auth-form-group">
+		<label>Password</label>
+		<div class="auth-formcontrol-wrapper">
+			<input
+				class="auth-formcontrol"
+				placeholder="Enter Your Password"
+				[autocompleteOff]="'off'"
+				formControlName="password"
+				[type]="toggleInputType ? 'text' : 'password'"
+				[class.auth-invalid-control]="hasFormControlError('password')"
+				onkeydown="if(event.key===' '){event.preventDefault();}"
+				name="password"
+				[(ngModel)]="password"
+			/>
+			<span
+				[class]="
+					toggleInputType
+						? 'icon-eye-off-outline'
+						: 'icon-eye-outline'
+				"
+				(click)="toggleInputType = !toggleInputType"
+			></span>
+		</div>
+		<ng-container *ngIf="hasFormControlError('password')">
+			<div
+				[@fadeInOut]
+				class="auth-error-message"
+				*ngIf="formcontrol['password'].hasError('required')"
+			>
+				<p>Please Enter Your Password</p>
+			</div>
+		</ng-container>
+	</div>
+	<div class="forget-pass-remember-me">
+		<div class="remember-me">
+			<label for="remember-me">
+				<input
+					id="remember-me"
+					type="checkbox"
+					formControlName="rememberMe"
+				/>
+				<span></span>
+				<p>Remember Me</p>
+			</label>
+		</div>
+		<div class="forget-password">
+			<a [routerLink]="['/forget-password']">Forgot Password?</a>
+		</div>
+	</div>
+	<div class="auth-form-submit">
+		<button type="submit">Sign In</button>
+	</div>
+	<div class="end-block">
+		<p>
+			Don't have any account?
+			<a [routerLink]="['/registration']">Sign Up</a>
+		</p>
+	</div>
+</form>

@@ -1,0 +1,56 @@
+<ng-container *ngIf="toasterInformation && toasterInformation.isVisible">
+	<div
+		class="custom-toast-outer"
+		[ngClass]="{
+			'toast-outer-top': toasterInformation.toastConfig.position == 'top',
+			'toast-outer-bottom':
+				toasterInformation.toastConfig.position == 'bottom'
+		}"
+		[@fadeInOut]
+	>
+		<div
+			class="custom-toast-inner"
+			[ngClass]="{
+				'toaster-success': toasterInformation.color == 'green',
+				'toaster-error': toasterInformation.color == 'red',
+				'toaster-warning': toasterInformation.color == 'orange'
+			}"
+		>
+			<div
+				class="custom-toast-icon"
+				[ngClass]="{
+					'success-toast-icon': toasterInformation.color == 'green',
+					'error-toast-icon': toasterInformation.color == 'red',
+					'warning-toast-icon': toasterInformation.color == 'orange'
+				}"
+			>
+				<span
+					[ngClass]="{
+						'icon-checkmark-outline':
+							toasterInformation.color == 'green',
+						'icon-close-outline': toasterInformation.color == 'red',
+						'icon-upload-outline':
+							toasterInformation.color == 'orange'
+					}"
+				></span>
+			</div>
+
+			<div class="custom-toast-content">
+				<h6>
+					{{
+						toasterInformation.title
+							? toasterInformation.title
+							: 'Title'
+					}}
+				</h6>
+				<p>
+					{{
+						toasterInformation.message
+							? toasterInformation.message
+							: 'Message'
+					}}
+				</p>
+			</div>
+		</div>
+	</div>
+</ng-container>

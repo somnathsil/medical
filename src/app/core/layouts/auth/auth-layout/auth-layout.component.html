@@ -1,0 +1,43 @@
+<div class="auth-outer">
+	<div class="auth-inner">
+		<div class="auth-left-panel">
+			<img
+				src="./assets/images/auth-bg.jpg"
+				width="596"
+				height="630"
+				alt=""
+				loading="lazy"
+			/>
+			<div class="leftpanel-inner">
+				<div class="logo-block">
+					<a>
+						<img
+							src="./assets/images/auth-logo.png"
+							width="220"
+							height="179"
+							alt="Logo"
+							loading="lazy"
+						/>
+					</a>
+				</div>
+				<h1>Welcome Back</h1>
+				<p>
+					Lorem ipsum dolor sit amet with code you want. Lorem ipsum
+					dolor sit amet with code you want. Lorem ipsum dolor sit
+					amet with code you want. Lorem ipsum dolor sit amet with
+					code you want. Lorem ipsum dolor sit amet with code you want
+					lorem ipsum dolor sit work.
+				</p>
+			</div>
+		</div>
+		<div class="auth-right-panel">
+			<div
+				class="auth-container"
+				[@.disabled]="isLoadingFirstTime"
+				[@routerAnimation]="getRouterOutletState(o)"
+			>
+				<router-outlet #o="outlet"></router-outlet>
+			</div>
+		</div>
+	</div>
+</div>
