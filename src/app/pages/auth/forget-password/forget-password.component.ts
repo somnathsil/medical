@@ -5,6 +5,7 @@ import {
 	FormGroup,
 	Validators
 } from '@angular/forms';
+import { CommonService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
 
 @Component({
@@ -14,12 +15,16 @@ import { fadeInOut } from '@app/shared/animations';
 	animations: [fadeInOut]
 })
 export class ForgetPasswordComponent implements OnInit {
-	constructor(private _formBuilder: FormBuilder) {}
+	constructor(
+		private _formBuilder: FormBuilder,
+		private _commonService: CommonService
+	) {}
 
 	public submitted = false;
 	public forgetPasswordForm!: FormGroup;
 
 	ngOnInit(): void {
+		this._commonService.setLoadingStatus(false);
 		this.initForgetPasswordForm();
 	}
 

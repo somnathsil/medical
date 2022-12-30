@@ -11,6 +11,7 @@ import {
 	FormGroup,
 	Validators
 } from '@angular/forms';
+import { CommonService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
 import { PasswordValidator } from '@app/shared/validators';
 
@@ -21,20 +22,35 @@ import { PasswordValidator } from '@app/shared/validators';
 	animations: [fadeInOut]
 })
 export class RegistrationComponent implements OnInit, AfterViewInit {
-	constructor(private _formBuilder: FormBuilder) {}
-
 	public submitted = false;
 	public registrationForm!: FormGroup;
+	public firstNumber!: number;
+	public captchaErr = false;
+	public lastNumber!: number;
 	public toggleInputType = false;
 	public toggleInputTypeConfirm = false;
 	public userType: any = [];
 	@ViewChild('inputFocus') inputFocus!: ElementRef;
 
+	constructor(
+		private _formBuilder: FormBuilder,
+		private _commonService: CommonService
+	) {}
+
 	ngOnInit(): void {
+		this._commonService.setLoadingStatus(false);
 		this.getPageType();
 		this.initRegistrationForm();
+		this.firstNumber = this.randomNumber();
+		this.lastNumber = this.randomNumber();
 	}
 
+	/**
+	 * *Initializing dropdown of page type
+	 *
+	 * @date 31 Aug 2022
+	 * @developer Somnath Sil
+	 */
 	getPageType() {
 		this.userType = [
 			{ id: 1, name: 'Patient' },
@@ -67,7 +83,8 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
 				]),
 				password: new FormControl('', [Validators.required]),
 				con_password: new FormControl('', [Validators.required]),
-				user_type: new FormControl('', [Validators.required])
+				user_type: new FormControl('', [Validators.required]),
+				captcha: new FormControl('', [Validators.required])
 			},
 			{
 				validator: PasswordValidator.passwordsMustMatch(
@@ -114,12 +131,74 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
 
 		// stop here if form is invalid
 		if (this.registrationForm.invalid) {
-			return false;
+			this.registrationForm.markAllAsTouched();
+			if (
+				this.firstNumber + this.lastNumber !==
+				Number(formValue.captcha)
+			) {
+				this.captchaErr = true;
+				// console.log(
+				// 	this.firstNumber + this.lastNumber,
+				// 	formValue.captcha
+				// );
+			} else {
+				if (
+					this.firstNumber + this.lastNumber ==
+					Number(formValue.captcha)
+				) {
+					this.captchaErr = false;
+				}
+			}
+			return;
+		}
+
+		if (this.firstNumber + this.lastNumber !== Number(formValue.captcha)) {
+			this.captchaErr = true;
+			// console.log(this.firstNumber + this.lastNumber, formValue.captcha);
+			return;
+		} else {
+			this.captchaErr = false;
 		}
 
 		//form is valid
 		if (this.registrationForm.valid) {
 			console.log(formValue);
+		}
+	}
+
+	/**
+	 * *Initializing random number for captcha
+	 *
+	 * @date 31 Aug 2022
+	 * @developer Somnath Sil
+	 */
+	randomNumber(): number {
+		const minNumber = 1;
+		const maxNumber = 9;
+		return (
+			Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber
+		);
+	}
+
+	/**
+	 * *Initializing method for captcha on input
+	 *
+	 * @date 31 Aug 2022
+	 * @developer Somnath Sil
+	 */
+	onInputCaptcha() {
+		if (
+			this.firstNumber + this.lastNumber !==
+			Number(this.registrationForm.value.captcha)
+		) {
+			this.captchaErr = true;
+			// console.log(
+			// 	this.firstNumber + this.lastNumber,
+			// 	this.registrationForm.value.captcha
+			// );
+			return;
+		} else {
+			this.captchaErr = false;
 		}
 	}
 }

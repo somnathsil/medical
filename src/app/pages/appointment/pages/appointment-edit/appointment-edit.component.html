@@ -229,6 +229,40 @@
 						</ng-container>
 					</div>
 				</div>
+				<div class="col-md-12">
+					<div class="form-group-block">
+						<label for="">Upload <sup>*</sup></label>
+						<div class="formcontrol-wrapper">
+							<div
+								class="input-group custom-image-upload"
+								[ngClass]="{
+									'invalid-control':
+										hasFormControlError('image')
+								}"
+							>
+								<label for="imageUpload" class="btn btn-primary"
+									>Uplaod Image</label
+								>
+								<input
+									type="file"
+									id="imageUpload"
+									formControlName="image"
+								/>
+							</div>
+						</div>
+						<ng-container *ngIf="hasFormControlError('image')">
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="
+									formcontrol['image'].hasError('required')
+								"
+							>
+								<p>Please Uplaod Your Imager</p>
+							</div>
+						</ng-container>
+					</div>
+				</div>
 			</div>
 
 			<div class="footer-submit">

@@ -11,6 +11,7 @@ import {
 	FormGroup,
 	Validators
 } from '@angular/forms';
+import { CommonService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
 
 @Component({
@@ -20,13 +21,17 @@ import { fadeInOut } from '@app/shared/animations';
 	animations: [fadeInOut]
 })
 export class AdminUserAddComponent implements OnInit, AfterViewInit {
-	constructor(private _formBuilder: FormBuilder) {}
+	constructor(
+		private _formBuilder: FormBuilder,
+		private _commonService: CommonService
+	) {}
 
 	public submitted = false;
 	public addAdminUserForm!: FormGroup;
 	@ViewChild('inputFocus') inputFocus!: ElementRef;
 
 	ngOnInit(): void {
+		this._commonService.setLoadingStatus(false);
 		this.initAdminUserForm();
 	}
 

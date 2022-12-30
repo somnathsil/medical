@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { IConfirmationInfo } from './confirmation.service';
 import { IToasterInfo } from './toaster.service';
 
 @Injectable({
@@ -28,4 +29,14 @@ export class CommonService {
 	 * @developer
 	 */
 	public _toasterSubject = new BehaviorSubject<IToasterInfo | null>(null);
+
+	/**
+	 * *Create Observable for Confirm Dialog
+	 *
+	 * @date 13 Nov 2022
+	 * @developer
+	 */
+	public _confirmSubject = new BehaviorSubject<IConfirmationInfo | null>(
+		null
+	);
 }

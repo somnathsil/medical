@@ -53,3 +53,15 @@
 	pointer-events: none;
 	font-size: $text-2xl !important;
 }
+
+.resolve-captcha,
+.captcha-formcontrol {
+	display: $inline-block;
+}
+.resolve-captcha p {
+	font-size: 15px;
+}
+.captcha-formcontrol {
+	width: calc(100% - 63px);
+	margin-left: 12px;
+}

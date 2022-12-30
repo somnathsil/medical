@@ -12,6 +12,7 @@ export interface IMenu {
 export interface ISubMenus {
 	label: string;
 	URl: string;
+	isActive: boolean;
 }
 
 interface IRouterLinkActiveOption {

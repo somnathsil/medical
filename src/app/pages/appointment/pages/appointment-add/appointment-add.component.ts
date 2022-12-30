@@ -11,6 +11,7 @@ import {
 	FormGroup,
 	Validators
 } from '@angular/forms';
+import { CommonService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
 import { IGender, IService } from '@app/shared/models/appointment.model';
 
@@ -21,7 +22,10 @@ import { IGender, IService } from '@app/shared/models/appointment.model';
 	animations: [fadeInOut]
 })
 export class AppointmentAddComponent implements OnInit, AfterViewInit {
-	constructor(private _formbuilder: FormBuilder) {}
+	constructor(
+		private _formbuilder: FormBuilder,
+		private _commonService: CommonService
+	) {}
 
 	public submitted = false;
 	public appointmentAddForm!: FormGroup;
@@ -31,6 +35,7 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 
 	ngOnInit(): void {
 		console.clear();
+		this._commonService.setLoadingStatus(false);
 		this.getAllDropdowns();
 		this.initAppointmentAddForm();
 	}
@@ -82,7 +87,8 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 			]),
 			service: new FormControl('', [Validators.required]),
 			appointment_date: new FormControl('', [Validators.required]),
-			gender: new FormControl('', [Validators.required])
+			gender: new FormControl('', [Validators.required]),
+			image: new FormControl('', [Validators.required])
 		});
 	}
 

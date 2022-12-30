@@ -5,7 +5,7 @@ import {
 	FormGroup,
 	Validators
 } from '@angular/forms';
-import { ToasterService } from '@app/core/services';
+import { CommonService, ToasterService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
 import {
 	IBloodGroup,
@@ -22,21 +22,23 @@ import {
 	animations: [fadeInOut]
 })
 export class PatientAddComponent implements OnInit {
-	constructor(
-		private _formBuilder: FormBuilder,
-		private _toast: ToasterService
-	) {}
-
 	public submitted = false;
 	public addPatientStepOneForm!: FormGroup;
-	public activeIndex: number = 1;	
+	public activeIndex: number = 1;
 	public diseases!: IDisease[];
 	public cities!: ICity[];
 	public bloodGroups!: IBloodGroup[];
 	public gender!: IGender[];
 	public visites!: IVisit[];
 
+	constructor(
+		private _formBuilder: FormBuilder,
+		private _toast: ToasterService,
+		private _commonService: CommonService
+	) {}
+
 	ngOnInit(): void {
+		this._commonService.setLoadingStatus(false);
 		console.clear();
 		this.getAllDropdowns();
 		this.initPatientAddForm();

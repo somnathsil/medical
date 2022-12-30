@@ -5,6 +5,7 @@ import {
 	FormGroup,
 	Validators
 } from '@angular/forms';
+import { CommonService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
 import {
 	IBloodGroup,
@@ -21,7 +22,10 @@ import {
 	animations: [fadeInOut]
 })
 export class PatientEditComponent implements OnInit {
-	constructor(private _formBuilder: FormBuilder) {}
+	constructor(
+		private _formBuilder: FormBuilder,
+		private _commonService: CommonService
+	) {}
 
 	public submitted = false;
 	public editPatientStepOneForm!: FormGroup;
@@ -33,6 +37,7 @@ export class PatientEditComponent implements OnInit {
 	public visites!: IVisit[];
 
 	ngOnInit(): void {
+		this._commonService.setLoadingStatus(false);
 		console.clear();
 		this.getAllDropdowns();
 		this.initPatientAddForm();

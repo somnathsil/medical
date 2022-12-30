@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from '@app/core/services';
 import { IAdminUserList } from '@app/shared/models';
 
 @Component({
@@ -7,11 +8,12 @@ import { IAdminUserList } from '@app/shared/models';
 	styleUrls: ['./admin-user-list.component.scss']
 })
 export class AdminUserListComponent implements OnInit {
-	constructor() {}
+	constructor(private _commonService: CommonService) {}
 
 	public users: IAdminUserList[] = [];
 
 	ngOnInit(): void {
+		this._commonService.setLoadingStatus(false);
 		this.getData();
 	}
 

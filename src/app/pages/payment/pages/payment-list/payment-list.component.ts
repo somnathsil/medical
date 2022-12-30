@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from '@app/core/services';
 import { IPaymentList } from '@app/shared/models';
 
 @Component({
@@ -7,11 +8,12 @@ import { IPaymentList } from '@app/shared/models';
 	styleUrls: ['./payment-list.component.scss']
 })
 export class PaymentListComponent implements OnInit {
-	constructor() {}
+	constructor(private _commonService: CommonService) {}
 
 	public payments: IPaymentList[] = [];
 
 	ngOnInit(): void {
+		this._commonService.setLoadingStatus(false);
 		this.getData();
 	}
 

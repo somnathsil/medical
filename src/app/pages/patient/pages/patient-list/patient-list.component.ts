@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from '@app/core/services';
 import { IPatientList } from '@app/shared/models';
 
 @Component({
@@ -7,11 +8,11 @@ import { IPatientList } from '@app/shared/models';
 	styleUrls: ['./patient-list.component.scss']
 })
 export class PatientListComponent implements OnInit {
-	constructor() {}
-
 	public appointments: IPatientList[] = [];
+	constructor(private _commonService: CommonService) {}
 
 	ngOnInit(): void {
+		this._commonService.setLoadingStatus(false);
 		this.getData();
 	}
 

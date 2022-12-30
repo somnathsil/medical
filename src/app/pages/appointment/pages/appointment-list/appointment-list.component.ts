@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from '@app/core/services';
 import { IAppointmentList } from '@app/shared/models';
 
 // interface IStatus {
@@ -12,12 +13,13 @@ import { IAppointmentList } from '@app/shared/models';
 	styleUrls: ['./appointment-list.component.scss']
 })
 export class AppointmentListComponent implements OnInit {
-	constructor() {}
+	constructor(private _commonService: CommonService) {}
 
 	public appointments: IAppointmentList[] = [];
 	// public statuses: IStatus[] = [];
 
 	ngOnInit(): void {
+		this._commonService.setLoadingStatus(false);
 		this.getData();
 		// this.statuses = [
 		// 	{ label: 'Active', value: '1' },
@@ -29,6 +31,7 @@ export class AppointmentListComponent implements OnInit {
 		this.appointments = [
 			{
 				id: 1,
+				image: './assets/images/default-img.jpg',
 				name: 'Alex Dugin',
 				email: 'helloworld@gmail.com',
 				phone_number: 9903246644,
@@ -38,6 +41,7 @@ export class AppointmentListComponent implements OnInit {
 			},
 			{
 				id: 2,
+				image: './assets/images/default-img.jpg',
 				name: 'Somnath Sil',
 				email: 'som121@gmail.com',
 				phone_number: 9903246644,
@@ -47,6 +51,7 @@ export class AppointmentListComponent implements OnInit {
 			},
 			{
 				id: 3,
+				image: './assets/images/default-img.jpg',
 				name: 'Lilly Cole',
 				email: 'helloworld@gmail.com',
 				phone_number: 9903246644,
@@ -56,6 +61,7 @@ export class AppointmentListComponent implements OnInit {
 			},
 			{
 				id: 4,
+				image: './assets/images/default-img.jpg',
 				name: 'Alex Dugin',
 				email: 'helloworld@gmail.com',
 				phone_number: 9903246644,
@@ -65,6 +71,7 @@ export class AppointmentListComponent implements OnInit {
 			},
 			{
 				id: 1,
+				image: './assets/images/default-img.jpg',
 				name: 'Alex Dugin',
 				email: 'helloworld@gmail.com',
 				phone_number: 9903246644,

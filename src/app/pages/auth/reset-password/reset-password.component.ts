@@ -5,6 +5,7 @@ import {
 	FormGroup,
 	Validators
 } from '@angular/forms';
+import { CommonService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
 import { PasswordValidator } from '@app/shared/validators';
 
@@ -15,16 +16,19 @@ import { PasswordValidator } from '@app/shared/validators';
 	animations: [fadeInOut]
 })
 export class ResetPasswordComponent implements OnInit {
-	constructor(private _formBuilder: FormBuilder) {}
-
 	public submitted = false;
 	public resetPasswordForm!: FormGroup;
-
 	public toggleInputType = false;
 	public toggleInputTypeConfirm = false;
 	public resetType: number = 1;
 
+	constructor(
+		private _formBuilder: FormBuilder,
+		private _commonService: CommonService
+	) {}
+
 	ngOnInit(): void {
+		this._commonService.setLoadingStatus(false);
 		this.initResetPasswordForm();
 	}
 

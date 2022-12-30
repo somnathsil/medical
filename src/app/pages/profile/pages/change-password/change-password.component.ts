@@ -11,6 +11,7 @@ import {
 	FormGroup,
 	Validators
 } from '@angular/forms';
+import { CommonService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
 import { PasswordValidator } from '@app/shared/validators';
 
@@ -21,7 +22,10 @@ import { PasswordValidator } from '@app/shared/validators';
 	animations: [fadeInOut]
 })
 export class ChangePasswordComponent implements OnInit, AfterViewInit {
-	constructor(private _formBuilder: FormBuilder) {}
+	constructor(
+		private _formBuilder: FormBuilder,
+		private _commonService: CommonService
+	) {}
 
 	public submitted = false;
 	public changePasswordForm!: FormGroup;
@@ -32,6 +36,7 @@ export class ChangePasswordComponent implements OnInit, AfterViewInit {
 	@ViewChild('inputFocus') inputFocus!: ElementRef;
 
 	ngOnInit(): void {
+		this._commonService.setLoadingStatus(false);
 		this.initChangePasswordForm();
 	}
 

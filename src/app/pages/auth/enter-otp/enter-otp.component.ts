@@ -5,6 +5,7 @@ import {
 	FormGroup,
 	Validators
 } from '@angular/forms';
+import { CommonService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
 
 @Component({
@@ -14,12 +15,17 @@ import { fadeInOut } from '@app/shared/animations';
 	animations: [fadeInOut]
 })
 export class EnterOtpComponent implements OnInit {
-	constructor(private _formBuilder: FormBuilder) {}
-
 	public submitted = false;
 	public enterOtpForm!: FormGroup;
+	public emailForOTP = 'somnath@mailinator.com';
+
+	constructor(
+		private _formBuilder: FormBuilder,
+		private _commonService: CommonService
+	) {}
 
 	ngOnInit(): void {
+		this._commonService.setLoadingStatus(false);
 		this.initEnterOtpForm();
 	}
 

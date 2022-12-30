@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { slideInOut } from '@app/shared/animations';
 import { IMenu } from '@app/shared/models';
 
@@ -9,13 +10,16 @@ import { IMenu } from '@app/shared/models';
 	animations: [slideInOut]
 })
 export class AdminLeftbarComponent implements OnInit {
-	constructor() {}
+	constructor(private _router: Router) {}
 
 	ngOnInit(): void {
 		this.getMenus();
+		this.getRoute();
 	}
 
 	public menus: IMenu[] = [];
+	public childSetIndex!: number;
+	public parentSetIndex!: number;
 
 	/* Dynamic Menu and Submenus */
 	getMenus() {
@@ -37,8 +41,16 @@ export class AdminLeftbarComponent implements OnInit {
 				URl: '',
 				isSubMenuOpen: false,
 				subMenus: [
-					{ label: 'All Appointments', URl: '/appointments' },
-					{ label: 'Add Appointments', URl: '/appointments/add' }
+					{
+						label: 'All Appointments',
+						URl: '/appointments',
+						isActive: false
+					},
+					{
+						label: 'Add Appointments',
+						URl: '/appointments/add',
+						isActive: false
+					}
 				]
 			},
 			{
@@ -51,9 +63,14 @@ export class AdminLeftbarComponent implements OnInit {
 				subMenus: [
 					{
 						label: 'All Doctors',
-						URl: 'form/reactive-form'
+						URl: '/doctors',
+						isActive: false
 					},
-					{ label: 'Add Doctors', URl: '' }
+					{
+						label: 'Add Doctors',
+						URl: '/doctors/add',
+						isActive: false
+					}
 				]
 			},
 			{
@@ -64,8 +81,16 @@ export class AdminLeftbarComponent implements OnInit {
 				URl: '',
 				isSubMenuOpen: false,
 				subMenus: [
-					{ label: 'All Patients', URl: '/patients' },
-					{ label: 'Add Patients', URl: '/patients/add' }
+					{
+						label: 'All Patients',
+						URl: '/patients',
+						isActive: false
+					},
+					{
+						label: 'Add Patients',
+						URl: '/patients/add',
+						isActive: false
+					}
 				]
 			},
 			{
@@ -103,8 +128,12 @@ export class AdminLeftbarComponent implements OnInit {
 				URl: '',
 				isSubMenuOpen: false,
 				subMenus: [
-					{ label: 'All Payments', URl: 'payments' },
-					{ label: 'Add Payments', URl: 'payments/add' }
+					{ label: 'All Payments', URl: 'payments', isActive: false },
+					{
+						label: 'Add Payments',
+						URl: 'payments/add',
+						isActive: false
+					}
 				]
 			}
 		];
@@ -115,9 +144,107 @@ export class AdminLeftbarComponent implements OnInit {
 		event.preventDefault();
 		this.menus.forEach((menu) => {
 			if (menu.id === menuID) {
-				menu.isSubMenuOpen = !menu.isSubMenuOpen;
+				menu.isSubMenuOpen = true;
 			} else {
 				menu.isSubMenuOpen = false;
+			}
+		});
+	}
+
+	/**
+	 * *Getting Active Class From Parent List
+	 *
+	 * @date 25 Nov 2022
+	 * @developer Somnath Sil
+	 */
+	onActiveParentMenu(item: number) {
+		this.parentSetIndex = item;
+	}
+
+	/**
+	 * *Getting Active Class From Child List
+	 *
+	 * @date 25 Nov 2022
+	 * @developer Somnath Sil
+	 */
+	onActiveChildMenu(item: number) {
+		this.childSetIndex = item;
+	}
+
+	/**
+	 * *Routing
+	 *
+	 * @date 9 Dec 2022
+	 * @developer Somnath Sil
+	 */
+	routeToLink(route: string, isActive: boolean, id: number) {
+		if (route == 'javascript:void(0)') {
+			return;
+		}
+		if (isActive) {
+			return;
+		}
+		// this._commonService.setRouterLinkSubject(route);
+		this._router.navigate([route]);
+	}
+
+	/**
+	 * * Getting Current Route and setting as active
+	 *
+	 * @date 10 Dec 2022
+	 * @developer Somnath Sil
+	 */
+
+	getRoute() {
+		this._router.events.subscribe((event) => {
+			if (event instanceof NavigationEnd) {
+				const url = event.url;
+				const urlArray = (url.split('/') as string[]).filter(
+					(item) => item !== ''
+				);
+				const primaryMenu = urlArray[0];
+				let secondaryMenu = urlArray[urlArray.length - 1];
+				const tempSecondaryMenuArr = secondaryMenu.split(
+					'?'
+				) as string[];
+				secondaryMenu = tempSecondaryMenuArr[0];
+				for (let i = 0; i < this.menus.length; i++) {
+					if (
+						this.menus[i].URl == '/' + primaryMenu &&
+						this.menus[i].subMenus.length > 0
+					) {
+						for (
+							let j = 0;
+							j < this.menus[i].subMenus.length;
+							j++
+						) {
+							if (
+								this.menus[i].subMenus[j].URl ==
+								primaryMenu + '/' + secondaryMenu
+							) {
+								this.menus[i].subMenus[j].isActive = true;
+								this.menus[i].isSubMenuOpen = true;
+							} else {
+								this.menus[i].subMenus[j].isActive = false;
+							}
+						}
+					}
+					if (
+						this.menus[i].URl == '/' + primaryMenu &&
+						this.menus[i].subMenus.length == 0
+					) {
+						this.menus[i].isSubMenuOpen = true;
+					}
+					if (this.menus[i].URl != '/' + primaryMenu) {
+						for (
+							let j = 0;
+							j < this.menus[i].subMenus.length;
+							j++
+						) {
+							this.menus[i].subMenus[j].isActive = false;
+						}
+					}
+				}
 			}
 		});
 	}

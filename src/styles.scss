@@ -1302,3 +1302,144 @@ select.formcontrol:focus {
 		}
 	}
 }
+
+/* 
+ * * Custom Add Edit Tab Style
+ *
+ * @date: 21 Dec 2022
+ * @developer: Somnath Sil 
+ */
+.sidebar-tab-header ul {
+	display: $table;
+	width: $full;
+	table-layout: $fixed;
+}
+.sidebar-tab-header ul li {
+	display: table-cell;
+	width: auto;
+	vertical-align: $align-top;
+	text-align: $text-center;
+	position: $relative;
+}
+.sidebar-tab-header ul li a {
+	cursor: $cursor-pointer;
+	position: $relative;
+	padding-top: 60px;
+	margin-top: 0px;
+	margin-bottom: 40px;
+	display: $block;
+}
+.sidebar-tab-header ul li a .step {
+	width: 40px;
+	height: 40px;
+	line-height: 48px;
+	font-size: 1.3rem;
+	border-radius: 15%;
+	background-color: #f4f5fa;
+	display: $inline-block;
+	position: $absolute;
+	top: 0;
+	left: 50%;
+	margin-left: -24px;
+	z-index: $z-10;
+	text-align: $text-center;
+}
+.sidebar-tab-header ul li a .step:after {
+	content: '';
+	width: 0;
+	height: 0;
+	position: $absolute;
+	bottom: 0;
+	left: 50%;
+	margin-left: -8px;
+	margin-bottom: -8px;
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	border-top: 8px solid #f4f5fa;
+}
+.sidebar-tab-header ul li a .step i {
+	font-size: $text-xl;
+	color: #ababad;
+}
+.sidebar-tab-header ul li.active:after,
+.sidebar-tab-header ul li.active ~ li:after,
+.sidebar-tab-header ul li.active ~ li:before {
+	background-color: #f4f5fa;
+}
+.sidebar-tab-header ul li:after,
+.sidebar-tab-header ul li:before {
+	top: 26px;
+	width: 50%;
+	height: 2px;
+	background-color: $color-primary;
+	content: '';
+	z-index: 9;
+	display: $block;
+	position: $absolute;
+}
+.sidebar-tab-header ul li:before {
+	left: 0;
+}
+.sidebar-tab-header ul li:after {
+	right: 0;
+}
+.sidebar-tab-header ul li:first-child::before {
+	height: 0;
+}
+.sidebar-tab-header ul li:last-child::after {
+	height: 0;
+}
+.sidebar-tab-header ul li a p {
+	font-size: 1.5rem;
+	font-weight: $font-medium;
+	line-height: $leading-none;
+	color: #999;
+}
+.sidebar-tab-header ul li.active .step {
+	border-width: $border-2;
+	border-style: $border-solid;
+	border-color: $color-primary;
+	color: $color-primary;
+	line-height: 44px !important;
+	background-color: $color-white !important;
+}
+.sidebar-tab-header ul li.active .step:after {
+	border-top-color: $color-primary !important;
+}
+.sidebar-tab-header ul li.active a .step i {
+	color: $color-primary !important;
+}
+.sidebar-tab-header ul li.active a p {
+	color: $color-black-100;
+}
+
+/* 
+ * * Custom Upload File Style
+ *
+ * @date: 21 Dec 2022
+ * @developer: Somnath Sil 
+ */
+.custom-image-upload {
+	border: 1px dashed #7c7db3;
+	border-radius: $rounded;
+	position: $relative;
+	max-width: $full;
+	margin-top: 5px;
+	padding: 26px 20px 30px;
+	transition: 0.2s;
+	input[type='file'] {
+		margin-left: 6px !important;
+		margin-top: 14px !important;
+		&::-webkit-file-upload-button {
+			display: $none;
+		}
+		&::file-selector-button {
+			display: $none;
+		}
+	}
+	label {
+		border-radius: $rounded !important;
+		color: $color-white;
+		margin-bottom: 0;
+	}
+}

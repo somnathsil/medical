@@ -1,10 +1,33 @@
 <!-- Custom Confirmation Dialog -->
-<div class="modal-dialog hidden">
-	<button class="close-modal-dialog">&times;</button>
-	<p>Do You Want To Delete This?</p>
-	<div class="button-area">
-		<button type="button" class="btn btn-primary">Yes</button>
-		<button type="button" class="btn btn-danger">No</button>
+<ng-container *ngIf="isDialogOpen">
+	<div class="modal-dialog">
+		<button
+			class="close-modal-dialog"
+			(click)="confirmMessageInfo.reject(); isDialogOpen = false"
+		>
+			&times;
+		</button>
+		<img [src]="confirmMessageInfo.icon" alt="" />
+		<p>{{ confirmMessageInfo.message }}</p>
+		<div class="button-area">
+			<button
+				type="button"
+				class="btn btn-primary"
+				(click)="confirmMessageInfo.accept(); isDialogOpen = false"
+			>
+				Yes
+			</button>
+			<button
+				type="button"
+				class="btn btn-danger"
+				(click)="confirmMessageInfo.reject(); isDialogOpen = false"
+			>
+				No
+			</button>
+		</div>
 	</div>
-</div>
-<div class="overlay-backdrop hidden"></div>
+	<div
+		class="overlay-backdrop"
+		(click)="confirmMessageInfo.reject(); isDialogOpen = false"
+	></div>
+</ng-container>

@@ -19,6 +19,8 @@
 		line-height: $leading-5;
 		span {
 			display: $block;
+			color: $color-primary;
+			font-weight: $font-semibold;
 		}
 	}
 }
@@ -45,7 +47,21 @@
 	border-color: #e3e3e3;
 	box-shadow: 0px 2px 10px rgb(0 0 0 / 15%);
 }
-
+.auth-resend-otp {
+	text-align: $text-center;
+	padding-top: 12px;
+	p {
+		color: $color-black-100;
+		font-weight: $font-medium;
+		font-size: $text-md;
+		line-height: $leading-none;
+		a {
+			color: $color-primary;
+			font-weight: $font-semibold;
+			cursor: $cursor-pointer;
+		}
+	}
+}
 .auth-form-submit button {
 	font-size: $text-lg;
 }

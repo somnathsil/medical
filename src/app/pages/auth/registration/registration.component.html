@@ -141,7 +141,7 @@
 			</div>
 		</ng-container>
 	</div>
-	<div class="auth-form-group">
+	<div class="auth-form-group form-group-pass-left">
 		<label>User Type</label>
 		<div class="auth-formcontrol-wrapper">
 			<select
@@ -152,7 +152,7 @@
 				}"
 			>
 				<option value="">Select User Type</option>
-				<option *ngFor="let user of userType" [value]="user">
+				<option *ngFor="let user of userType" [value]="user.name">
 					{{ user.name }}
 				</option>
 			</select>
@@ -165,6 +165,41 @@
 				*ngIf="formcontrol['user_type'].hasError('required')"
 			>
 				<p>Please Select User Type</p>
+			</div>
+		</ng-container>
+	</div>
+	<div class="auth-form-group form-group-pass-right">
+		<label>Resolve Captcha</label>
+		<div class="auth-formcontrol-wrapper">
+			<div class="resolve-captcha">
+				<p>{{ firstNumber }} + {{ lastNumber }} =</p>
+			</div>
+			<input
+				class="auth-formcontrol captcha-formcontrol"
+				type="text"
+				placeholder="Enter Captcha"
+				formControlName="captcha"
+				(input)="onInputCaptcha()"
+			/>
+		</div>
+		<ng-container *ngIf="hasFormControlError('captcha')">
+			<div
+				[@fadeInOut]
+				class="auth-error-message"
+				*ngIf="formcontrol['captcha'].hasError('required')"
+			>
+				<p>Please Enter Your Captcha</p>
+			</div>
+		</ng-container>
+		<ng-container
+			*ngIf="
+				!formcontrol['captcha'].errors?.['required'] &&
+				formcontrol['captcha'].touched &&
+				captchaErr
+			"
+		>
+			<div [@fadeInOut] class="auth-error-message">
+				<p>Wrong Answer</p>
 			</div>
 		</ng-container>
 	</div>

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 
 @Component({
 	selector: 'admin-wrapper',
@@ -7,7 +6,5 @@ import { Title } from '@angular/platform-browser';
 	styleUrls: ['./admin-wrapper.component.scss']
 })
 export class AdminWrapperComponent implements OnInit {
-	constructor() {}
-
 	ngOnInit(): void {}
 }

@@ -23,13 +23,12 @@
 			>
 				<nav>
 					<ul class="sidebar-nav sidebar-nav-pills">
-						<ng-container *ngFor="let menu of menus">
+						<ng-container *ngFor="let menu of menus; index as i">
 							<li
 								class="nav-list"
 								[class.submenu-expanded]="menu.isSubMenuOpen"
-								routerLinkActive="active"
-								[routerLinkActiveOptions]="{ exact: true }"
-								rou
+								[ngClass]="menu.isSubMenuOpen ? 'active' : ''"
+								(click)="onActiveParentMenu(i)"
 							>
 								<!--  -->
 								<ng-container
@@ -58,9 +57,15 @@
 								</ng-container>
 								<ng-template #withoutDropdownBlock>
 									<a
-										(click)="toggleSubMenu($event, menu.id)"
+										(click)="
+											routeToLink(
+												menu.URl,
+												menu.isSubMenuOpen,
+												menu.id
+											);
+											toggleSubMenu($event, menu.id)
+										"
 										class="nav-list-item"
-										[routerLink]="menu.URl"
 									>
 										<i
 											class="nav-icon"
@@ -80,11 +85,24 @@
 										<li
 											class="submenu-list"
 											*ngFor="
-												let submenu of menu.subMenus
+												let submenu of menu.subMenus;
+												index as i
+											"
+											(click)="onActiveChildMenu(i)"
+											[ngClass]="
+												submenu.isActive === true
+													? 'active'
+													: ''
 											"
 										>
 											<a
-												[routerLink]="submenu.URl"
+												(click)="
+													routeToLink(
+														submenu.URl,
+														submenu.isActive,
+														menu.id
+													)
+												"
 												class="submenu-item"
 											>
 												<p>{{ submenu.label }}</p>

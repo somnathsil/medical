@@ -42,6 +42,13 @@ const routes: Routes = [
 					)
 			},
 			{
+				path: 'doctors',
+				loadChildren: () =>
+					import('./pages/doctor/doctor.module').then(
+						(m) => m.DoctorModule
+					)
+			},
+			{
 				path: 'admin-users',
 				loadChildren: () =>
 					import('./pages/admin-user/admin-user.module').then(

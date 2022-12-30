@@ -1,8 +1,8 @@
 <div class="auth-heading">
 	<h1>Verification</h1>
 	<p>
-		A One Time Password has been sent to Your Email Address
-		<span>somnath@mailinator.com</span>
+		A One Time Password has been sent to your Email Address
+		<span>{{ emailForOTP }}</span>
 	</p>
 </div>
 <form [formGroup]="enterOtpForm" (ngSubmit)="enterOtpSubmit()">
@@ -90,6 +90,12 @@
 				<p>Please Enter Your OTP</p>
 			</div>
 		</ng-container>
+	</div>
+	<div class="auth-resend-otp">
+		<p>
+			Don't receive the OTP?
+			<a>Resend OTP</a>
+		</p>
 	</div>
 	<div class="auth-form-submit">
 		<button type="submit">Verify</button>

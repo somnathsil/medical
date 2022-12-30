@@ -5,6 +5,7 @@ import {
 	FormGroup,
 	Validators
 } from '@angular/forms';
+import { CommonService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
 import { IDisease, IPaymentMode } from '@app/shared/models';
 
@@ -15,7 +16,10 @@ import { IDisease, IPaymentMode } from '@app/shared/models';
 	animations: [fadeInOut]
 })
 export class PaymentEditComponent implements OnInit {
-	constructor(private _formbuilder: FormBuilder) {}
+	constructor(
+		private _formbuilder: FormBuilder,
+		private _commonService: CommonService
+	) {}
 
 	public submitted = false;
 	public paymentEditForm!: FormGroup;
@@ -23,6 +27,7 @@ export class PaymentEditComponent implements OnInit {
 	public paymentMode!: IPaymentMode[];
 
 	ngOnInit(): void {
+		this._commonService.setLoadingStatus(false);
 		console.clear();
 		this.getAllDropdowns();
 		this.initPaymentAddForm();

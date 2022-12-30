@@ -1,0 +1,510 @@
+<section class="content">
+	<div class="wrapper-box">
+		<div class="page-heading">
+			<h4>Edit Doctor Details</h4>
+		</div>
+		<div class="sidebar-content-bot">
+			<div class="sidebar-tab-header">
+				<ul>
+					<li
+						[class.active]="activeIndex === 0"
+						(click)="activeIndex = 0"
+					>
+						<a>
+							<span class="step"
+								><i class="icon-plus-circle-outline"></i
+							></span>
+							<p>Step One</p>
+						</a>
+					</li>
+					<li
+						[class.active]="activeIndex === 1"
+						(click)="activeIndex = 1"
+					>
+						<a>
+							<span class="step"
+								><i class="icon-plus-circle-outline"></i
+							></span>
+							<p>Step Two</p>
+						</a>
+					</li>
+					<li
+						[class.active]="activeIndex === 2"
+						(click)="activeIndex = 2"
+					>
+						<a
+							><span class="step"
+								><i class="icon-plus-circle-outline"></i
+							></span>
+							<p>Step Three</p></a
+						>
+					</li>
+				</ul>
+			</div>
+			<div class="sidebar-tab-area">
+				<div class="sidebar-tab-block" *ngIf="activeIndex === 0">
+					<div class="patients-wrapper-block">
+						<form
+							[formGroup]="editDoctorStepOneForm"
+							(ngSubmit)="onStepOneFormSubmit()"
+						>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group-block">
+										<label for="">Name <sup>*</sup></label>
+										<div class="formcontrol-wrapper">
+											<input
+												type="text"
+												class="formcontrol"
+												placeholder="Enter Your Name"
+												formControlName="name"
+												[class.invalid-control]="
+													hasFormControlError('name')
+												"
+											/>
+										</div>
+										<ng-container
+											*ngIf="hasFormControlError('name')"
+										>
+											<div
+												[@fadeInOut]
+												class="error-message"
+												*ngIf="
+													formcontrol[
+														'name'
+													].hasError('required')
+												"
+											>
+												<p>Please Enter Your Name</p>
+											</div>
+											<div
+												[@fadeInOut]
+												class="error-message"
+												*ngIf="
+													formcontrol[
+														'name'
+													].hasError('pattern')
+												"
+											>
+												<p>Please Enter a Valid Name</p>
+											</div>
+										</ng-container>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group-block">
+										<label for="">Email <sup>*</sup></label>
+										<div class="formcontrol-wrapper">
+											<input
+												type="email"
+												class="formcontrol"
+												placeholder="Enter Your Email"
+												[autocompleteOff]="'off'"
+												formControlName="email"
+												[ngClass]="{
+													'invalid-control':
+														hasFormControlError(
+															'email'
+														)
+												}"
+												onkeydown="if(event.key===' '){event.preventDefault();}"
+											/>
+										</div>
+										<ng-container
+											*ngIf="hasFormControlError('email')"
+										>
+											<div
+												[@fadeInOut]
+												class="error-message"
+												*ngIf="
+													formcontrol[
+														'email'
+													].hasError('required')
+												"
+											>
+												<p>Please Enter Your Email</p>
+											</div>
+											<div
+												[@fadeInOut]
+												class="error-message"
+												*ngIf="
+													formcontrol[
+														'email'
+													].hasError('pattern')
+												"
+											>
+												<p>
+													Please Enter a Valid Email
+												</p>
+											</div>
+										</ng-container>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group-block">
+										<label for=""
+											>Phone Number <sup>*</sup></label
+										>
+										<div class="formcontrol-wrapper">
+											<input
+												type="text"
+												class="formcontrol"
+												placeholder="Enter Your Phone Number"
+												[autocompleteOff]="'off'"
+												formControlName="phone_number"
+												[ngClass]="{
+													'invalid-control':
+														hasFormControlError(
+															'phone_number'
+														)
+												}"
+												onkeydown="if(event.key===' '){event.preventDefault();}"
+											/>
+										</div>
+										<ng-container
+											*ngIf="
+												hasFormControlError(
+													'phone_number'
+												)
+											"
+										>
+											<div
+												[@fadeInOut]
+												class="error-message"
+												*ngIf="
+													formcontrol[
+														'phone_number'
+													].hasError('required')
+												"
+											>
+												<p>
+													Please Enter Your Phone
+													Number
+												</p>
+											</div>
+											<div
+												[@fadeInOut]
+												class="error-message"
+												*ngIf="
+													formcontrol[
+														'phone_number'
+													].hasError('pattern')
+												"
+											>
+												<p>
+													Please Enter a Valid Phone
+													Number
+												</p>
+											</div>
+										</ng-container>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group-block">
+										<label for="">City <sup>*</sup></label>
+										<div class="formcontrol-wrapper">
+											<select
+												class="formcontrol"
+												formControlName="city"
+												[ngClass]="{
+													'invalid-control':
+														hasFormControlError(
+															'city'
+														)
+												}"
+											>
+												<option
+													disabled
+													selected
+													[value]="null"
+												>
+													Select City
+												</option>
+												<option
+													*ngFor="let city of cities"
+													[value]="city.label"
+												>
+													{{ city.label }}
+												</option>
+											</select>
+											<i
+												class="icon-chevron-down-outline"
+											></i>
+										</div>
+										<ng-container
+											*ngIf="hasFormControlError('city')"
+										>
+											<div
+												[@fadeInOut]
+												class="error-message"
+												*ngIf="
+													formcontrol[
+														'city'
+													].hasError('required')
+												"
+											>
+												<p>Please Select Your City</p>
+											</div>
+										</ng-container>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group-block">
+										<label for=""
+											>Address <sup>*</sup></label
+										>
+										<div class="formcontrol-wrapper">
+											<input
+												type="text"
+												class="formcontrol"
+												placeholder="Enter Your Address"
+												formControlName="address"
+												[class.invalid-control]="
+													hasFormControlError(
+														'address'
+													)
+												"
+											/>
+										</div>
+										<ng-container
+											*ngIf="
+												hasFormControlError('address')
+											"
+										>
+											<div
+												[@fadeInOut]
+												class="error-message"
+												*ngIf="
+													formcontrol[
+														'address'
+													].hasError('required')
+												"
+											>
+												<p>Please Enter Your Address</p>
+											</div>
+										</ng-container>
+									</div>
+								</div>
+							</div>
+							<div class="footer-submit">
+								<button type="submit" class="btn btn-primary">
+									Next
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="sidebar-tab-block" *ngIf="activeIndex === 1">
+					<div class="patients-wrapper-block">
+						<form>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group-block">
+										<label for=""
+											>Date of Birth <sup>*</sup></label
+										>
+										<div class="formcontrol-wrapper">
+											<input
+												type="text"
+												placeholder="Date of Birth"
+												class="formcontrol"
+												bsDatepicker
+												[bsConfig]="{
+													customTodayClass:
+														'custom-today-date',
+													dateInputFormat:
+														'DD/MM/YYYY'
+												}"
+											/>
+											<i
+												class="icon-calendar-outline"
+											></i>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group-block">
+										<label for="">Age <sup>*</sup></label>
+										<div class="formcontrol-wrapper">
+											<input
+												type="text"
+												class="formcontrol"
+												placeholder="Enter Your Age"
+												onkeydown="if(event.key===' '){event.preventDefault();}"
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group-block">
+										<label for=""
+											>Blood Group <sup>*</sup></label
+										>
+										<div class="formcontrol-wrapper">
+											<select class="formcontrol">
+												<option
+													disabled
+													selected
+													[value]="null"
+												>
+													Select Blood Group
+												</option>
+												<option
+													*ngFor="
+														let blood of bloodGroups
+													"
+													[value]="blood.label"
+												>
+													{{ blood.label }}
+												</option>
+											</select>
+											<i
+												class="icon-chevron-down-outline"
+											></i>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div
+										class="form-group-block form-group-block-gender"
+									>
+										<label for=""
+											>Gender <sup>*</sup></label
+										>
+										<div class="formcontrol-wrapper">
+											<div
+												class="custom-radio-button"
+												*ngFor="let data of gender"
+											>
+												<input
+													type="radio"
+													name="gender"
+													id="{{ data.label }}"
+													value="{{ data.label }}"
+												/>
+												<label for="{{ data.label }}">{{
+													data.label
+												}}</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group-block">
+										<label for=""
+											>Upload <sup>*</sup></label
+										>
+										<div class="formcontrol-wrapper">
+											<div
+												class="input-group custom-image-upload"
+											>
+												<label
+													for="imageUpload"
+													class="btn btn-primary"
+													>Uplaod Image</label
+												>
+												<input
+													type="file"
+													id="imageUpload"
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="footer-submit">
+								<button
+									type="button"
+									class="btn btn-secondary"
+									(click)="activeIndex = 0"
+								>
+									Previous
+								</button>
+								<button type="submit" class="btn btn-primary">
+									Next
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="sidebar-tab-block" *ngIf="activeIndex === 2">
+					<div class="patients-wrapper-block">
+						<form>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group-block">
+										<label for=""
+											>Department <sup>*</sup></label
+										>
+										<div class="formcontrol-wrapper">
+											<select class="formcontrol">
+												<option
+													disabled
+													selected
+													[value]="null"
+												>
+													Select Department
+												</option>
+												<option
+													*ngFor="
+														let department of departments
+													"
+													[value]="department.label"
+												>
+													{{ department.label }}
+												</option>
+											</select>
+											<i
+												class="icon-chevron-down-outline"
+											></i>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group-block">
+										<label for=""
+											>Specialist <sup>*</sup></label
+										>
+										<div class="formcontrol-wrapper">
+											<input
+												type="text"
+												class="formcontrol"
+												placeholder="Enter Your Specialist Field"
+												onkeydown="if(event.key===' '){event.preventDefault();}"
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group-block">
+										<label for=""
+											>Short Biography <sup>*</sup></label
+										>
+										<div class="formcontrol-wrapper">
+											<textarea
+												class="formcontrol"
+												placeholder="Enter Your Biography"
+											></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="footer-submit">
+								<button
+									type="button"
+									class="btn btn-secondary"
+									(click)="activeIndex = 1"
+								>
+									Previous
+								</button>
+								<button type="submit" class="btn btn-primary">
+									Submit
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

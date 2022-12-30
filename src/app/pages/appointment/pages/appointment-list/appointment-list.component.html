@@ -63,14 +63,18 @@
 				<tr *ngFor="let appointment of appointments">
 					<td>
 						<div class="name-area">
-							{{ appointment.name }}
+							<div class="group-image">
+								<!-- <img [src]="appointment.image" alt="" /> -->
+								<span>AD</span>
+							</div>
+							<p>{{ appointment.name }}</p>
 						</div>
 					</td>
 					<td>{{ appointment.email }}</td>
 					<td>{{ appointment.phone_number }}</td>
 					<td>{{ appointment.service }}</td>
 					<td>
-						{{ appointment.appointment_date | date: 'dd/MM/yyyy' }}
+						{{ appointment.appointment_date | date : 'dd/MM/yyyy' }}
 					</td>
 					<td>{{ appointment.gender }}</td>
 					<td>

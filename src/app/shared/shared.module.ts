@@ -10,6 +10,7 @@ import { AutocompleteOffDirective, ClickoutsideDirective } from './directives';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PreLoaderComponent } from './components/pre-loader/pre-loader.component';
 import { CustomToastComponent } from './components/custom-toast/custom-toast.component';
+import { CustomConfirmationComponent } from './components/custom-confirmation/custom-confirmation.component';
 
 const MODULES = [
 	FormsModule,
@@ -19,7 +20,11 @@ const MODULES = [
 	NgSelectModule
 ];
 
-const COMPONENTS = [PreLoaderComponent, CustomToastComponent];
+const COMPONENTS = [
+	PreLoaderComponent,
+	CustomToastComponent,
+	CustomConfirmationComponent
+];
 
 const DIRECTIVES = [AutocompleteOffDirective, ClickoutsideDirective];
 

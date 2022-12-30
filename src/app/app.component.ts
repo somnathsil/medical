@@ -15,10 +15,10 @@ import { CommonService } from './core/services';
 })
 export class AppComponent {
 	constructor(private _common: CommonService, private _router: Router) {
-		// this.handleLoadingState();
-		setTimeout(() => {
-			this._common.setLoadingStatus(false);
-		}, 1000);
+		this.handleLoadingState();
+		// setTimeout(() => {
+		// 	this._common.setLoadingStatus(false);
+		// }, 1000);
 	}
 
 	// title = 'DoctorProject';

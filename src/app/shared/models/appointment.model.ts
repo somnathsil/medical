@@ -1,5 +1,6 @@
 export interface IAppointmentList {
 	id: number;
+	image: string;
 	name: string;
 	email: string;
 	phone_number: number;
@@ -14,6 +15,11 @@ export interface IService {
 }
 
 export interface IDisease {
+	id: number;
+	label: string;
+}
+
+export interface IDepartment {
 	id: number;
 	label: string;
 }

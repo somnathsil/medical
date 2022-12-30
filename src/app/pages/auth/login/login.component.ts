@@ -12,6 +12,7 @@ import {
 	Validators
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommonService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
 
 @Component({
@@ -21,8 +22,6 @@ import { fadeInOut } from '@app/shared/animations';
 	animations: [fadeInOut]
 })
 export class LoginComponent implements OnInit, AfterViewInit {
-	constructor(private _router: Router, private _formBuilder: FormBuilder) {}
-
 	public submitted = false;
 	public loginForm!: FormGroup;
 	public toggleInputType = false;
@@ -30,7 +29,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
 	public password!: string;
 	@ViewChild('inputFocus') inputFocus!: ElementRef;
 
+	constructor(
+		private _router: Router,
+		private _formBuilder: FormBuilder,
+		private _commonService: CommonService
+	) {}
+
 	ngOnInit(): void {
+		this._commonService.setLoadingStatus(false);
 		this.initLoginForm();
 	}
 

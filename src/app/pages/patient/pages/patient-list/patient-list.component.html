@@ -34,9 +34,7 @@
 			</form>
 		</div>
 		<div class="header-right">
-			<a
-				class="btn btn-primary-outline"
-				[routerLink]="['/appointments/add']"
+			<a class="btn btn-primary-outline" [routerLink]="['/patients/add']"
 				>Add Patient</a
 			>
 		</div>
@@ -73,7 +71,7 @@
 					<td>{{ appointment.phone_number }}</td>
 					<td>{{ appointment.disease }}</td>
 					<td>
-						{{ appointment.dob | date: 'dd/MM/yyyy' }}
+						{{ appointment.dob | date : 'dd/MM/yyyy' }}
 					</td>
 					<td>{{ appointment.gender }}</td>
 					<td>{{ appointment.blood_group }}</td>
