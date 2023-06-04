@@ -10,16 +10,18 @@ import { IMenu } from '@app/shared/models';
 	animations: [slideInOut]
 })
 export class AdminLeftbarComponent implements OnInit {
+	public menus: IMenu[] = [];
+	public childSetIndex!: number;
+	public parentSetIndex!: number;
+	public date!: number;
+
 	constructor(private _router: Router) {}
 
 	ngOnInit(): void {
 		this.getMenus();
 		this.getRoute();
+		this.date = new Date().getFullYear();
 	}
-
-	public menus: IMenu[] = [];
-	public childSetIndex!: number;
-	public parentSetIndex!: number;
 
 	/* Dynamic Menu and Submenus */
 	getMenus() {
@@ -89,6 +91,26 @@ export class AdminLeftbarComponent implements OnInit {
 					{
 						label: 'Add Patients',
 						URl: '/patients/add',
+						isActive: false
+					}
+				]
+			},
+			{
+				id: 9,
+				label: 'Services',
+				icon: 'icon-people-outline',
+				routerLinkActive: 'active',
+				URl: '',
+				isSubMenuOpen: false,
+				subMenus: [
+					{
+						label: 'All Services',
+						URl: '/services',
+						isActive: false
+					},
+					{
+						label: 'Add services',
+						URl: '/services/add',
 						isActive: false
 					}
 				]

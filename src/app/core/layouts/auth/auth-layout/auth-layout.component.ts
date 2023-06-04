@@ -33,7 +33,7 @@ export class AuthLayoutComponent implements OnInit, AfterViewInit {
 	 * @date 20 Sep 2022
 	 * @developer
 	 */
-	public getRouterOutletState(outlet: RouterOutlet) {
-		return outlet.isActivated ? outlet.activatedRoute : '';
-	}
+	// public getRouterOutletState(outlet: RouterOutlet) {
+	// 	return outlet.isActivated ? outlet.activatedRoute : '';
+	// }
 }

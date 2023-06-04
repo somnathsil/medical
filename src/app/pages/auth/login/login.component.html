@@ -15,8 +15,6 @@
 				formControlName="email"
 				[class.auth-invalid-control]="hasFormControlError('email')"
 				onkeydown="if(event.key===' '){event.preventDefault();}"
-				name="email"
-				[(ngModel)]="email"
 			/>
 			<span class="icon-email-outline"></span>
 		</div>
@@ -48,8 +46,6 @@
 				[type]="toggleInputType ? 'text' : 'password'"
 				[class.auth-invalid-control]="hasFormControlError('password')"
 				onkeydown="if(event.key===' '){event.preventDefault();}"
-				name="password"
-				[(ngModel)]="password"
 			/>
 			<span
 				[class]="

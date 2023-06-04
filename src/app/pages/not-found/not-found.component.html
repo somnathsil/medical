@@ -1,4 +1,4 @@
-<div class="notfount-area">
+<!-- <div class="notfount-area">
 	<div class="notfount-block">
 		<h1>404</h1>
 		<h4>Opps! Page Not Found</h4>
@@ -9,4 +9,31 @@
 			>
 		</div>
 	</div>
+</div> -->
+
+<div class="wrapper" style="padding: 20px 0px 0px 40px">
+	<input
+		type="checkbox"
+		[value]="-1"
+		[(ngModel)]="parentSelector"
+		(change)="onChangePlace($event)"
+	/>
+	<label for="-1">All</label><br /><br />
+	<div class="block" *ngFor="let p of place">
+		<input
+			type="checkbox"
+			[checked]="p.select"
+			[value]="p.id"
+			(change)="onChangePlace($event)"
+		/>
+		<label [for]="p.id">{{ p.name }}</label>
+	</div>
+	<!-- <div class="block">
+		<input type="checkbox" id="vehicle2" value="Car" />
+		<label for="vehicle2">Mumbai</label>
+	</div>
+	<div class="block">
+		<input type="checkbox" id="vehicle3" value="Car" />
+		<label for="vehicle3">Goa</label>
+	</div> -->
 </div>

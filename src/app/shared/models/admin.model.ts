@@ -1,6 +1,7 @@
 export interface IMenu {
 	id: number;
 	label: string;
+	type?: string;
 	icon: string;
 	routerLinkActive: string;
 	routerLinkActiveOptions?: IRouterLinkActiveOption;

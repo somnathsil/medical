@@ -43,10 +43,60 @@
 				<a (click)="getProfileDropdown()">
 					<div class="user-profile">
 						<div class="user-profile-image">
-							<h5>RD</h5>
+							<!-- <ng-container
+								*ngIf="
+									profileDP !== '' || behaSubprofileDP !== ''
+								"
+							> -->
+							<ng-container
+								*ngIf="
+									behaSubprofileDP == '' ||
+									behaSubprofileDP == undefined
+								"
+							>
+								<img [src]="profileDP" alt="" />
+							</ng-container>
+							<ng-container
+								*ngIf="
+									behaSubprofileDP != '' &&
+									behaSubprofileDP != undefined
+								"
+							>
+								<img [src]="behaSubprofileDP" alt="" />
+							</ng-container>
+							<!-- </ng-container>
+							<ng-container
+								*ngIf="
+									profileDP == '' || behaSubprofileDP == ''
+								"
+							>
+								<img
+									src="./assets/images/profile-dafault-sm.png"
+									alt=""
+								/>
+							</ng-container> -->
 						</div>
 						<div class="user-profile-info">
-							<p>Ritesh Doloi</p>
+							<ng-container
+								*ngIf="
+									behaSubUserName == '' ||
+									behaSubUserName == undefined
+								"
+							>
+								<p>
+									{{ userName }}
+								</p>
+							</ng-container>
+							<ng-container
+								*ngIf="
+									behaSubUserName != '' &&
+									behaSubUserName != undefined
+								"
+							>
+								<p>
+									{{ behaSubUserName }}
+								</p>
+							</ng-container>
 						</div>
 						<div
 							class="user-profile-dropdown"
@@ -69,7 +119,9 @@
 								><i class="icon-unlock-outline"></i>Change
 								Password</a
 							>
-							<a><i class="icon-power-outline"></i>Logout</a>
+							<a (click)="logout()"
+								><i class="icon-power-outline"></i>Logout</a
+							>
 						</div>
 					</div>
 				</ng-container>

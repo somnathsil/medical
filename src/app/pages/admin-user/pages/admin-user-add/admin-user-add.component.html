@@ -111,7 +111,7 @@
 						</label>
 					</div>
 				</div>
-				<ng-container *ngIf="hasFormControlError('status')">
+				<!-- <ng-container *ngIf="hasFormControlError('status')">
 					<div
 						[@fadeInOut]
 						class="error-message"
@@ -119,21 +119,32 @@
 					>
 						<p>Please Select Your Status</p>
 					</div>
-				</ng-container>
+				</ng-container> -->
 			</div>
 			<div class="footer-submit">
 				<button type="submit" class="btn btn-primary">Submit</button>
-				<button type="button" class="btn btn-danger">Cancel</button>
+				<button type="button" class="btn btn-danger" (click)="backTo()">
+					Cancel
+				</button>
 			</div>
 		</form>
 	</div>
 	<div class="add-image-area">
 		<div class="upload-inner-block">
 			<div class="upload-img-block">
-				<img src="./assets/images/profile-pic.jpg" />
+				<ng-container *ngIf="profileImage">
+					<img [src]="profileImage" />
+				</ng-container>
+				<ng-container *ngIf="!profileImage">
+					<img src="./assets/images/profile-dafault.jpg" />
+				</ng-container>
 			</div>
 			<label class="custom-file-upload">
-				<input type="file" />
+				<input
+					type="file"
+					accept="image/png, image/jpg, image/jpeg"
+					(change)="onLocalFileSelect($event)"
+				/>
 				<abbr title="Upload Image"
 					><img src="assets/images/browse-icon.png"
 				/></abbr>

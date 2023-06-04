@@ -1,0 +1,70 @@
+<section class="content">
+	<div class="form-block">
+		<form [formGroup]="serviceForm" (ngSubmit)="serviceFormSubmit()">
+			<div class="form-group-block">
+				<label for="">Service Name <sup>*</sup></label>
+				<div class="formcontrol-wrapper">
+					<input
+						#inputFocus
+						type="text"
+						class="formcontrol"
+						placeholder="Enter Service Name"
+						[autocompleteOff]="'off'"
+						formControlName="service_name"
+						[class.invalid-control]="
+							hasFormControlError('service_name')
+						"
+					/>
+				</div>
+				<ng-container *ngIf="hasFormControlError('service_name')">
+					<div
+						[@fadeInOut]
+						class="error-message"
+						*ngIf="formcontrol['service_name'].hasError('required')"
+					>
+						<p>Please Enter Service Name</p>
+					</div>
+				</ng-container>
+			</div>
+			<div class="form-group-block">
+				<label for="">Select Doctors <sup>*</sup></label>
+				<div class="formcontrol-wrapper">
+					<ng-select
+						[(ngModel)]="selectedDoctor"
+						[items]="doctorsDropdownList"
+						bindLabel="name"
+						bindValue="name"
+						[multiple]="true"
+						placeholder="Select Doctor"
+						class="custom-select"
+						formControlName="doctor_name"
+						[class.select-invalid-control]="
+							hasFormControlError('doctor_name')
+						"
+						>>
+						<ng-option
+							*ngFor="let item of doctorsDropdownList"
+							[value]="item.name"
+							>{{ item.name }}</ng-option
+						>
+					</ng-select>
+				</div>
+				<ng-container *ngIf="hasFormControlError('doctor_name')">
+					<div
+						[@fadeInOut]
+						class="error-message"
+						*ngIf="formcontrol['doctor_name'].hasError('required')"
+					>
+						<p>Please Select Doctor</p>
+					</div>
+				</ng-container>
+			</div>
+			<div class="footer-submit">
+				<button type="submit" class="btn btn-primary">Submit</button>
+				<button type="button" class="btn btn-danger" (click)="backTo()">
+					Cancel
+				</button>
+			</div>
+		</form>
+	</div>
+</section>

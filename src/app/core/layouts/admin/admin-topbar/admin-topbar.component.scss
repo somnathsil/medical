@@ -94,8 +94,8 @@
 	cursor: $cursor-pointer;
 }
 .user-profile-image {
-	width: 32px;
-	height: 32px;
+	width: 36px;
+	height: 36px;
 	border-radius: $rounded-half;
 	overflow: $overflow-hidden;
 	display: $flex;
@@ -103,6 +103,11 @@
 	justify-content: $justify-center;
 	background: $color-primary;
 	margin-right: 8px;
+}
+.user-profile-image img {
+	width: $full;
+	height: $full;
+	object-fit: cover;
 }
 .user-profile-image h5 {
 	font-size: $text-xs;

@@ -1,8 +1,19 @@
 export interface IAdminUserList {
-	id: number;
-	image?: string;
 	name: string;
 	email: string;
-	phone_number: number;
-	status: 0 | 1;
+	contact: string;
+	image: string;
+	status: string;
+	type: string;
+	login_id: number;
+	user_id: number;
+}
+
+export interface IAdminUserListParam {
+	type: string;
+	sort_by: string;
+	filter_by: string;
+	search_str: string;
+	page_size: string | number;
+	page_no: number;
 }

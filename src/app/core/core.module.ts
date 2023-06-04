@@ -2,9 +2,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '@app/shared/shared.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // Auth Admin layout imports
 import { AdminWrapperComponent, AuthLayoutComponent } from './layouts';
+
+import {
+	HttpService,
+	AuthService,
+	CommonService,
+	ConfirmationService,
+	ToasterService
+} from './services';
+import { AuthInterceptor } from './intercepters';
 
 //Component import for layouts
 import {
@@ -13,9 +23,17 @@ import {
 	AdminTitleBarComponent
 } from './layouts';
 
-const MODULES = [CommonModule, SharedModule, RouterModule];
+const MODULES = [CommonModule, SharedModule, RouterModule, HttpClientModule];
 
 const LAYOUTS = [AuthLayoutComponent, AdminWrapperComponent];
+
+const PROVIDERS = [
+	HttpService,
+	AuthService,
+	CommonService,
+	ConfirmationService,
+	ToasterService
+];
 
 const COMPONENTS = [
 	AdminLeftbarComponent,
@@ -26,6 +44,14 @@ const COMPONENTS = [
 @NgModule({
 	declarations: [...LAYOUTS, ...COMPONENTS],
 	imports: [...MODULES],
-	exports: [...LAYOUTS, ...COMPONENTS]
+	exports: [...LAYOUTS, ...COMPONENTS, HttpClientModule],
+	providers: [
+		...PROVIDERS,
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: AuthInterceptor,
+			multi: true
+		}
+	]
 })
 export class CoreModule {}

@@ -2,7 +2,7 @@
 	<h1>Sign Up</h1>
 </div>
 <form [formGroup]="registrationForm" (ngSubmit)="registrationSubmit()">
-	<div class="auth-form-group">
+	<div class="auth-form-group form-group-pass-left">
 		<label>Name</label>
 		<div class="auth-formcontrol-wrapper">
 			<input
@@ -35,7 +35,7 @@
 			</div>
 		</ng-container>
 	</div>
-	<div class="auth-form-group">
+	<div class="auth-form-group form-group-pass-right">
 		<label>Email</label>
 		<div class="auth-formcontrol-wrapper">
 			<input
@@ -152,7 +152,7 @@
 				}"
 			>
 				<option value="">Select User Type</option>
-				<option *ngFor="let user of userType" [value]="user.name">
+				<option *ngFor="let user of userType" [value]="user.value">
 					{{ user.name }}
 				</option>
 			</select>
@@ -202,6 +202,29 @@
 				<p>Wrong Answer</p>
 			</div>
 		</ng-container>
+	</div>
+	<div class="auth-form-group">
+		<div class="auth-formcontrol-wrapper">
+			<div class="agree-block">
+				<label for="agree">
+					<input id="agree" type="checkbox" formControlName="terms" />
+					<span></span>
+					<p>
+						I agree with the
+						<a>Terms of Use</a>
+					</p>
+				</label>
+			</div>
+			<ng-container *ngIf="hasFormControlError('terms')">
+				<div
+					[@fadeInOut]
+					class="auth-error-message error-terms"
+					*ngIf="formcontrol['terms'].hasError('required')"
+				>
+					<p>Please Select Terms of Use</p>
+				</div>
+			</ng-container>
+		</div>
 	</div>
 	<div class="auth-form-submit">
 		<button type="submit">Sign Up</button>

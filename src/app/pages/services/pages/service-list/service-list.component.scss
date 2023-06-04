@@ -1,0 +1,18 @@
+@import 'partials';
+
+.list-table thead tr th,
+.list-table tbody tr td {
+	width: 52%;
+}
+.list-table thead tr th:first-child,
+.list-table tbody tr td:first-child {
+	width: 32%;
+}
+
+.list-table thead tr th:last-child,
+.list-table tbody tr td:last-child {
+	width: 16%;
+}
+.list-table tbody tr td a {
+	padding-left: 22px;
+}

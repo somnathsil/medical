@@ -1,0 +1,69 @@
+<div class="dashboard-header">
+	<div class="header-inner">
+		<div class="header-left">
+			<form>
+				<div class="sort-block">
+					<select class="formcontrol">
+						<option value="" selected hidden>Sort By</option>
+						<option value="ASC">A-Z</option>
+						<option value="DESC">Z-A</option>
+						<option value="rcnt">Most Recent</option>
+					</select>
+					<i class="icon-chevron-down-outline"></i>
+				</div>
+				<div class="search-block">
+					<input
+						type="text"
+						class="formcontrol"
+						placeholder="Search"
+					/>
+
+					<i class="icon-search-outline"></i>
+				</div>
+				<div class="reset-block">
+					<i class="icon-refresh-outline"></i>
+				</div>
+			</form>
+		</div>
+		<div class="header-right">
+			<a class="btn btn-primary-outline" [routerLink]="['/services/add']"
+				>Add Service</a
+			>
+		</div>
+	</div>
+</div>
+
+<!-- Table Area -->
+<!-- Main content -->
+<section class="content">
+	<div class="list-area">
+		<table class="table list-table mb-0">
+			<thead>
+				<tr>
+					<th>Service Name</th>
+					<th>Doctors</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let service of serviceList">
+					<td>{{ service.service_name }}</td>
+					<td>{{ service.doctors }}</td>
+					<td>
+						<a title="Delete" class="delete-icon"
+							><i class="icon-trash-2-outline"></i
+						></a>
+					</td>
+				</tr>
+			</tbody>
+			<!-- <ng-template #noRecordsBlock>
+				<tbody>
+					<tr class="norecords-block">
+						<td colspan="5">No Records Found</td>
+					</tr>
+				</tbody>
+			</ng-template> -->
+		</table>
+	</div>
+</section>
+<!-- Main content End -->

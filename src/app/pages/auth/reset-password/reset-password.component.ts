@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import {
 	FormBuilder,
 	FormControl,
 	FormGroup,
 	Validators
 } from '@angular/forms';
-import { CommonService } from '@app/core/services';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonService, HttpService, ToasterService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
+import { IResetPasswordForm } from '@app/shared/models';
 import { PasswordValidator } from '@app/shared/validators';
+import { LoadingBarService } from '@ngx-loading-bar/core';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-reset-password',
@@ -15,21 +19,48 @@ import { PasswordValidator } from '@app/shared/validators';
 	styleUrls: ['./reset-password.component.scss'],
 	animations: [fadeInOut]
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent implements OnInit, AfterViewInit {
 	public submitted = false;
+	public isDisable = false;
 	public resetPasswordForm!: FormGroup;
 	public toggleInputType = false;
 	public toggleInputTypeConfirm = false;
+	public subscriptions: Subscription[] = [];
 	public resetType: number = 1;
+	public emailForOTP = '';
 
 	constructor(
 		private _formBuilder: FormBuilder,
-		private _commonService: CommonService
+		private _commonService: CommonService,
+		private _router: Router,
+		private _route: ActivatedRoute,
+		private _loader: LoadingBarService,
+		private _http: HttpService,
+		private _toast: ToasterService
 	) {}
 
 	ngOnInit(): void {
-		this._commonService.setLoadingStatus(false);
 		this.initResetPasswordForm();
+		this.getEmail();
+	}
+
+	ngAfterViewInit() {
+		this._commonService.setLoadingStatus(false);
+	}
+
+	/**
+	 * *get email address form address bar
+	 *
+	 * @date 5 April 2023
+	 * @developer Somnath Sil
+	 */
+	getEmail() {
+		this._route.queryParamMap.subscribe((param: any) => {
+			this.emailForOTP = param.params.email;
+			if (this.emailForOTP == undefined) {
+				this._router.navigate(['/login']);
+			}
+		});
 	}
 
 	/**
@@ -45,7 +76,7 @@ export class ResetPasswordComponent implements OnInit {
 				con_password: new FormControl('', [Validators.required])
 			},
 			{
-				validator: PasswordValidator.passwordsMustMatch(
+				validators: PasswordValidator.passwordsMustMatch(
 					'new_password',
 					'con_password'
 				)
@@ -84,17 +115,67 @@ export class ResetPasswordComponent implements OnInit {
 	}
 
 	resetPasswordSubmit(): boolean | void {
-		this.submitted = true;
-		const formValue = this.resetPasswordForm.value;
+		if (!this.isDisable) {
+			const formValue = this.resetPasswordForm.value;
+			this.submitted = true;
 
-		// stop here if form is invalid
-		if (this.resetPasswordForm.invalid) {
-			return false;
-		}
+			// stop here if form is invalid
+			if (this.resetPasswordForm.invalid) {
+				this.resetPasswordForm.markAllAsTouched();
+				return true;
+			}
 
-		//form is valid
-		if (this.resetPasswordForm.valid) {
-			console.log(formValue);
+			//form is valid
+			this.isDisable = true;
+			const param: IResetPasswordForm = {
+				email: this.emailForOTP,
+				password: formValue.new_password,
+				con_password: formValue.con_password
+			};
+
+			this._loader.useRef().start();
+			this.subscriptions.push(
+				this._http.post('resetPwd', param).subscribe({
+					next: (apiResult) => {
+						console.log('result', apiResult);
+						this.isDisable = false;
+						this._loader.useRef().complete();
+						this._toast.success(
+							'Success',
+							apiResult.response.status.msg,
+							{
+								timeout: 5000,
+								position: 'top'
+							}
+						);
+						this.resetType = 2;
+					},
+					error: (apiError) => {
+						this.isDisable = false;
+						this._loader.useRef().complete();
+						this._toast.error(
+							'Error',
+							apiError.error.response.status.msg,
+							{
+								timeout: 5000,
+								position: 'top'
+							}
+						);
+					}
+				})
+			);
 		}
+	}
+
+	/**
+	 * *Unsubscribing observable on destroy
+	 *
+	 * @date 4 April 2023
+	 * @developer Somnath Sil
+	 */
+	ngOnDestroy(): void {
+		this.subscriptions.forEach((subscription) => {
+			subscription.unsubscribe();
+		});
 	}
 }

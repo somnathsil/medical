@@ -19,34 +19,5 @@ export class CustomConfirmationComponent implements OnInit {
 		});
 	}
 
-	ngOnInit(): void {
-		// this.confirmDialog();
-	}
-
-	/**
-	 * *Initializing Custom Confirmation Dialog
-	 *
-	 * @date  27 Nov 2022
-	 * @developer Somnath Sil
-	 */
-	// private confirmDialog() {
-	// 	const modal = document.querySelector('.modal-dialog');
-	// 	const overlay = document.querySelector('.overlay-backdrop');
-	// 	const btnCloseModal = document.querySelector('.close-modal-dialog');
-	// 	const btnOpenModal = document.querySelector('.show-modal');
-
-	// 	const openModal = () => {
-	// 		modal?.classList.remove('hidden');
-	// 		overlay?.classList.remove('hidden');
-	// 	};
-
-	// 	const closeModal = () => {
-	// 		modal?.classList.add('hidden');
-	// 		overlay?.classList.add('hidden');
-	// 	};
-
-	// 	btnOpenModal?.addEventListener('click', openModal);
-	// 	btnCloseModal?.addEventListener('click', closeModal);
-	// 	overlay?.addEventListener('click', closeModal);
-	// }
+	ngOnInit(): void {}
 }

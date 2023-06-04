@@ -4,10 +4,23 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 
 // Custom Directives
-import { AutocompleteOffDirective, ClickoutsideDirective } from './directives';
+import { ClickoutsideDirective, AutocompleteOffDirective } from './directives';
+
+//Custom pipes
+import {
+	CastPipe,
+	SummaryPipe,
+	FileSizePipe,
+	SafeSanitizePipe,
+	NameInitialsPipe
+} from './pipes';
 
 /* Third party import */
 import { NgSelectModule } from '@ng-select/ng-select';
+import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { NgxPaginationModule } from 'ngx-pagination';
+
+/* Components */
 import { PreLoaderComponent } from './components/pre-loader/pre-loader.component';
 import { CustomToastComponent } from './components/custom-toast/custom-toast.component';
 import { CustomConfirmationComponent } from './components/custom-confirmation/custom-confirmation.component';
@@ -17,7 +30,9 @@ const MODULES = [
 	CommonModule,
 	ReactiveFormsModule,
 	NgScrollbarModule,
-	NgSelectModule
+	NgSelectModule,
+	LoadingBarModule,
+	NgxPaginationModule
 ];
 
 const COMPONENTS = [
@@ -26,11 +41,19 @@ const COMPONENTS = [
 	CustomConfirmationComponent
 ];
 
-const DIRECTIVES = [AutocompleteOffDirective, ClickoutsideDirective];
+const CUSTOM_PIPES = [
+	CastPipe,
+	SummaryPipe,
+	FileSizePipe,
+	SafeSanitizePipe,
+	NameInitialsPipe
+];
+
+const DIRECTIVES = [ClickoutsideDirective, AutocompleteOffDirective];
 
 @NgModule({
-	declarations: [...DIRECTIVES, ...COMPONENTS],
+	declarations: [...CUSTOM_PIPES, ...DIRECTIVES, ...COMPONENTS],
 	imports: [...MODULES],
-	exports: [...DIRECTIVES, ...MODULES, ...COMPONENTS]
+	exports: [...CUSTOM_PIPES, ...DIRECTIVES, ...MODULES, ...COMPONENTS]
 })
 export class SharedModule {}

@@ -65,3 +65,67 @@
 	width: calc(100% - 63px);
 	margin-left: 12px;
 }
+
+.agree-block label {
+	display: $flex;
+	align-items: $items-center;
+	cursor: $cursor-pointer;
+	margin-top: 2px;
+}
+.agree-block label input {
+	display: $hidden;
+}
+.agree-block label span {
+	width: 2rem;
+	height: 2rem;
+	border-radius: $rounded;
+	margin-right: 1.2rem;
+	position: $relative;
+	background: $color-white;
+	border-width: $border;
+	border-style: $border-solid;
+	border-color: $color-gray-300;
+	display: $inline-block;
+	right: 0;
+	top: auto;
+	transform: inherit;
+	@include transition;
+}
+.agree-block label span:after {
+	content: '\e9c1';
+	font-size: $text-md;
+	line-height: $leading-none;
+	font-family: 'icomoon' !important;
+	opacity: 0;
+	position: $absolute;
+	width: auto;
+	height: auto;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	color: $color-white;
+	@include transition;
+}
+.agree-block label p {
+	font-family: $font-primary;
+	color: $color-black-100;
+	font-size: $text-sm;
+	line-height: $leading-none;
+	font-weight: $font-medium;
+	@include transition;
+}
+.agree-block label:hover p {
+	color: $color-primary-dark;
+}
+.agree-block label input:checked + span {
+	background: $color-primary;
+	border-color: $color-primary;
+}
+.agree-block label input:checked + span:after {
+	opacity: 1;
+}
+.error-terms {
+	right: auto;
+	left: 0;
+	bottom: -32px;
+}

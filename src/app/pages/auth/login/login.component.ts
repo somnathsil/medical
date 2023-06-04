@@ -2,6 +2,7 @@ import {
 	AfterViewInit,
 	Component,
 	ElementRef,
+	OnDestroy,
 	OnInit,
 	ViewChild
 } from '@angular/core';
@@ -12,8 +13,12 @@ import {
 	Validators
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CommonService } from '@app/core/services';
+import { CommonService, HttpService, ToasterService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
+import { IAuthResult, ILoginForm } from '@app/shared/models';
+import { LoadingBarService } from '@ngx-loading-bar/core';
+import { SimpleCookieService } from 'simple-cookie-service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-login',
@@ -21,27 +26,31 @@ import { fadeInOut } from '@app/shared/animations';
 	styleUrls: ['./login.component.scss'],
 	animations: [fadeInOut]
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 	public submitted = false;
+	public isDisabled = false;
 	public loginForm!: FormGroup;
 	public toggleInputType = false;
-	public email!: string;
-	public password!: string;
+	private rememberMe!: boolean;
+	private subscriptios: Subscription[] = [];
 	@ViewChild('inputFocus') inputFocus!: ElementRef;
 
 	constructor(
 		private _router: Router,
 		private _formBuilder: FormBuilder,
-		private _commonService: CommonService
+		private _commonService: CommonService,
+		private _http: HttpService,
+		private _toast: ToasterService,
+		private _loader: LoadingBarService
 	) {}
 
 	ngOnInit(): void {
-		this._commonService.setLoadingStatus(false);
 		this.initLoginForm();
 	}
 
 	ngAfterViewInit(): void {
 		this.inputFocus.nativeElement.focus();
+		this._commonService.setLoadingStatus(false);
 	}
 
 	/**
@@ -61,6 +70,20 @@ export class LoginComponent implements OnInit, AfterViewInit {
 			password: new FormControl('', [Validators.required]),
 			rememberMe: new FormControl(false)
 		});
+		this.rememberMeDataPatch();
+	}
+
+	/**
+	 * *Setting remember me data patch
+	 *
+	 * @date 19 April 2023
+	 * @developer Somnath Sil
+	 */
+	rememberMeDataPatch() {
+		const formValue = SimpleCookieService.getItem('remember_me');
+		if (!!formValue) {
+			this.loginForm.patchValue(JSON.parse(formValue));
+		}
 	}
 
 	/**
@@ -93,25 +116,117 @@ export class LoginComponent implements OnInit, AfterViewInit {
 		return false;
 	}
 
+	/**
+	 * *Submitting login form
+	 *  - If Form is Valid
+	 *  - If Form has no Error
+	 *
+	 * @date 19 Mar 2023
+	 * @developer Somnath Sil
+	 */
 	loginSubmit(): boolean | void {
-		this.submitted = true;
-		const formValue = this.loginForm.value;
+		if (!this.isDisabled) {
+			const formValue = this.loginForm.value;
+			this.submitted = true;
 
-		// stop here if form is invalid
-		if (this.loginForm.invalid) {
-			return false;
-		}
-
-		//form is valid
-		if (this.loginForm.valid) {
-			console.log(formValue);
-
-			/* Static Login Method */
-			if (this.email === 'abc@gmail.com' && this.password === '123456') {
-				this._router.navigate(['/dashboard']);
-			} else {
+			// stop here if form is invalid
+			if (this.loginForm.invalid) {
+				this.loginForm.markAllAsTouched();
 				return false;
 			}
+			//form is valid
+			this.isDisabled = true;
+			const param: ILoginForm = {
+				email: formValue.email,
+				password: formValue.password
+			};
+			this._loader.useRef().start();
+			this.subscriptios.push(
+				this._http.post('login', param).subscribe({
+					next: (apiResult) => {
+						const authData: IAuthResult =
+							apiResult.response.dataset[0];
+
+						this.isDisabled = false;
+						this._loader.useRef().complete();
+
+						/* Set JWT, Refresh Token, User Name, User Type */
+						localStorage.setItem('JWT_TOKEN', authData.token);
+						localStorage.setItem(
+							'REFRESH_TOKEN',
+							authData.refresh_token
+						);
+						localStorage.setItem('USER_NAME', authData.name);
+						localStorage.setItem('USER_TYPE', authData.user_type);
+						localStorage.setItem(
+							'PROFILE_IMAGE',
+							authData.profile_image
+						);
+
+						/* Set all login response in Cookies */
+						// SimpleCookieService.setItem(
+						// 	'user_data',
+						// 	JSON.stringify(authData),
+						// 	{
+						// 		sameSite: 'Lax',
+						// 		secure: true,
+						// 		expires: 365,
+						// 		path: '/'
+						// 	}
+						// );
+
+						/* Set login form data in Cookies */
+						if (formValue.rememberMe) {
+							SimpleCookieService.setItem(
+								'remember_me',
+								JSON.stringify(formValue),
+								{
+									sameSite: 'Lax',
+									secure: true,
+									expires: 365,
+									path: '/'
+								}
+							);
+						} else {
+							SimpleCookieService.removeItem('remember_me');
+						}
+
+						this._toast.success(
+							'Success',
+							apiResult.response.status.msg,
+							{
+								timeout: 5000,
+								position: 'top'
+							}
+						);
+						this._router.navigate(['/profile/change-password']);
+					},
+					error: (apiError) => {
+						this.isDisabled = false;
+						this._loader.useRef().complete();
+						this._toast.error(
+							'Error',
+							apiError.error.response.status.msg,
+							{
+								timeout: 5000,
+								position: 'top'
+							}
+						);
+					}
+				})
+			);
 		}
+	}
+
+	/**
+	 * *Unsubscribing observable on destroy
+	 *
+	 * @date 19 Mar 2022
+	 * @developer Somnath Sil
+	 */
+	ngOnDestroy(): void {
+		this.subscriptios.forEach((subscription) => {
+			subscription.unsubscribe();
+		});
 	}
 }

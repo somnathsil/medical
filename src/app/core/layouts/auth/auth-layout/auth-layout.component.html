@@ -31,12 +31,15 @@
 			</div>
 		</div>
 		<div class="auth-right-panel">
-			<div
+			<!-- <div
 				class="auth-container"
 				[@.disabled]="isLoadingFirstTime"
 				[@routerAnimation]="getRouterOutletState(o)"
 			>
 				<router-outlet #o="outlet"></router-outlet>
+			</div> -->
+			<div class="auth-container">
+				<router-outlet></router-outlet>
 			</div>
 		</div>
 	</div>

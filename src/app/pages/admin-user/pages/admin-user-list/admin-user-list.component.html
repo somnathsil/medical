@@ -1,10 +1,14 @@
 <div class="dashboard-header">
 	<div class="header-inner">
 		<div class="header-left">
-			<form>
+			<form [formGroup]="adminQueryForm">
 				<div class="sort-block">
-					<select class="formcontrol">
-						<option value="">Sort By</option>
+					<select
+						class="formcontrol"
+						formControlName="sort_by"
+						(change)="getAdminUserListData()"
+					>
+						<option value="" selected hidden>Sort By</option>
 						<option value="ASC">A-Z</option>
 						<option value="DESC">Z-A</option>
 						<option value="rcnt">Most Recent</option>
@@ -12,8 +16,12 @@
 					<i class="icon-chevron-down-outline"></i>
 				</div>
 				<div class="status-block">
-					<select class="formcontrol">
-						<option value="">Filter BY</option>
+					<select
+						class="formcontrol"
+						formControlName="filter_by"
+						(change)="getAdminUserListData()"
+					>
+						<option value="" selected hidden>Filter BY</option>
 						<option value="A">Active</option>
 						<option value="I">Inactive</option>
 					</select>
@@ -24,11 +32,16 @@
 						type="text"
 						class="formcontrol"
 						placeholder="Search by Name, Phone Number"
+						formControlName="search_str"
+						(keyup.enter)="getAdminUserListData()"
 					/>
 
-					<i class="icon-search-outline"></i>
+					<i
+						class="icon-search-outline"
+						(click)="getAdminUserListData()"
+					></i>
 				</div>
-				<div class="reset-block">
+				<div class="reset-block" (click)="onResetUser()">
 					<i class="icon-refresh-outline"></i>
 				</div>
 			</form>
@@ -57,43 +70,95 @@
 					<th>Action</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr *ngFor="let user of users">
+			<tbody *ngIf="totalRecords; else noRecordsBlock">
+				<tr
+					*ngFor="
+						let user of adminUserList
+							| paginate
+								: {
+										itemsPerPage: page_size,
+										currentPage: page_no,
+										totalItems: totalRecords
+								  };
+						let i = index;
+						trackBy: trackByIndex
+					"
+				>
 					<td>
 						<div class="name-area">
 							<div class="group-image">
-								<img [src]="user.image" alt="" />
-								<!-- <span>AD</span> -->
+								<ng-container
+									*ngIf="user.image; else nameBlock"
+								>
+									<img [src]="user.image" alt="" />
+								</ng-container>
+								<ng-template #nameBlock>
+									<span>{{ user.name | nameInitials }}</span>
+								</ng-template>
 							</div>
 							<p>{{ user.name }}</p>
 						</div>
 					</td>
 					<td>{{ user.email }}</td>
-					<td>{{ user.phone_number }}</td>
+					<td>{{ user.contact }}</td>
 					<td>
 						<div
 							class="list-status-block"
 							[ngClass]="{
-								'status-active': user.status === 1,
-								'status-inactive': user.status === 0
+								'status-active': user.status === 'Active',
+								'status-inactive': user.status === 'Inactive'
 							}"
 						></div>
-						{{ user.status == 1 ? 'Active' : 'Inactive' }}
+						{{ user.status }}
 					</td>
 					<td>
 						<a
 							title="Edit"
 							class="edit-icon"
-							[routerLink]="['/admin-users/edit/' + 1]"
+							[routerLink]="[
+								'/admin-users/edit/' +
+									user.name.toLowerCase().split(' ').join(''),
+								user.user_id
+							]"
 							><i class="icon-edit-outline"></i
 						></a>
-						<a title="Delete" class="delete-icon"
+						<a
+							title="Delete"
+							class="delete-icon"
+							(click)="onDeleteUser(user.user_id)"
 							><i class="icon-trash-2-outline"></i
 						></a>
 					</td>
 				</tr>
 			</tbody>
+			<ng-template #noRecordsBlock>
+				<tbody>
+					<tr class="norecords-block">
+						<td colspan="5">No Records Found</td>
+					</tr>
+				</tbody>
+			</ng-template>
 		</table>
 	</div>
 </section>
+<div class="pagination-area">
+	<div class="row" *ngIf="totalRecords">
+		<div class="col-md-3 position-relative">
+			<select (change)="onPageSizeChange($event)" class="custom-select">
+				<option *ngFor="let size of pageSizes" [ngValue]="size">
+					{{ size }}
+				</option>
+			</select>
+			<i class="fa fa-angle-down"></i>
+		</div>
+		<div class="col-md-9 text-right">
+			<pagination-controls
+				previousLabel="Previous"
+				nextLabel="Next"
+				(pageChange)="onPageNoChange($event)"
+			>
+			</pagination-controls>
+		</div>
+	</div>
+</div>
 <!-- Main content End -->

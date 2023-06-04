@@ -12,7 +12,7 @@
 				type="text"
 				maxlength="1"
 				#text1
-				(keyup)="move(text1, text2)"
+				(keyup)="move(text1, text2, $event, 1)"
 				formControlName="otp1"
 				[ngClass]="{
 					'auth-invalid-control': hasFormControlError('otp1')
@@ -24,7 +24,7 @@
 				type="text"
 				maxlength="1"
 				#text2
-				(keyup)="move(text2, text3)"
+				(keyup)="move(text1, text3, $event, 2)"
 				formControlName="otp2"
 				[ngClass]="{
 					'auth-invalid-control': hasFormControlError('otp2')
@@ -36,7 +36,7 @@
 				type="text"
 				maxlength="1"
 				#text3
-				(keyup)="move(text3, text4)"
+				(keyup)="move(text2, text4, $event, 3)"
 				formControlName="otp3"
 				[ngClass]="{
 					'auth-invalid-control': hasFormControlError('otp3')
@@ -48,6 +48,7 @@
 				type="text"
 				maxlength="1"
 				#text4
+				(keyup)="move(text3, text4, $event, 4)"
 				formControlName="otp4"
 				[ngClass]="{
 					'auth-invalid-control': hasFormControlError('otp4')
@@ -94,7 +95,9 @@
 	<div class="auth-resend-otp">
 		<p>
 			Don't receive the OTP?
-			<a>Resend OTP</a>
+			<a [attr.disabled]="isDisabled" (click)="resentOTP($event)"
+				>Resend OTP</a
+			>
 		</p>
 	</div>
 	<div class="auth-form-submit">

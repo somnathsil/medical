@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { IConfirmationInfo } from './confirmation.service';
 import { IToasterInfo } from './toaster.service';
 
@@ -39,4 +39,36 @@ export class CommonService {
 	public _confirmSubject = new BehaviorSubject<IConfirmationInfo | null>(
 		null
 	);
+
+	/**
+	 * *Create Observable for User Name
+	 *
+	 * @date 06 May 2023
+	 * @developer
+	 */
+
+	private _userNameStatus = new BehaviorSubject<any>('');
+
+	public setUserName(message: string) {
+		this._userNameStatus.next({ text: message });
+	}
+	public getUserName(): Observable<any> {
+		return this._userNameStatus.asObservable();
+	}
+
+	/**
+	 * *Create Observable for Profile Image
+	 *
+	 * @date 06 May 2023
+	 * @developer
+	 */
+
+	private _profileImageStatus = new BehaviorSubject<any>('');
+
+	public setProfileImage(image: string) {
+		this._profileImageStatus.next({ proimage: image });
+	}
+	public getProfileImage(): Observable<any> {
+		return this._profileImageStatus.asObservable();
+	}
 }
