@@ -11,3 +11,4 @@ export * from './otp-form-model';
 export * from './reset-password-model';
 export * from './change-password-model';
 export * from './my-profile-model';
+export * from './services.model';

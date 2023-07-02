@@ -1,9 +1,13 @@
 <div class="dashboard-header">
 	<div class="header-inner">
 		<div class="header-left">
-			<form>
+			<form [formGroup]="serviceQueryForm">
 				<div class="sort-block">
-					<select class="formcontrol">
+					<select
+						class="formcontrol"
+						formControlName="sort_by"
+						(change)="getServiceListData()"
+					>
 						<option value="" selected hidden>Sort By</option>
 						<option value="ASC">A-Z</option>
 						<option value="DESC">Z-A</option>
@@ -16,11 +20,16 @@
 						type="text"
 						class="formcontrol"
 						placeholder="Search"
+						formControlName="search_str"
+						(keyup.enter)="getServiceListData()"
 					/>
 
-					<i class="icon-search-outline"></i>
+					<i
+						class="icon-search-outline"
+						(click)="getServiceListData()"
+					></i>
 				</div>
-				<div class="reset-block">
+				<div class="reset-block" (click)="onResetUser()">
 					<i class="icon-refresh-outline"></i>
 				</div>
 			</form>
@@ -45,25 +54,60 @@
 					<th>Action</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr *ngFor="let service of serviceList">
+			<tbody *ngIf="totalRecords; else noRecordsBlock">
+				<tr
+					*ngFor="
+						let service of serviceList
+							| paginate
+								: {
+										itemsPerPage: page_size,
+										currentPage: page_no,
+										totalItems: totalRecords
+								  };
+						let i = index;
+						trackBy: trackByIndex
+					"
+				>
 					<td>{{ service.service_name }}</td>
-					<td>{{ service.doctors }}</td>
+					<td>{{ service.doc_name }}</td>
 					<td>
-						<a title="Delete" class="delete-icon"
+						<a
+							title="Delete"
+							class="delete-icon"
+							(click)="onDeleteService(service.id)"
 							><i class="icon-trash-2-outline"></i
 						></a>
 					</td>
 				</tr>
 			</tbody>
-			<!-- <ng-template #noRecordsBlock>
+			<ng-template #noRecordsBlock>
 				<tbody>
 					<tr class="norecords-block">
 						<td colspan="5">No Records Found</td>
 					</tr>
 				</tbody>
-			</ng-template> -->
+			</ng-template>
 		</table>
 	</div>
 </section>
+<div class="pagination-area">
+	<div class="row" *ngIf="totalRecords">
+		<div class="col-md-3 position-relative">
+			<select (change)="onPageSizeChange($event)" class="custom-select">
+				<option *ngFor="let size of pageSizes" [ngValue]="size">
+					{{ size }}
+				</option>
+			</select>
+			<i class="fa fa-angle-down"></i>
+		</div>
+		<div class="col-md-9 text-right">
+			<pagination-controls
+				previousLabel="Previous"
+				nextLabel="Next"
+				(pageChange)="onPageNoChange($event)"
+			>
+			</pagination-controls>
+		</div>
+	</div>
+</div>
 <!-- Main content End -->

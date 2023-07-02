@@ -23,6 +23,8 @@ import {
 	AdminTitleBarComponent
 } from './layouts';
 
+import { AuthGuard } from './guards';
+
 const MODULES = [CommonModule, SharedModule, RouterModule, HttpClientModule];
 
 const LAYOUTS = [AuthLayoutComponent, AdminWrapperComponent];
@@ -30,6 +32,7 @@ const LAYOUTS = [AuthLayoutComponent, AdminWrapperComponent];
 const PROVIDERS = [
 	HttpService,
 	AuthService,
+	AuthGuard,
 	CommonService,
 	ConfirmationService,
 	ToasterService

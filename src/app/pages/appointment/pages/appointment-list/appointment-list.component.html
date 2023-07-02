@@ -54,6 +54,7 @@
 					<th>Email</th>
 					<th>Phone Number</th>
 					<th>Service</th>
+					<th>Dcotor</th>
 					<th>Appointment Date</th>
 					<th>Gender</th>
 					<th>Action</th>
@@ -73,16 +74,17 @@
 					<td>{{ appointment.email }}</td>
 					<td>{{ appointment.phone_number }}</td>
 					<td>{{ appointment.service }}</td>
+					<td>{{ appointment.doctor }}</td>
 					<td>
 						{{ appointment.appointment_date | date : 'dd/MM/yyyy' }}
 					</td>
 					<td>{{ appointment.gender }}</td>
 					<td>
 						<a
-							title="Edit"
+							title="Reschedule"
 							class="edit-icon"
 							[routerLink]="['/appointments/edit/' + 1]"
-							><i class="icon-edit-outline"></i
+							><i class="icon-calendar-outline"></i
 						></a>
 						<a title="Delete" class="delete-icon"
 							><i class="icon-trash-2-outline"></i

@@ -5,11 +5,17 @@ export interface IAppointmentList {
 	email: string;
 	phone_number: number;
 	service: string;
+	doctor: string;
 	appointment_date: string;
 	gender: string;
 }
 
 export interface IService {
+	id: number;
+	label: string;
+}
+
+export interface IDoctor {
 	id: number;
 	label: string;
 }

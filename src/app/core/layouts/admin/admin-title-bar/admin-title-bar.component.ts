@@ -7,6 +7,7 @@ import {
 	RoutesRecognized,
 	ActivatedRouteSnapshot
 } from '@angular/router';
+import { CommonService } from '@app/core/services';
 import { IBreadCrumb } from '@app/shared/models';
 import { distinctUntilChanged, filter, map, Subscription } from 'rxjs';
 
@@ -16,7 +17,18 @@ import { distinctUntilChanged, filter, map, Subscription } from 'rxjs';
 	styleUrls: ['./admin-title-bar.component.scss']
 })
 export class AdminTitleBarComponent implements OnInit {
-	constructor(private _router: Router, private _route: ActivatedRoute) {
+	public pageTitle!: string;
+	public breadcrumbs: IBreadCrumb[] = [];
+	private subs: Array<Subscription> = [];
+	public breadcrumbData: any = null;
+	public totalRecords!: number;
+	totalRecordsShow!: boolean;
+
+	constructor(
+		private _router: Router,
+		private _route: ActivatedRoute,
+		private _commonService: CommonService
+	) {
 		// this.getPageTitle();
 		// this.initBreadcrumb(this._route.root);
 		this.subs[0] = this._router.events
@@ -36,13 +48,15 @@ export class AdminTitleBarComponent implements OnInit {
 			});
 	}
 
-	public pageTitle!: string;
-	public breadcrumbs: IBreadCrumb[] = [];
-	private subs: Array<Subscription> = [];
-	public breadcrumbData: any = null;
-
 	ngOnInit() {
 		// this.updateBreadCrumbOnRouteChange();
+		this._commonService._totalRecords.subscribe((response) => {
+			this.totalRecords = response;
+		});
+
+		this._commonService._totalRecordsShow.subscribe((response) => {
+			this.totalRecordsShow = response;
+		});
 	}
 
 	/**

@@ -2,11 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonService } from '@app/core/services';
 import { IAppointmentList } from '@app/shared/models';
 
-// interface IStatus {
-// 	label: string;
-// 	value: string;
-// }
-
 @Component({
 	selector: 'app-appointment-list',
 	templateUrl: './appointment-list.component.html',
@@ -16,15 +11,10 @@ export class AppointmentListComponent implements OnInit {
 	constructor(private _commonService: CommonService) {}
 
 	public appointments: IAppointmentList[] = [];
-	// public statuses: IStatus[] = [];
 
 	ngOnInit(): void {
 		this._commonService.setLoadingStatus(false);
 		this.getData();
-		// this.statuses = [
-		// 	{ label: 'Active', value: '1' },
-		// 	{ label: 'Inactive', value: '0' }
-		// ];
 	}
 
 	public getData() {
@@ -36,6 +26,7 @@ export class AppointmentListComponent implements OnInit {
 				email: 'helloworld@gmail.com',
 				phone_number: 9903246644,
 				service: 'ENT Checkup',
+				doctor: 'Abc Doctor',
 				appointment_date: '22 Jul, 2022',
 				gender: 'Male'
 			},
@@ -46,6 +37,7 @@ export class AppointmentListComponent implements OnInit {
 				email: 'som121@gmail.com',
 				phone_number: 9903246644,
 				service: 'Heart Checkup',
+				doctor: 'Def Doctor',
 				appointment_date: '15 Jul, 2022',
 				gender: 'Male'
 			},
@@ -56,6 +48,7 @@ export class AppointmentListComponent implements OnInit {
 				email: 'helloworld@gmail.com',
 				phone_number: 9903246644,
 				service: 'Full Body Checkup',
+				doctor: 'Xyz Doctor',
 				appointment_date: '07 Jul, 2022',
 				gender: 'Female'
 			},
@@ -66,6 +59,7 @@ export class AppointmentListComponent implements OnInit {
 				email: 'helloworld@gmail.com',
 				phone_number: 9903246644,
 				service: 'Dental Checkup',
+				doctor: 'Uvw Doctor',
 				appointment_date: '22 Jul, 2022',
 				gender: 'Famale'
 			},
@@ -76,6 +70,7 @@ export class AppointmentListComponent implements OnInit {
 				email: 'helloworld@gmail.com',
 				phone_number: 9903246644,
 				service: 'ENT Checkup',
+				doctor: 'Abc Doctor',
 				appointment_date: '22 Jul, 2022',
 				gender: 'Male'
 			}

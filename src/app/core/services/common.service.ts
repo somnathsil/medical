@@ -10,6 +10,15 @@ export class CommonService {
 	constructor() {}
 
 	/**
+	 * *Create total records form header for all list
+	 *
+	 * @date 12 June 2023
+	 * @developer
+	 */
+	public _totalRecords = new BehaviorSubject<number>(0);
+	public _totalRecordsShow = new BehaviorSubject<boolean>(false);
+
+	/**
 	 * *Create Observable for pre loader
 	 *
 	 * @date 05 Nov 2022

@@ -30,6 +30,11 @@
 			<div class="page-title">
 				<h2>{{ breadcrumbData.title }}</h2>
 			</div>
+			<div class="total-count-block" *ngIf="totalRecordsShow">
+				<p>
+					Total Records:<span>{{ totalRecords }}</span>
+				</p>
+			</div>
 			<div class="page-breadcrumbs">
 				<!-- <ng-container *ngIf="breadcrumbData.breadcrumb === 'dashboard'">
 					<ul>

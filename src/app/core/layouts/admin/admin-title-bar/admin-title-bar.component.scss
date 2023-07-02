@@ -51,3 +51,14 @@
 .page-breadcrumbs ul li a:hover {
 	color: $color-primary;
 }
+.total-count-block p {
+	color: $color-black-100;
+	font-size: $text-md;
+	font-weight: $font-medium;
+	text-transform: $capitalize;
+	font-weight: $font-semibold;
+	span {
+		font-weight: $font-medium;
+		margin-left: 6px;
+	}
+}

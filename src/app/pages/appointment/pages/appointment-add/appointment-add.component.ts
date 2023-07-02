@@ -13,7 +13,11 @@ import {
 } from '@angular/forms';
 import { CommonService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
-import { IGender, IService } from '@app/shared/models/appointment.model';
+import {
+	IDoctor,
+	IGender,
+	IService
+} from '@app/shared/models/appointment.model';
 
 @Component({
 	selector: 'app-appointment-add',
@@ -30,6 +34,7 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 	public submitted = false;
 	public appointmentAddForm!: FormGroup;
 	public services!: IService[];
+	public doctors!: IDoctor[];
 	public gender!: IGender[];
 	@ViewChild('inputFocus') inputFocus!: ElementRef;
 
@@ -56,6 +61,12 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 			{ id: 2, label: 'Full Body Checkup' },
 			{ id: 3, label: 'Heart Checkup' },
 			{ id: 4, label: 'ENT Checkup' }
+		];
+		this.doctors = [
+			{ id: 1, label: 'Abc Doctor' },
+			{ id: 2, label: 'Def Doctor' },
+			{ id: 3, label: 'XYZ Doctor' },
+			{ id: 4, label: 'UVW Doctor' }
 		];
 		this.gender = [
 			{ id: 1, label: 'Male' },
@@ -85,7 +96,8 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 				Validators.required,
 				Validators.pattern('[- +()0-9]+')
 			]),
-			service: new FormControl('', [Validators.required]),
+			service_name: new FormControl('', [Validators.required]),
+			doctor_name: new FormControl('', [Validators.required]),
 			appointment_date: new FormControl('', [Validators.required]),
 			gender: new FormControl('', [Validators.required]),
 			image: new FormControl('', [Validators.required])

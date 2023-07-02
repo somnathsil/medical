@@ -149,16 +149,18 @@ export class AdminUserEditComponent implements OnInit, AfterViewInit {
 				'contact',
 				this.editAdminUserForm.get('phone_number')?.value
 			);
+			formdata.append(
+				'status',
+				this.editAdminUserForm.get('status')?.value ? 'A' : 'I'
+			);
 			formdata.append('type', 'A');
 			formdata.append(
 				'image',
 				this.editAdminUserForm.get('image')?.value
 			);
-
 			// for (var pair of formData.entries()) {
 			// 	console.log('hello', pair[0] + ', ' + pair[1]);
 			// }
-
 			this._loader.useRef().start();
 			this.subscriptions.push(
 				this._http.post('edit', formdata).subscribe({
@@ -205,12 +207,16 @@ export class AdminUserEditComponent implements OnInit, AfterViewInit {
 		this.subscriptions.push(
 			this._http.post('details', param).subscribe({
 				next: (apiResult) => {
+					console.log(apiResult);
 					this.editAdminUserForm.patchValue({
 						userId: apiResult.response.dataset[0].userId,
 						email: apiResult.response.dataset[0].email,
 						name: apiResult.response.dataset[0].name,
-						phone_number: apiResult.response.dataset[0].contact
-						// status: apiResult.response.dataset[0].type
+						phone_number: apiResult.response.dataset[0].contact,
+						status:
+							apiResult.response.dataset[0].status == 'A'
+								? true
+								: false
 					});
 					if (apiResult.response.dataset[0].image) {
 						this.adminUserImage =

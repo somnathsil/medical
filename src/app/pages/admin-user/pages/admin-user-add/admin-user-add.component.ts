@@ -129,10 +129,10 @@ export class AdminUserAddComponent implements OnInit, AfterViewInit, OnDestroy {
 				'contact',
 				this.addAdminUserForm.get('phone_number')?.value
 			);
-			// formData.append(
-			// 	'status',
-			// 	this.addAdminUserForm.get('status')?.value ? 'A' : 'I'
-			// );
+			formData.append(
+				'status',
+				this.addAdminUserForm.get('status')?.value ? 'A' : 'I'
+			);
 			formData.append('image', this.addAdminUserForm.get('image')?.value);
 
 			// for (var pair of formData.entries()) {

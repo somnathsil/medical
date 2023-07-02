@@ -123,14 +123,14 @@
 				</div>
 				<div class="col-md-6">
 					<div class="form-group-block">
-						<label for="">Service <sup>*</sup></label>
+						<label for="">Service Name<sup>*</sup></label>
 						<div class="formcontrol-wrapper">
 							<select
 								class="formcontrol"
-								formControlName="service"
+								formControlName="service_name"
 								[ngClass]="{
 									'invalid-control':
-										hasFormControlError('service')
+										hasFormControlError('service_name')
 								}"
 							>
 								<option disabled selected [value]="null">
@@ -145,15 +145,60 @@
 							</select>
 							<i class="icon-chevron-down-outline"></i>
 						</div>
-						<ng-container *ngIf="hasFormControlError('service')">
+						<ng-container
+							*ngIf="hasFormControlError('service_name')"
+						>
 							<div
 								[@fadeInOut]
 								class="error-message"
 								*ngIf="
-									formcontrol['service'].hasError('required')
+									formcontrol['service_name'].hasError(
+										'required'
+									)
 								"
 							>
-								<p>Please Select Your Service</p>
+								<p>Please Select Your Service Name</p>
+							</div>
+						</ng-container>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group-block">
+						<label for="">Select Doctor<sup>*</sup></label>
+						<div class="formcontrol-wrapper">
+							<select
+								class="formcontrol"
+								formControlName="doctor_name"
+								[ngClass]="{
+									'invalid-control':
+										hasFormControlError('doctor_name')
+								}"
+							>
+								<option disabled selected [value]="null">
+									Select Doctor
+								</option>
+								<option
+									*ngFor="let doctor of doctors"
+									[value]="doctor.label"
+								>
+									{{ doctor.label }}
+								</option>
+							</select>
+							<i class="icon-chevron-down-outline"></i>
+						</div>
+						<ng-container
+							*ngIf="hasFormControlError('doctor_name')"
+						>
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="
+									formcontrol['doctor_name'].hasError(
+										'required'
+									)
+								"
+							>
+								<p>Please Select Your Doctor</p>
 							</div>
 						</ng-container>
 					</div>
@@ -229,7 +274,7 @@
 						</ng-container>
 					</div>
 				</div>
-				<div class="col-md-12">
+				<div class="col-md-6">
 					<div class="form-group-block">
 						<label for="">Upload <sup>*</sup></label>
 						<div class="formcontrol-wrapper">

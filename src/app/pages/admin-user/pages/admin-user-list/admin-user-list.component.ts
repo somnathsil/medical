@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
 	CommonService,
 	ConfirmationService,
@@ -15,9 +15,8 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 	templateUrl: './admin-user-list.component.html',
 	styleUrls: ['./admin-user-list.component.scss']
 })
-export class AdminUserListComponent implements OnInit {
+export class AdminUserListComponent implements OnInit, OnDestroy {
 	public totalRecords = 0;
-	public routeUsername = '';
 	public adminQueryForm!: FormGroup;
 	public adminUserList: IAdminUserList[] = [];
 	private subscriptions: Subscription[] = [];
@@ -65,6 +64,10 @@ export class AdminUserListComponent implements OnInit {
 					this._loader.useRef().complete();
 					this.adminUserList = apiResult.response.dataset.records;
 					this.totalRecords = apiResult.response.dataset.totalRecords;
+
+					/* For Total Records */
+					this._commonService._totalRecords.next(this.totalRecords);
+					this._commonService._totalRecordsShow.next(true);
 				},
 				error: (apiError) => {
 					this._loader.useRef().complete();
@@ -138,6 +141,7 @@ export class AdminUserListComponent implements OnInit {
 		});
 	}
 
+	/* Reset */
 	onResetUser() {
 		// this.adminUserList = [];
 		// this.adminQueryForm.controls['sort_by'].setValue('');
@@ -148,11 +152,13 @@ export class AdminUserListComponent implements OnInit {
 		this.getAdminUserListData();
 	}
 
+	/* Pagintion */
 	onPageNoChange(event: any) {
 		this.page_no = event;
 		this.getAdminUserListData();
 	}
 
+	/* Pagintion */
 	onPageSizeChange(event: any): void {
 		this.page_size = event.target.value;
 		this.page_no = 1;
@@ -169,5 +175,7 @@ export class AdminUserListComponent implements OnInit {
 		this.subscriptions.forEach((subscription) =>
 			subscription.unsubscribe()
 		);
+		this._commonService._totalRecords.next(0);
+		this._commonService._totalRecordsShow.next(false);
 	}
 }
