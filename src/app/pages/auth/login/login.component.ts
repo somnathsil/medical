@@ -140,6 +140,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 				email: formValue.email,
 				password: formValue.password
 			};
+			console.log('Login', param);
 			this._loader.useRef().start();
 			this.subscriptios.push(
 				this._http.post('login', param).subscribe({

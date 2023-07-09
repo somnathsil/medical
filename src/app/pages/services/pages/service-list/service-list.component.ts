@@ -22,8 +22,8 @@ export class ServiceListComponent implements OnInit {
 	private subscriptions: Subscription[] = [];
 
 	page_no: number = 1;
-	page_size: number = 2;
-	pageSizes: any = [1, 2, 3];
+	page_size: number = 5;
+	pageSizes: any = [5, 10, 15];
 
 	constructor(
 		private _commonService: CommonService,
