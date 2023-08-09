@@ -1,13 +1,22 @@
 export interface IAppointmentList {
-	id: number;
-	image: string;
 	name: string;
 	email: string;
-	phone_number: number;
-	service: string;
-	doctor: string;
-	appointment_date: string;
+	contact: string | number;
+	image: string;
+	status: string;
+	appoiment_date: string;
 	gender: string;
+	service_name: string;
+	doctor_name: string;
+	appoint_id: number;
+}
+
+export interface IAppointmentListParam {
+	sort_by: string;
+	filter_by: string;
+	search_str: string;
+	page_size: string | number;
+	page_no: number;
 }
 
 export interface IService {
@@ -33,6 +42,7 @@ export interface IDepartment {
 export interface IGender {
 	id: number;
 	label: 'Male' | 'Female';
+	value?: string;
 }
 
 export interface ICity {

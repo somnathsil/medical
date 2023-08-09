@@ -137,7 +137,6 @@ export class ResetPasswordComponent implements OnInit, AfterViewInit {
 			this.subscriptions.push(
 				this._http.post('resetPwd', param).subscribe({
 					next: (apiResult) => {
-						console.log('result', apiResult);
 						this.isDisable = false;
 						this._loader.useRef().complete();
 						this._toast.success(

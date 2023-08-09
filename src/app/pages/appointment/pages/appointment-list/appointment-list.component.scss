@@ -6,7 +6,7 @@
 }
 .list-table thead tr th:first-child,
 .list-table tbody tr td:first-child {
-	width: 17%;
+	width: 15%;
 }
 .list-table thead tr th:last-child,
 .list-table tbody tr td:last-child {
@@ -18,5 +18,9 @@
 }
 .list-table thead tr th:nth-last-child(3),
 .list-table tbody tr td:nth-last-child(3) {
-	width: 15%;
+	width: 18%;
+}
+.list-table thead tr th:nth-last-child(5),
+.list-table tbody tr td:nth-last-child(5) {
+	width: 14%;
 }

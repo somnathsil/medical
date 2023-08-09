@@ -247,18 +247,16 @@
 						<div class="formcontrol-wrapper">
 							<div
 								class="custom-radio-button"
-								*ngFor="let data of gender"
+								*ngFor="let data of gender; index as i"
 							>
 								<input
 									type="radio"
 									name="gender"
-									id="{{ data.label }}"
-									value="{{ data.label }}"
+									[id]="i"
+									[value]="data.value"
 									formControlName="gender"
 								/>
-								<label for="{{ data.label }}">{{
-									data.label
-								}}</label>
+								<label [for]="i">{{ data.label }}</label>
 							</div>
 						</div>
 						<ng-container *ngIf="hasFormControlError('gender')">

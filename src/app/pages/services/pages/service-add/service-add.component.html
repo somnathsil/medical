@@ -8,7 +8,7 @@
 						class="formcontrol"
 						(change)="setServiceData($event)"
 					>
-						<option value="">Select Service Name</option>
+						<option value="" hidden>Select Service Name</option>
 						<option
 							[value]="service.id"
 							*ngFor="let service of serviceList"
@@ -18,15 +18,13 @@
 					</select>
 					<i class="icon-chevron-down-outline"></i>
 				</div>
-				<!-- <ng-container *ngIf="hasFormControlError('service_name')">
-					<div
-						[@fadeInOut]
-						class="error-message"
-						*ngIf="formcontrol['service_name'].hasError('required')"
-					>
+				<ng-container
+					*ngIf="submitted && param && !param['service_id']"
+				>
+					<div [@fadeInOut] class="error-message">
 						<p>Please Select Service</p>
 					</div>
-				</ng-container> -->
+				</ng-container>
 			</div>
 			<div class="form-group-block">
 				<label for="">Select Doctors <sup>*</sup></label>
@@ -48,15 +46,11 @@
 						>
 					</ng-select>
 				</div>
-				<!-- <ng-container *ngIf="hasFormControlError('doctor_name')">
-					<div
-						[@fadeInOut]
-						class="error-message"
-						*ngIf="formcontrol['doctor_name'].hasError('required')"
-					>
+				<ng-container *ngIf="submitted && !selectedDoctor">
+					<div [@fadeInOut] class="error-message">
 						<p>Please Select Doctor</p>
 					</div>
-				</ng-container> -->
+				</ng-container>
 			</div>
 			<div class="footer-submit">
 				<button

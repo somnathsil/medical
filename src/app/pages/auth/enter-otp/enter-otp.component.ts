@@ -142,7 +142,7 @@ export class EnterOtpComponent implements OnInit, AfterViewInit, OnDestroy {
 							}
 						);
 						setTimeout(() => {
-							// This email is set for use in enter otp page
+							// This email is set for use in reset password page
 							this._router.navigate(['/reset-password'], {
 								queryParams: { email: this.emailForOTP }
 							});

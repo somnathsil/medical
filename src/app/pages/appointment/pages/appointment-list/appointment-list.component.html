@@ -1,10 +1,14 @@
 <div class="dashboard-header">
 	<div class="header-inner">
 		<div class="header-left">
-			<form>
+			<form [formGroup]="appointmentQueryForm">
 				<div class="sort-block">
-					<select class="formcontrol">
-						<option value="">Sort By</option>
+					<select
+						class="formcontrol"
+						formControlName="sort_by"
+						(change)="getAppointmentListData()"
+					>
+						<option value="" selected hidden>Sort By</option>
 						<option value="ASC">A-Z</option>
 						<option value="DESC">Z-A</option>
 						<option value="rcnt">Most Recent</option>
@@ -12,8 +16,12 @@
 					<i class="icon-chevron-down-outline"></i>
 				</div>
 				<div class="status-block">
-					<select class="formcontrol">
-						<option value="">Filter BY</option>
+					<select
+						class="formcontrol"
+						formControlName="filter_by"
+						(change)="getAppointmentListData()"
+					>
+						<option value="" selected hidden>Filter BY</option>
 						<option value="A">Active</option>
 						<option value="I">Inactive</option>
 					</select>
@@ -24,11 +32,16 @@
 						type="text"
 						class="formcontrol"
 						placeholder="Search by Name, Email, Phone Number"
+						formControlName="search_str"
+						(keyup.enter)="getAppointmentListData()"
 					/>
 
-					<i class="icon-search-outline"></i>
+					<i
+						class="icon-search-outline"
+						(click)="getAppointmentListData()"
+					></i>
 				</div>
-				<div class="reset-block">
+				<div class="reset-block" (click)="onResetUser()">
 					<i class="icon-refresh-outline"></i>
 				</div>
 			</form>
@@ -60,44 +73,87 @@
 					<th>Action</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr *ngFor="let appointment of appointments">
+			<tbody *ngIf="totalRecords; else noRecordsBlock">
+				<tr
+					*ngFor="
+						let data of appointmentList
+							| paginate
+								: {
+										itemsPerPage: page_size,
+										currentPage: page_no,
+										totalItems: totalRecords
+								  };
+						let i = index;
+						trackBy: trackByIndex
+					"
+				>
 					<td>
 						<div class="name-area">
 							<div class="group-image">
-								<!-- <img [src]="appointment.image" alt="" /> -->
-								<span>AD</span>
+								<ng-container
+									*ngIf="data.image; else nameBlock"
+								>
+									<img [src]="data.image" alt="" />
+								</ng-container>
+								<ng-template #nameBlock>
+									<span>{{ data.name | nameInitials }}</span>
+								</ng-template>
 							</div>
-							<p>{{ appointment.name }}</p>
+							<p>{{ data.name }}</p>
 						</div>
 					</td>
-					<td>{{ appointment.email }}</td>
-					<td>{{ appointment.phone_number }}</td>
-					<td>{{ appointment.service }}</td>
-					<td>{{ appointment.doctor }}</td>
+					<td>{{ data.email }}</td>
+					<td>{{ data.contact }}</td>
+					<td>{{ data.service_name }}</td>
+					<td>{{ data.doctor_name }}</td>
 					<td>
-						{{ appointment.appointment_date | date : 'dd/MM/yyyy' }}
+						{{ data.appoiment_date | date : 'dd/MM/yyyy' }}
 					</td>
-					<td>{{ appointment.gender }}</td>
+					<td>{{ data.gender == 'M' ? 'Male' : 'Female' }}</td>
 					<td>
 						<a
 							title="Reschedule"
 							class="edit-icon"
 							[routerLink]="['/appointments/edit/' + 1]"
-							><i class="icon-calendar-outline"></i
+							><i class="icon-edit-outline"></i
 						></a>
-						<a title="Delete" class="delete-icon"
+						<a
+							title="Delete"
+							class="delete-icon"
+							(click)="onDeleteAppointment(data.appoint_id)"
 							><i class="icon-trash-2-outline"></i
 						></a>
 					</td>
 				</tr>
 			</tbody>
-			<!-- <tbody *ngIf="!userExits">
-                        <tr>
-                            <td colspan="5"><h6 class="text-center p-4">No Reords Found</h6></td>
-                        </tr>
-                    </tbody> -->
+			<ng-template #noRecordsBlock>
+				<tbody>
+					<tr class="norecords-block">
+						<td colspan="7">No Records Found</td>
+					</tr>
+				</tbody>
+			</ng-template>
 		</table>
 	</div>
 </section>
+<div class="pagination-area">
+	<div class="row" *ngIf="totalRecords">
+		<div class="col-md-3 position-relative">
+			<select (change)="onPageSizeChange($event)" class="custom-select">
+				<option *ngFor="let size of pageSizes" [ngValue]="size">
+					{{ size }}
+				</option>
+			</select>
+			<i class="fa fa-angle-down"></i>
+		</div>
+		<div class="col-md-9 text-right">
+			<pagination-controls
+				previousLabel="Previous"
+				nextLabel="Next"
+				(pageChange)="onPageNoChange($event)"
+			>
+			</pagination-controls>
+		</div>
+	</div>
+</div>
 <!-- Main content End -->

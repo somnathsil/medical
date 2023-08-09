@@ -70,7 +70,9 @@
 				>
 					<td>{{ service.service_name }}</td>
 					<td>
-						<span>{{ service.doc_name }}</span>
+						<span *ngFor="let data of service.doc_name">{{
+							data
+						}}</span>
 					</td>
 					<td>
 						<a

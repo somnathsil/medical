@@ -11,13 +11,17 @@ import {
 	FormGroup,
 	Validators
 } from '@angular/forms';
-import { CommonService } from '@app/core/services';
+import { Router } from '@angular/router';
+import { CommonService, HttpService, ToasterService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
+import { Location } from '@angular/common';
 import {
 	IDoctor,
 	IGender,
 	IService
 } from '@app/shared/models/appointment.model';
+import { LoadingBarService } from '@ngx-loading-bar/core';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-appointment-add',
@@ -26,17 +30,24 @@ import {
 	animations: [fadeInOut]
 })
 export class AppointmentAddComponent implements OnInit, AfterViewInit {
-	constructor(
-		private _formbuilder: FormBuilder,
-		private _commonService: CommonService
-	) {}
-
+	public isDisable = false;
 	public submitted = false;
 	public appointmentAddForm!: FormGroup;
 	public services!: IService[];
 	public doctors!: IDoctor[];
 	public gender!: IGender[];
+	public subscriptions: Subscription[] = [];
 	@ViewChild('inputFocus') inputFocus!: ElementRef;
+
+	constructor(
+		private _formBuilder: FormBuilder,
+		private _commonService: CommonService,
+		private _loader: LoadingBarService,
+		private _router: Router,
+		private _http: HttpService,
+		private _toast: ToasterService,
+		private _location: Location
+	) {}
 
 	ngOnInit(): void {
 		console.clear();
@@ -69,8 +80,8 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 			{ id: 4, label: 'UVW Doctor' }
 		];
 		this.gender = [
-			{ id: 1, label: 'Male' },
-			{ id: 2, label: 'Female' }
+			{ id: 1, label: 'Male', value: 'M' },
+			{ id: 2, label: 'Female', value: 'F' }
 		];
 	}
 
@@ -81,7 +92,7 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 	 * @developer Somnath Sil
 	 */
 	private initAppointmentAddForm() {
-		this.appointmentAddForm = this._formbuilder.group({
+		this.appointmentAddForm = this._formBuilder.group({
 			name: new FormControl('', [
 				Validators.required,
 				Validators.pattern(/^([^0-9]*)$/)
@@ -135,17 +146,111 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 	}
 
 	onAppointmentSubmit(): boolean | void {
-		this.submitted = true;
-		const formValue = this.appointmentAddForm.value;
+		if (!this.isDisable) {
+			this.submitted = true;
+			const formValue = this.appointmentAddForm.value;
 
-		// stop here if form is invalid
-		if (this.appointmentAddForm.invalid) {
-			return false;
-		}
+			if (this.appointmentAddForm.invalid) {
+				this.appointmentAddForm.markAllAsTouched();
+				return true;
+			}
 
-		//form is valid
-		if (this.appointmentAddForm.valid) {
-			console.log(formValue);
+			// form is valid
+			this.isDisable = true;
+			let formData = new FormData();
+			formData.append(
+				'patient_name',
+				this.appointmentAddForm.get('name')?.value
+			);
+			formData.append(
+				'email',
+				this.appointmentAddForm.get('email')?.value
+			);
+			formData.append(
+				'contact',
+				this.appointmentAddForm.get('phone_number')?.value
+			);
+			formData.append(
+				'appoiment_date',
+				this.appointmentAddForm.get('appointment_date')?.value
+			);
+			formData.append(
+				'gender',
+				this.appointmentAddForm.get('gender')?.value ? 'M' : 'F'
+			);
+			formData.append(
+				'image',
+				this.appointmentAddForm.get('image')?.value
+			);
+
+			// for (var pair of formData.entries()) {
+			// 	console.log('hello', pair[0] + ', ' + pair[1]);
+			// }
+
+			this._loader.useRef().start();
+			this.subscriptions.push(
+				this._http.post('addAppointment', formData).subscribe({
+					next: (apiResult) => {
+						this.isDisable = false;
+						this.submitted = false;
+						this._loader.useRef().complete();
+						this._toast.success(
+							'Success',
+							apiResult.response.status.msg,
+							{
+								timeout: 5000,
+								position: 'top'
+							}
+						);
+					},
+					error: (apiError) => {
+						this.isDisable = false;
+						this._loader.useRef().complete();
+						this._toast.error(
+							'Error',
+							apiError.error.response.status.msg,
+							{
+								timeout: 5000,
+								position: 'top'
+							}
+						);
+					}
+				})
+			);
 		}
+	}
+
+	/**
+	 * *Back to last visit page
+	 *
+	 * @date 09 May 2023
+	 * @developer Somnath Sil
+	 */
+	backTo() {
+		this._location.back();
+	}
+
+	/**
+	 * *Reset form method
+	 *
+	 * @date 09 May 2023
+	 * @developer Somnath Sil
+	 */
+	resetForm() {
+		this.appointmentAddForm.reset();
+		this.appointmentAddForm.setValidators(null);
+		this.appointmentAddForm.updateValueAndValidity();
+	}
+
+	/**
+	 * *Unsubscribing observable on destroy
+	 *
+	 * @date 09 Aug 2023
+	 * @developer Somnath Sil
+	 */
+	ngOnDestroy(): void {
+		this.subscriptions.forEach((subscription) => {
+			subscription.unsubscribe();
+		});
 	}
 }

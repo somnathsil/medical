@@ -69,8 +69,8 @@ export class AppointmentEditComponent implements OnInit, AfterViewInit {
 			{ id: 4, label: 'UVW Doctor' }
 		];
 		this.gender = [
-			{ id: 1, label: 'Male' },
-			{ id: 2, label: 'Female' }
+			{ id: 1, label: 'Male', value: 'M' },
+			{ id: 2, label: 'Female', value: 'F' }
 		];
 	}
 
