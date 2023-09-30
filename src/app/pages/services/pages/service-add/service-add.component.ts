@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonService, HttpService, ToasterService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
+import { IService } from '@app/shared/models';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { Subscription } from 'rxjs';
 
@@ -15,7 +16,7 @@ import { Subscription } from 'rxjs';
 export class ServiceAddComponent implements OnInit, OnDestroy {
 	public submitted = false;
 	public subscriptions: Subscription[] = [];
-	public serviceList: any = [];
+	public serviceList: IService[] = [];
 	public doctorsList: any = [];
 	public selectedDoctor!: [];
 	public param: any = {};
@@ -43,22 +44,8 @@ export class ServiceAddComponent implements OnInit, OnDestroy {
 	 * @date 04 July 2023
 	 * @developer Somnath Sil
 	 */
-	private getServiceData() {
-		this.serviceList = [
-			{ id: 1, name: 'Fever' },
-			{ id: 2, name: 'AurthoPedic' },
-			{ id: 3, name: 'ENT' },
-			{ id: 4, name: 'Chest Specialist' },
-			{ id: 5, name: 'Dengue' },
-			{ id: 6, name: 'Malaria' },
-			{ id: 7, name: 'Coronavirus' },
-			{ id: 8, name: 'kidney Specialist' },
-			{ id: 9, name: 'Gyno' },
-			{ id: 10, name: 'Chicken Pox' },
-			{ id: 11, name: 'Neuro Specialist' },
-			{ id: 12, name: 'Dental' },
-			{ id: 13, name: 'Skin Spacialist' }
-		];
+	private getServiceData(): void {
+		this.serviceList = this._commonService.serviceListArr();
 	}
 
 	/**

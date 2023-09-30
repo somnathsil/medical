@@ -35,7 +35,7 @@ export class AppointmentListComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		this._commonService.setLoadingStatus(false);
+		this._commonService.setLoadingStatus(true);
 		this.createQueryForm();
 		this.getAppointmentListData();
 	}
@@ -60,7 +60,7 @@ export class AppointmentListComponent implements OnInit {
 		this.subscriptions.push(
 			this._http.post('appointmentList', param).subscribe({
 				next: (apiResult) => {
-					console.log('Api Appointment', apiResult);
+					this._commonService.setLoadingStatus(false);
 					this._loader.useRef().complete();
 					this.appointmentList = apiResult.response.dataset.records;
 					this.totalRecords = apiResult.response.dataset.totalRecords;
@@ -70,6 +70,7 @@ export class AppointmentListComponent implements OnInit {
 					this._commonService._totalRecordsShow.next(true);
 				},
 				error: (apiError) => {
+					this._commonService.setLoadingStatus(false);
 					this._loader.useRef().complete();
 				}
 			})

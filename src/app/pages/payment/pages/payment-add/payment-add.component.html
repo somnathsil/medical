@@ -48,6 +48,34 @@
 				</div>
 				<div class="col-md-6">
 					<div class="form-group-block">
+						<label for="">Contact <sup>*</sup></label>
+						<div class="formcontrol-wrapper">
+							<input
+								type="text"
+								class="formcontrol"
+								placeholder="Enter Contact Number"
+								[autocompleteOff]="'off'"
+								formControlName="contact"
+								[class.invalid-control]="
+									hasFormControlError('contact')
+								"
+							/>
+						</div>
+						<ng-container *ngIf="hasFormControlError('contact')">
+							<div
+								[@fadeInOut]
+								class="error-message"
+								*ngIf="
+									formcontrol['contact'].hasError('required')
+								"
+							>
+								<p>Please Enter Contact Number</p>
+							</div>
+						</ng-container>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group-block">
 						<label for="">Disease <sup>*</sup></label>
 						<div class="formcontrol-wrapper">
 							<select
@@ -58,14 +86,14 @@
 										hasFormControlError('disease')
 								}"
 							>
-								<option disabled selected [value]="null">
+								<option disabled selected value="">
 									Select Disease
 								</option>
 								<option
-									*ngFor="let disease of diseases"
-									[value]="disease.label"
+									*ngFor="let disease of serviceList"
+									[value]="disease.id"
 								>
-									{{ disease.label }}
+									{{ disease.name }}
 								</option>
 							</select>
 							<i class="icon-chevron-down-outline"></i>
@@ -150,7 +178,7 @@
 									)
 								"
 							>
-								<p>Please Enter Your Amount</p>
+								<p>Please Enter Total Amount</p>
 							</div>
 						</ng-container>
 					</div>
@@ -167,12 +195,12 @@
 										hasFormControlError('payment_mode')
 								}"
 							>
-								<option disabled selected [value]="null">
+								<option disabled selected value="">
 									Select Payment Mode
 								</option>
 								<option
 									*ngFor="let payment of paymentMode"
-									[value]="payment.label"
+									[value]="payment.name"
 								>
 									{{ payment.label }}
 								</option>
@@ -230,7 +258,9 @@
 
 			<div class="footer-submit">
 				<button type="submit" class="btn btn-primary">Submit</button>
-				<button type="button" class="btn btn-danger">Cancel</button>
+				<button type="button" class="btn btn-danger" (click)="backTo()">
+					Cancel
+				</button>
 			</div>
 		</form>
 	</div>

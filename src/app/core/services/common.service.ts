@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IConfirmationInfo } from './confirmation.service';
 import { IToasterInfo } from './toaster.service';
+import { IService } from '@app/shared/models';
 
 @Injectable({
 	providedIn: 'root'
@@ -79,5 +80,24 @@ export class CommonService {
 	}
 	public getProfileImage(): Observable<any> {
 		return this._profileImageStatus.asObservable();
+	}
+
+	serviceListArr(): IService[] {
+		return [
+			{ id: 1, name: 'Fever' },
+			{ id: 2, name: 'AurthoPedic' },
+			{ id: 3, name: 'ENT' },
+			{ id: 4, name: 'Chest Specialist' },
+			{ id: 5, name: 'Dengue' },
+			{ id: 6, name: 'Malaria' },
+			{ id: 7, name: 'Coronavirus' },
+			{ id: 8, name: 'kidney Specialist' },
+			{ id: 9, name: 'Gyno' },
+			{ id: 10, name: 'Chicken Pox' },
+			{ id: 11, name: 'Neuro Specialist' },
+			{ id: 12, name: 'Dental' },
+			{ id: 13, name: 'Skin Spacialist' },
+			{ id: 14, name: 'Cardio Specialist' }
+		];
 	}
 }

@@ -132,15 +132,16 @@
 									'invalid-control':
 										hasFormControlError('service_name')
 								}"
+								(change)="getDoctor($event)"
 							>
-								<option selected [value]="null">
+								<option disabled selected value="">
 									Select Service
 								</option>
 								<option
-									*ngFor="let service of services"
-									[value]="service.label"
+									*ngFor="let service of serviceList"
+									[value]="service.id"
 								>
-									{{ service.label }}
+									{{ service.name }}
 								</option>
 							</select>
 							<i class="icon-chevron-down-outline"></i>
@@ -174,14 +175,14 @@
 										hasFormControlError('doctor_name')
 								}"
 							>
-								<option disabled selected [value]="null">
+								<option disabled selected value="">
 									Select Doctor
 								</option>
 								<option
-									*ngFor="let doctor of doctors"
-									[value]="doctor.label"
+									*ngFor="let data of doctors"
+									[value]="data.doc_id"
 								>
-									{{ doctor.label }}
+									{{ data.doc_name }}
 								</option>
 							</select>
 							<i class="icon-chevron-down-outline"></i>
@@ -219,7 +220,7 @@
 								bsDatepicker
 								[bsConfig]="{
 									customTodayClass: 'custom-today-date',
-									dateInputFormat: 'DD/MM/YYYY'
+									dateInputFormat: 'YYYY/MM/DD'
 								}"
 							/>
 							<i class="icon-calendar-outline"></i>
@@ -253,7 +254,7 @@
 									type="radio"
 									name="gender"
 									id="{{ data.label }}"
-									value="{{ data.label }}"
+									value="{{ data.value }}"
 									formControlName="gender"
 								/>
 								<label for="{{ data.label }}">{{
@@ -276,43 +277,57 @@
 				</div>
 				<div class="col-md-6">
 					<div class="form-group-block">
-						<label for="">Upload <sup>*</sup></label>
+						<!-- <label for="">Upload <sup>*</sup></label>
 						<div class="formcontrol-wrapper">
-							<div
-								class="input-group custom-image-upload"
-								[ngClass]="{
-									'invalid-control':
-										hasFormControlError('image')
-								}"
-							>
+							<div class="input-group custom-image-upload">
 								<label for="imageUpload" class="btn btn-primary"
 									>Uplaod Image</label
 								>
 								<input
 									type="file"
 									id="imageUpload"
-									formControlName="image"
+									accept="image/png, image/jpg, image/jpeg"
+									(change)="onFileselect($event)"
 								/>
 							</div>
-						</div>
-						<ng-container *ngIf="hasFormControlError('image')">
-							<div
-								[@fadeInOut]
-								class="error-message"
-								*ngIf="
-									formcontrol['image'].hasError('required')
-								"
-							>
-								<p>Please Uplaod Your Imager</p>
+						</div> -->
+						<div class="global-form-group">
+							<label>Browse image</label>
+							<div class="formcontrol-wrapper">
+								<div class="upload-wrap formcontrol">
+									<label for="inp">{{
+										imageFileName
+											? imageFileName
+											: 'Browse image'
+									}}</label>
+
+									<div class="upload-box">
+										<img
+											src="./assets/images/upload-icon.svg"
+											width="18px"
+											height="13px"
+											alt="upload file"
+											loading="lazy"
+										/>
+										<input
+											id="inp"
+											type="file"
+											accept="image/png, image/jpg, image/jpeg"
+											(change)="onFileselect($event)"
+										/>
+									</div>
+								</div>
 							</div>
-						</ng-container>
+						</div>
 					</div>
 				</div>
 			</div>
 
 			<div class="footer-submit">
 				<button type="submit" class="btn btn-primary">Submit</button>
-				<button type="button" class="btn btn-danger">Cancel</button>
+				<button type="button" class="btn btn-danger" (click)="backTo()">
+					Cancel
+				</button>
 			</div>
 		</form>
 	</div>

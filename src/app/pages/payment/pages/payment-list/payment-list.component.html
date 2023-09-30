@@ -1,10 +1,14 @@
 <div class="dashboard-header">
 	<div class="header-inner">
 		<div class="header-left">
-			<form>
+			<form [formGroup]="paymentQueryForm">
 				<div class="sort-block">
-					<select class="formcontrol">
-						<option value="">Sort By</option>
+					<select
+						class="formcontrol"
+						formControlName="sort_by"
+						(change)="getPaymentListData()"
+					>
+						<option value="" selected hidden>Sort By</option>
 						<option value="ASC">A-Z</option>
 						<option value="DESC">Z-A</option>
 						<option value="rcnt">Most Recent</option>
@@ -12,10 +16,14 @@
 					<i class="icon-chevron-down-outline"></i>
 				</div>
 				<div class="status-block">
-					<select class="formcontrol">
+					<select
+						class="formcontrol"
+						formControlName="filter_by"
+						(change)="getPaymentListData()"
+					>
 						<option value="">Filter BY</option>
-						<option value="A">Active</option>
-						<option value="I">Inactive</option>
+						<option value="Y">Paid</option>
+						<option value="N">Unpaid</option>
 					</select>
 					<i class="icon-chevron-down-outline"></i>
 				</div>
@@ -23,12 +31,17 @@
 					<input
 						type="text"
 						class="formcontrol"
-						placeholder="Search by Name, Phone Number"
+						placeholder="Search by Name"
+						formControlName="search_str"
+						(keyup.enter)="getPaymentListData()"
 					/>
 
-					<i class="icon-search-outline"></i>
+					<i
+						class="icon-search-outline"
+						(click)="getPaymentListData()"
+					></i>
 				</div>
-				<div class="reset-block">
+				<div class="reset-block" (click)="onResetUser()">
 					<i class="icon-refresh-outline"></i>
 				</div>
 			</form>
@@ -49,6 +62,7 @@
 			<thead>
 				<tr>
 					<th>Patient Name</th>
+					<th>Contact</th>
 					<th>Disease</th>
 					<th>Payment Date</th>
 					<th>Total Amount</th>
@@ -57,41 +71,97 @@
 					<th>Action</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr *ngFor="let payment of payments">
+			<tbody *ngIf="totalRecords; else noRecordsBlock">
+				<tr
+					*ngFor="
+						let data of paymentList
+							| paginate
+								: {
+										itemsPerPage: page_size,
+										currentPage: page_no,
+										totalItems: totalRecords
+								  };
+						let i = index;
+						trackBy: trackByIndex
+					"
+				>
 					<td>
 						<div class="name-area">
-							<p>{{ payment.name }}</p>
+							<p>{{ data.name }}</p>
 						</div>
 					</td>
-					<td>{{ payment.disease }}</td>
-					<td>{{ payment.payment_date }}</td>
-					<td>{{ payment.total_amount }}/-</td>
-					<td>{{ payment.payment_mode }}</td>
+					<td>{{ data.contact }}</td>
+					<td>{{ data.service_name }}</td>
+					<td>{{ data.payment_date }}</td>
+					<td>{{ data.amount }}/-</td>
+					<td [ngSwitch]="data.payment_mode">
+						<ng-container *ngSwitchCase="'DC'">
+							Debit Card
+						</ng-container>
+						<ng-container *ngSwitchCase="'CC'">
+							Credit Card
+						</ng-container>
+						<ng-container *ngSwitchCase="'C'"> Cash </ng-container>
+					</td>
 					<td>
 						<div
 							class="list-status-block"
 							[ngClass]="{
-								'status-active': payment.status === 1,
-								'status-inactive': payment.status === 0
+								'status-active': data.payment_status === 'Paid',
+								'status-inactive':
+									data.payment_status === 'Unpaid'
 							}"
 						></div>
-						{{ payment.status == 1 ? 'Active' : 'Inactive' }}
+						{{ data.payment_status == 'Paid' ? 'Paid' : 'Unpaid' }}
 					</td>
 					<td>
 						<a
 							title="Edit"
 							class="edit-icon"
-							[routerLink]="['/payments/edit/' + 1]"
+							[routerLink]="[
+								'/payments/edit/' +
+									data.name.toLowerCase().split(' ').join(''),
+								data.payment_id
+							]"
 							><i class="icon-edit-outline"></i
 						></a>
-						<a title="Delete" class="delete-icon"
+						<a
+							title="Delete"
+							class="delete-icon"
+							(click)="onDeletePayment(data.payment_id)"
 							><i class="icon-trash-2-outline"></i
 						></a>
 					</td>
 				</tr>
 			</tbody>
+			<ng-template #noRecordsBlock>
+				<tbody>
+					<tr class="norecords-block">
+						<td colspan="7">No Records Found</td>
+					</tr>
+				</tbody>
+			</ng-template>
 		</table>
 	</div>
 </section>
+<div class="pagination-area">
+	<div class="row" *ngIf="totalRecords">
+		<div class="col-md-3 position-relative">
+			<select (change)="onPageSizeChange($event)" class="custom-select">
+				<option *ngFor="let size of pageSizes" [ngValue]="size">
+					{{ size }}
+				</option>
+			</select>
+			<i class="fa fa-angle-down"></i>
+		</div>
+		<div class="col-md-9 text-right">
+			<pagination-controls
+				previousLabel="Previous"
+				nextLabel="Next"
+				(pageChange)="onPageNoChange($event)"
+			>
+			</pagination-controls>
+		</div>
+	</div>
+</div>
 <!-- Main content End -->

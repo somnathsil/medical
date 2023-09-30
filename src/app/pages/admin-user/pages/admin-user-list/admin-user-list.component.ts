@@ -35,7 +35,7 @@ export class AdminUserListComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit(): void {
-		this._commonService.setLoadingStatus(false);
+		this._commonService.setLoadingStatus(true);
 		this.createQueryForm();
 		this.getAdminUserListData();
 	}
@@ -61,6 +61,7 @@ export class AdminUserListComponent implements OnInit, OnDestroy {
 		this.subscriptions.push(
 			this._http.post('/listing', param).subscribe({
 				next: (apiResult) => {
+					this._commonService.setLoadingStatus(false);
 					this._loader.useRef().complete();
 					this.adminUserList = apiResult.response.dataset.records;
 					this.totalRecords = apiResult.response.dataset.totalRecords;
@@ -70,6 +71,7 @@ export class AdminUserListComponent implements OnInit, OnDestroy {
 					this._commonService._totalRecordsShow.next(true);
 				},
 				error: (apiError) => {
+					this._commonService.setLoadingStatus(false);
 					this._loader.useRef().complete();
 				}
 			})

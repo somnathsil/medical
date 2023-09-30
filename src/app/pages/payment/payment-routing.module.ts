@@ -28,7 +28,7 @@ const routes: Routes = [
 		}
 	},
 	{
-		path: 'edit/:id',
+		path: 'edit/:username/:id',
 		component: PaymentEditComponent,
 		title: 'Payment Edit',
 		data: {

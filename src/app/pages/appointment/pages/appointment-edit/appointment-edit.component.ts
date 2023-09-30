@@ -11,13 +11,17 @@ import {
 	FormGroup,
 	Validators
 } from '@angular/forms';
-import { CommonService } from '@app/core/services';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonService, HttpService, ToasterService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
 import {
 	IDoctor,
 	IGender,
 	IService
 } from '@app/shared/models/appointment.model';
+import { LoadingBarService } from '@ngx-loading-bar/core';
+import { Subscription } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
 	selector: 'app-appointment-edit',
@@ -26,23 +30,37 @@ import {
 	animations: [fadeInOut]
 })
 export class AppointmentEditComponent implements OnInit, AfterViewInit {
-	constructor(
-		private _formbuilder: FormBuilder,
-		private _commonService: CommonService
-	) {}
-
 	public submitted = false;
+	public isDisable = false;
+	public appointmentId: number | string;
 	public appointmentEditForm!: FormGroup;
-	public services!: IService[];
+	public serviceList: IService[] = [];
 	public doctors!: IDoctor[];
 	public gender!: IGender[];
+	imageFileName!: string;
+	public subscriptions: Subscription[] = [];
 	@ViewChild('inputFocus') inputFocus!: ElementRef;
 
+	constructor(
+		private _formBuilder: FormBuilder,
+		private _commonService: CommonService,
+		private _actRoute: ActivatedRoute,
+		private _loader: LoadingBarService,
+		private _router: Router,
+		private _http: HttpService,
+		private _toast: ToasterService,
+		private _location: Location
+	) {
+		this.appointmentId = this._actRoute.snapshot.paramMap.get(
+			'id'
+		) as string;
+	}
+
 	ngOnInit(): void {
-		this._commonService.setLoadingStatus(false);
+		this._commonService.setLoadingStatus(true);
 		this.getAllDropdowns();
+		this.getAppointmentDetails();
 		this.initAppointmentEditForm();
-		this.onEditPatchUpdate();
 	}
 
 	ngAfterViewInit(): void {
@@ -55,19 +73,14 @@ export class AppointmentEditComponent implements OnInit, AfterViewInit {
 	 * @date 15 Oct 2022
 	 * @developer Somnath Sil
 	 */
-	getAllDropdowns() {
-		this.services = [
-			{ id: 1, label: 'Dental Checkup' },
-			{ id: 2, label: 'Full Body Checkup' },
-			{ id: 3, label: 'Heart Checkup' },
-			{ id: 4, label: 'ENT Checkup' }
-		];
-		this.doctors = [
-			{ id: 1, label: 'Abc Doctor' },
-			{ id: 2, label: 'Def Doctor' },
-			{ id: 3, label: 'XYZ Doctor' },
-			{ id: 4, label: 'UVW Doctor' }
-		];
+	getAllDropdowns(): void {
+		this.serviceList = this._commonService.serviceListArr();
+		// this.doctors = [
+		// 	{ doc_id: '1', doc_name: 'Abc Doctor' },
+		// 	{ doc_id: '2', doc_name: 'Def Doctor' },
+		// 	{ doc_id: '3', doc_name: 'XYZ Doctor' },
+		// 	{ doc_id: '4', doc_name: 'UVW Doctor' }
+		// ];
 		this.gender = [
 			{ id: 1, label: 'Male', value: 'M' },
 			{ id: 2, label: 'Female', value: 'F' }
@@ -81,7 +94,7 @@ export class AppointmentEditComponent implements OnInit, AfterViewInit {
 	 * @developer Somnath Sil
 	 */
 	private initAppointmentEditForm() {
-		this.appointmentEditForm = this._formbuilder.group({
+		this.appointmentEditForm = this._formBuilder.group({
 			name: new FormControl('', [
 				Validators.required,
 				Validators.pattern(/^([^0-9]*)$/)
@@ -100,7 +113,7 @@ export class AppointmentEditComponent implements OnInit, AfterViewInit {
 			doctor_name: new FormControl('', [Validators.required]),
 			appointment_date: new FormControl('', [Validators.required]),
 			gender: new FormControl('', [Validators.required]),
-			image: new FormControl('', [Validators.required])
+			image: new FormControl('', [])
 		});
 	}
 
@@ -135,28 +148,197 @@ export class AppointmentEditComponent implements OnInit, AfterViewInit {
 	}
 
 	onAppointmentSubmit(): boolean | void {
-		this.submitted = true;
-		const formValue = this.appointmentEditForm.value;
+		if (!this.isDisable) {
+			this.submitted = true;
+			const formValue = this.appointmentEditForm.value;
 
-		// stop here if form is invalid
-		if (this.appointmentEditForm.invalid) {
-			return false;
-		}
+			if (this.appointmentEditForm.invalid) {
+				this.appointmentEditForm.markAllAsTouched();
+				return true;
+			}
 
-		//form is valid
-		if (this.appointmentEditForm.valid) {
-			console.log(formValue);
+			// form is valid
+			this.isDisable = true;
+			let formData = new FormData();
+			formData.append('id', this.appointmentId as string);
+			formData.append(
+				'patient_name',
+				this.appointmentEditForm.get('name')?.value
+			);
+			formData.append(
+				'email',
+				this.appointmentEditForm.get('email')?.value
+			);
+			formData.append(
+				'gender',
+				this.appointmentEditForm.get('gender')?.value
+			);
+			formData.append(
+				'contact',
+				this.appointmentEditForm.get('phone_number')?.value
+			);
+			formData.append(
+				'appoiment_date',
+				this.appointmentEditForm.get('appointment_date')?.value
+			);
+			formData.append(
+				'service_id',
+				this.appointmentEditForm.get('service_name')?.value
+			);
+			formData.append(
+				'Doctor_id',
+				this.appointmentEditForm.get('doctor_name')?.value
+			);
+			formData.append(
+				'image',
+				this.appointmentEditForm.get('image')?.value
+			);
+
+			// for (var pair of formData.entries()) {
+			// 	console.log('hello', pair[0] + ', ' + pair[1]);
+			// }
+
+			this._loader.useRef().start();
+			this.subscriptions.push(
+				this._http.post('editAppointment', formData).subscribe({
+					next: (apiResult) => {
+						this.isDisable = false;
+						this._loader.useRef().complete();
+						this._router.navigate(['/appointments']);
+						this._toast.success(
+							'Success',
+							apiResult.response.status.msg,
+							{
+								timeout: 5000,
+								position: 'top'
+							}
+						);
+					},
+					error: (apiError) => {
+						this.isDisable = false;
+						this._loader.useRef().complete();
+						this._toast.error(
+							'Error',
+							apiError.error.response.status.msg,
+							{
+								timeout: 5000,
+								position: 'top'
+							}
+						);
+					}
+				})
+			);
 		}
 	}
 
-	private onEditPatchUpdate() {
-		this.appointmentEditForm.patchValue({
-			name: 'Jhon Doe',
-			email: 'admin121@gmail.com',
-			phone_number: '1234567890',
-			service: 'ENT Checkup',
-			appointment_date: '12/10/2022',
-			gender: 'Male'
+	/**
+	 * *Back to last visit page
+	 *
+	 * @date 29 May 2023
+	 * @developer Somnath Sil
+	 */
+	backTo() {
+		this._location.back();
+	}
+
+	abc(id: number) {
+		this.subscriptions.push(
+			this._http
+				.post('doctorsListByService', {
+					service_id: id
+				})
+				.subscribe({
+					next: (apiResult) => {
+						this._loader.useRef().complete();
+						this.doctors = apiResult.response.dataset[0];
+					},
+					error: (apiError) => {
+						this._loader.useRef().complete();
+						this._toast.error(
+							'Error',
+							apiError.error.response.status.msg,
+							{
+								timeout: 5000,
+								position: 'top'
+							}
+						);
+					}
+				})
+		);
+	}
+
+	getDoctor(event: any) {
+		this._loader.useRef().start();
+		this.abc(event.target.value);
+	}
+
+	/**
+	 * *admin appointment details method
+	 *
+	 * @date 20 Aug 2023
+	 * @developer Somnath Sil
+	 */
+	getAppointmentDetails() {
+		const param = {
+			id: this.appointmentId
+		};
+		this.subscriptions.push(
+			this._http.post('appointmentDetails', param).subscribe({
+				next: (apiResult) => {
+					this._commonService.setLoadingStatus(false);
+					const patchData = apiResult.response.dataset[0];
+					this.abc(patchData.service_id);
+					// console.log('Image', patchData.image.split('/').pop());
+
+					this.appointmentEditForm.patchValue({
+						appointmentId: patchData.appointment_id,
+						name: patchData.patient_name,
+						email: patchData.email,
+						phone_number: patchData.contact,
+						service_name: patchData.service_id,
+						doctor_name: patchData.doctor_id,
+						appointment_date: patchData.appoiment_date,
+						gender: patchData.gender
+						// image: patchData.image
+					});
+					if (patchData.image) {
+						this.imageFileName = patchData.image.split('/').pop();
+					}
+				},
+				error: (apiError) => {
+					this._commonService.setLoadingStatus(false);
+				}
+			})
+		);
+	}
+
+	/**
+	 * *Image Upload Method
+	 *
+	 * @date 14 May 2023
+	 * @developer Somnath Sil
+	 */
+	onFileselect(event: any) {
+		if (event.target.files && event.target.files[0]) {
+			const file = event.target.files[0];
+			this.imageFileName = file.name;
+			this.appointmentEditForm.controls['image'].setValue(file);
+			/* For Preview Image Base 64 */
+			var reader = new FileReader();
+			reader.readAsDataURL(event.target.files[0]);
+			reader.onload = (event) => {};
+		}
+	}
+
+	/**
+	 * *Unsubscribing observable on destroy
+	 *
+	 * @date 20 Aug 2023
+	 * @developer Somnath Sil
+	 */
+	ngOnDestroy(): void {
+		this.subscriptions.forEach((subscription) => {
+			subscription.unsubscribe();
 		});
 	}
 }

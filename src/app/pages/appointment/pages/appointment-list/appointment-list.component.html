@@ -114,7 +114,12 @@
 						<a
 							title="Reschedule"
 							class="edit-icon"
-							[routerLink]="['/appointments/edit/' + 1]"
+							[routerLink]="[
+								'/appointments/edit/' +
+									data.name.toLowerCase().split(' ').join(''),
+								data.appoint_id
+							]"
+							fragment="editMode"
 							><i class="icon-edit-outline"></i
 						></a>
 						<a

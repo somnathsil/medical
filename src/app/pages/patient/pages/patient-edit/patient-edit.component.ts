@@ -51,14 +51,19 @@ export class PatientEditComponent implements OnInit {
 	 */
 	getAllDropdowns() {
 		this.diseases = [
-			{ id: 1, label: 'Dental' },
-			{ id: 2, label: 'Allergy' },
-			{ id: 3, label: 'Skin Problem' },
-			{ id: 4, label: 'Malaria' },
-			{ id: 5, label: 'Fever' },
-			{ id: 4, label: 'Headache' },
-			{ id: 4, label: 'Stomach Ache' },
-			{ id: 4, label: 'Diabetes' }
+			{ id: 1, name: 'Fever' },
+			{ id: 2, name: 'AurthoPedic' },
+			{ id: 3, name: 'ENT' },
+			{ id: 4, name: 'Chest Specialist' },
+			{ id: 5, name: 'Dengue' },
+			{ id: 6, name: 'Malaria' },
+			{ id: 7, name: 'Coronavirus' },
+			{ id: 8, name: 'kidney Specialist' },
+			{ id: 9, name: 'Gyno' },
+			{ id: 10, name: 'Chicken Pox' },
+			{ id: 11, name: 'Neuro Specialist' },
+			{ id: 12, name: 'Dental' },
+			{ id: 13, name: 'Skin Spacialist' }
 		];
 		this.cities = [
 			{ id: 1, label: 'Kolkata' },

@@ -62,7 +62,7 @@ export class AdminUserEditComponent implements OnInit, AfterViewInit {
 	}
 
 	ngOnInit(): void {
-		this._commonService.setLoadingStatus(false);
+		this._commonService.setLoadingStatus(true);
 		this.getAdminUserDetails();
 		this.initAdminUserForm();
 	}
@@ -207,7 +207,7 @@ export class AdminUserEditComponent implements OnInit, AfterViewInit {
 		this.subscriptions.push(
 			this._http.post('details', param).subscribe({
 				next: (apiResult) => {
-					console.log(apiResult);
+					this._commonService.setLoadingStatus(false);
 					this.editAdminUserForm.patchValue({
 						userId: apiResult.response.dataset[0].userId,
 						email: apiResult.response.dataset[0].email,
@@ -223,7 +223,9 @@ export class AdminUserEditComponent implements OnInit, AfterViewInit {
 							apiResult.response.dataset[0].image;
 					}
 				},
-				error: (apiError) => {}
+				error: (apiError) => {
+					this._commonService.setLoadingStatus(false);
+				}
 			})
 		);
 	}

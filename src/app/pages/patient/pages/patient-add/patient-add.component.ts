@@ -52,14 +52,14 @@ export class PatientAddComponent implements OnInit {
 	 */
 	getAllDropdowns() {
 		this.diseases = [
-			{ id: 1, label: 'Dental' },
-			{ id: 2, label: 'Allergy' },
-			{ id: 3, label: 'Skin Problem' },
-			{ id: 4, label: 'Malaria' },
-			{ id: 5, label: 'Fever' },
-			{ id: 4, label: 'Headache' },
-			{ id: 4, label: 'Stomach Ache' },
-			{ id: 4, label: 'Diabetes' }
+			{ id: 1, name: 'Dental' },
+			{ id: 2, name: 'Allergy' },
+			{ id: 3, name: 'Skin Problem' },
+			{ id: 4, name: 'Malaria' },
+			{ id: 5, name: 'Fever' },
+			{ id: 4, name: 'Headache' },
+			{ id: 4, name: 'Stomach Ache' },
+			{ id: 4, name: 'Diabetes' }
 		];
 		this.cities = [
 			{ id: 1, label: 'Kolkata' },

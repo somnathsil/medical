@@ -33,9 +33,10 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 	public isDisable = false;
 	public submitted = false;
 	public appointmentAddForm!: FormGroup;
-	public services!: IService[];
-	public doctors!: IDoctor[];
+	public serviceList: IService[] = [];
+	public doctors: IDoctor[] = [];
 	public gender!: IGender[];
+	imageFileName!: string;
 	public subscriptions: Subscription[] = [];
 	@ViewChild('inputFocus') inputFocus!: ElementRef;
 
@@ -50,7 +51,7 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 	) {}
 
 	ngOnInit(): void {
-		console.clear();
+		// console.clear();
 		this._commonService.setLoadingStatus(false);
 		this.getAllDropdowns();
 		this.initAppointmentAddForm();
@@ -66,19 +67,8 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 	 * @date 15 Oct 2022
 	 * @developer Somnath Sil
 	 */
-	getAllDropdowns() {
-		this.services = [
-			{ id: 1, label: 'Dental Checkup' },
-			{ id: 2, label: 'Full Body Checkup' },
-			{ id: 3, label: 'Heart Checkup' },
-			{ id: 4, label: 'ENT Checkup' }
-		];
-		this.doctors = [
-			{ id: 1, label: 'Abc Doctor' },
-			{ id: 2, label: 'Def Doctor' },
-			{ id: 3, label: 'XYZ Doctor' },
-			{ id: 4, label: 'UVW Doctor' }
-		];
+	getAllDropdowns(): void {
+		this.serviceList = this._commonService.serviceListArr();
 		this.gender = [
 			{ id: 1, label: 'Male', value: 'M' },
 			{ id: 2, label: 'Female', value: 'F' }
@@ -111,7 +101,7 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 			doctor_name: new FormControl('', [Validators.required]),
 			appointment_date: new FormControl('', [Validators.required]),
 			gender: new FormControl('', [Validators.required]),
-			image: new FormControl('', [Validators.required])
+			image: new FormControl('', [])
 		});
 	}
 
@@ -171,12 +161,20 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 				this.appointmentAddForm.get('phone_number')?.value
 			);
 			formData.append(
+				'service_id',
+				this.appointmentAddForm.get('service_name')?.value
+			);
+			formData.append(
+				'Doctor_id',
+				this.appointmentAddForm.get('doctor_name')?.value
+			);
+			formData.append(
 				'appoiment_date',
 				this.appointmentAddForm.get('appointment_date')?.value
 			);
 			formData.append(
 				'gender',
-				this.appointmentAddForm.get('gender')?.value ? 'M' : 'F'
+				this.appointmentAddForm.get('gender')?.value
 			);
 			formData.append(
 				'image',
@@ -189,11 +187,13 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 
 			this._loader.useRef().start();
 			this.subscriptions.push(
-				this._http.post('addAppointment', formData).subscribe({
+				this._http.post('addPayment', formData).subscribe({
 					next: (apiResult) => {
 						this.isDisable = false;
 						this.submitted = false;
 						this._loader.useRef().complete();
+						this.resetForm();
+						this._router.navigate(['/appointments']);
 						this._toast.success(
 							'Success',
 							apiResult.response.status.msg,
@@ -221,6 +221,39 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 	}
 
 	/**
+	 * *get doctor list
+	 *
+	 * @date 25 Aug 2023
+	 * @developer Somnath Sil
+	 */
+	getDoctor(event: any) {
+		this._loader.useRef().start();
+		this.subscriptions.push(
+			this._http
+				.post('doctorsListByService', {
+					service_id: event.target.value
+				})
+				.subscribe({
+					next: (apiResult) => {
+						this._loader.useRef().complete();
+						this.doctors = apiResult.response.dataset[0];
+					},
+					error: (apiError) => {
+						this._loader.useRef().complete();
+						this._toast.error(
+							'Error',
+							apiError.error.response.status.msg,
+							{
+								timeout: 5000,
+								position: 'top'
+							}
+						);
+					}
+				})
+		);
+	}
+
+	/**
 	 * *Back to last visit page
 	 *
 	 * @date 09 May 2023
@@ -242,6 +275,23 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 		this.appointmentAddForm.updateValueAndValidity();
 	}
 
+	/**
+	 * *Image Upload Method
+	 *
+	 * @date 14 May 2023
+	 * @developer Somnath Sil
+	 */
+	onFileselect(event: any) {
+		if (event.target.files && event.target.files[0]) {
+			const file = event.target.files[0];
+			this.imageFileName = file.name;
+			this.appointmentAddForm.controls['image'].setValue(file);
+			/* For Preview Image Base 64 */
+			var reader = new FileReader();
+			reader.readAsDataURL(event.target.files[0]);
+			reader.onload = (event) => {};
+		}
+	}
 	/**
 	 * *Unsubscribing observable on destroy
 	 *

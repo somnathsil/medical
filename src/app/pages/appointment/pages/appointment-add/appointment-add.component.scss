@@ -35,3 +35,48 @@
 .formcontrol-wrapper i.icon-calendar-outline {
 	font-size: $text-xl;
 }
+
+/* Upload Image */
+.upload-wrap {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: white;
+	color: transparent;
+	padding: 0px;
+	padding-right: 12px;
+	cursor: pointer;
+	position: relative;
+	label {
+		font-size: 13px;
+		font-weight: 500;
+		color: #222b45;
+		opacity: 50%;
+		display: flex;
+		align-items: center;
+		width: calc(100% - 30px);
+		height: 100%;
+		padding: 8px 12px 0px 12px;
+		cursor: pointer;
+	}
+}
+.upload-box {
+	width: 30px;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #3366ff;
+	border-radius: 50%;
+	opacity: 1;
+	position: relative;
+	cursor: pointer;
+	img {
+		cursor: pointer;
+	}
+	input[type='file'] {
+		position: absolute;
+		opacity: 0;
+		cursor: pointer;
+	}
+}

@@ -1,5 +1,8 @@
 @import 'partials';
 
+.name-area p {
+	text-transform: capitalize;
+}
 .list-table thead tr th,
 .list-table tbody tr td {
 	width: 15%;

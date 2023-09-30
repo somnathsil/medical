@@ -111,8 +111,8 @@ export class AdminUserAddComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	addAdminUserSubmit(): boolean | void {
 		if (!this.isDisable) {
-			const formValue = this.addAdminUserForm.value;
 			this.submitted = true;
+			const formValue = this.addAdminUserForm.value;
 
 			if (this.addAdminUserForm.invalid) {
 				this.addAdminUserForm.markAllAsTouched();

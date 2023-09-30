@@ -35,7 +35,7 @@ export class ServiceListComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		this._commonService.setLoadingStatus(false);
+		this._commonService.setLoadingStatus(true);
 		this.createQueryForm();
 		this.getServiceListData();
 	}
@@ -59,6 +59,7 @@ export class ServiceListComponent implements OnInit {
 		this.subscriptions.push(
 			this._http.post('serviceList', param).subscribe({
 				next: (apiResult) => {
+					this._commonService.setLoadingStatus(false);
 					this._loader.useRef().complete();
 					this.serviceList = apiResult.response.dataset.records;
 					this.totalRecords = apiResult.response.dataset.totalRecords;
@@ -68,6 +69,7 @@ export class ServiceListComponent implements OnInit {
 					this._commonService._totalRecordsShow.next(true);
 				},
 				error: (apiError) => {
+					this._commonService.setLoadingStatus(false);
 					this._loader.useRef().complete();
 				}
 			})

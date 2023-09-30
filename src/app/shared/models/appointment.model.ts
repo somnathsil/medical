@@ -21,17 +21,20 @@ export interface IAppointmentListParam {
 
 export interface IService {
 	id: number;
-	label: string;
+	label?: string;
+	name?: string;
 }
 
 export interface IDoctor {
-	id: number;
-	label: string;
+	// id: number;
+	// label: string;
+	doc_id: string;
+	doc_name: string;
 }
 
 export interface IDisease {
 	id: number;
-	label: string;
+	name: string;
 }
 
 export interface IDepartment {
