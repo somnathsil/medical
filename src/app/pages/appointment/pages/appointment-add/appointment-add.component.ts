@@ -14,7 +14,7 @@ import {
 import { Router } from '@angular/router';
 import { CommonService, HttpService, ToasterService } from '@app/core/services';
 import { fadeInOut } from '@app/shared/animations';
-import { Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import {
 	IDoctor,
 	IGender,
@@ -27,6 +27,7 @@ import { Subscription } from 'rxjs';
 	selector: 'app-appointment-add',
 	templateUrl: './appointment-add.component.html',
 	styleUrls: ['./appointment-add.component.scss'],
+	providers: [DatePipe],
 	animations: [fadeInOut]
 })
 export class AppointmentAddComponent implements OnInit, AfterViewInit {
@@ -47,7 +48,8 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 		private _router: Router,
 		private _http: HttpService,
 		private _toast: ToasterService,
-		private _location: Location
+		private _location: Location,
+		private _datePipe: DatePipe
 	) {}
 
 	ngOnInit(): void {
@@ -147,6 +149,11 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 
 			// form is valid
 			this.isDisable = true;
+			let date = new Date(
+				this.appointmentAddForm.get('appointment_date')?.value
+			);
+			date.setDate(date.getDate() + 1);
+
 			let formData = new FormData();
 			formData.append(
 				'patient_name',
@@ -170,7 +177,7 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 			);
 			formData.append(
 				'appoiment_date',
-				this.appointmentAddForm.get('appointment_date')?.value
+				this._datePipe.transform(date, 'MM-dd-yyyy') ?? ''
 			);
 			formData.append(
 				'gender',
@@ -187,7 +194,7 @@ export class AppointmentAddComponent implements OnInit, AfterViewInit {
 
 			this._loader.useRef().start();
 			this.subscriptions.push(
-				this._http.post('addPayment', formData).subscribe({
+				this._http.post('addAppointment', formData).subscribe({
 					next: (apiResult) => {
 						this.isDisable = false;
 						this.submitted = false;

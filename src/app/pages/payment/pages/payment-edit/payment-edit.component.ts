@@ -11,12 +11,13 @@ import { fadeInOut } from '@app/shared/animations';
 import { IDisease, IPaymentMode, IService } from '@app/shared/models';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { Subscription } from 'rxjs';
-import { Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 
 @Component({
 	selector: 'app-payment-edit',
 	templateUrl: './payment-edit.component.html',
 	styleUrls: ['./payment-edit.component.scss'],
+	providers: [DatePipe],
 	animations: [fadeInOut]
 })
 export class PaymentEditComponent implements OnInit {
@@ -36,7 +37,8 @@ export class PaymentEditComponent implements OnInit {
 		private _router: Router,
 		private _http: HttpService,
 		private _toast: ToasterService,
-		private _location: Location
+		private _location: Location,
+		private _datePipe: DatePipe
 	) {
 		// this._actRoute.paramMap.subscribe((param: any) => {
 		// 	console.log(param.params.id);
@@ -131,10 +133,12 @@ export class PaymentEditComponent implements OnInit {
 			}
 			// form is valid
 			this.isDisable = true;
+			let date = new Date(formValue.payment_date);
+			date.setDate(date.getDate() + 1);
 			let param: any = {
 				id: this.paymentId as string,
 				patient_name: formValue.patient_name,
-				payment_date: formValue.payment_date,
+				payment_date: this._datePipe.transform(date, 'MM-dd-yyyy'),
 				amount: formValue.total_amount,
 				contact: formValue.contact,
 				payment_mode: formValue.payment_mode,

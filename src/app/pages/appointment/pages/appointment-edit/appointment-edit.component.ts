@@ -21,12 +21,13 @@ import {
 } from '@app/shared/models/appointment.model';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { Subscription } from 'rxjs';
-import { Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 
 @Component({
 	selector: 'app-appointment-edit',
 	templateUrl: './appointment-edit.component.html',
 	styleUrls: ['./appointment-edit.component.scss'],
+	providers: [DatePipe],
 	animations: [fadeInOut]
 })
 export class AppointmentEditComponent implements OnInit, AfterViewInit {
@@ -49,7 +50,8 @@ export class AppointmentEditComponent implements OnInit, AfterViewInit {
 		private _router: Router,
 		private _http: HttpService,
 		private _toast: ToasterService,
-		private _location: Location
+		private _location: Location,
+		private _datePipe: DatePipe
 	) {
 		this.appointmentId = this._actRoute.snapshot.paramMap.get(
 			'id'
@@ -75,12 +77,6 @@ export class AppointmentEditComponent implements OnInit, AfterViewInit {
 	 */
 	getAllDropdowns(): void {
 		this.serviceList = this._commonService.serviceListArr();
-		// this.doctors = [
-		// 	{ doc_id: '1', doc_name: 'Abc Doctor' },
-		// 	{ doc_id: '2', doc_name: 'Def Doctor' },
-		// 	{ doc_id: '3', doc_name: 'XYZ Doctor' },
-		// 	{ doc_id: '4', doc_name: 'UVW Doctor' }
-		// ];
 		this.gender = [
 			{ id: 1, label: 'Male', value: 'M' },
 			{ id: 2, label: 'Female', value: 'F' }
@@ -159,6 +155,11 @@ export class AppointmentEditComponent implements OnInit, AfterViewInit {
 
 			// form is valid
 			this.isDisable = true;
+			let date = new Date(
+				this.appointmentEditForm.get('appointment_date')?.value
+			);
+			date.setDate(date.getDate() + 1);
+
 			let formData = new FormData();
 			formData.append('id', this.appointmentId as string);
 			formData.append(
@@ -179,7 +180,7 @@ export class AppointmentEditComponent implements OnInit, AfterViewInit {
 			);
 			formData.append(
 				'appoiment_date',
-				this.appointmentEditForm.get('appointment_date')?.value
+				this._datePipe.transform(date) ?? ''
 			);
 			formData.append(
 				'service_id',
@@ -299,10 +300,9 @@ export class AppointmentEditComponent implements OnInit, AfterViewInit {
 						doctor_name: patchData.doctor_id,
 						appointment_date: patchData.appoiment_date,
 						gender: patchData.gender
-						// image: patchData.image
 					});
-					if (patchData.image) {
-						this.imageFileName = patchData.image.split('/').pop();
+					if (patchData.originalFilename) {
+						this.imageFileName = patchData.originalFilename;
 					}
 				},
 				error: (apiError) => {

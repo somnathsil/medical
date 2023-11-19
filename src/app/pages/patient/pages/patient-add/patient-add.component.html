@@ -42,12 +42,12 @@
 				</ul>
 			</div>
 			<div class="sidebar-tab-area">
-				<div class="sidebar-tab-block" *ngIf="activeIndex === 0">
-					<div class="patients-wrapper-block">
-						<form
-							[formGroup]="addPatientStepOneForm"
-							(ngSubmit)="onStepOneFormSubmit()"
-						>
+				<form
+					[formGroup]="addPatientForm"
+					(ngSubmit)="onPatientFormSubmit()"
+				>
+					<div class="sidebar-tab-block" *ngIf="activeIndex === 0">
+						<div class="patients-wrapper-block">
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group-block">
@@ -216,7 +216,7 @@
 												<option
 													disabled
 													selected
-													[value]="null"
+													value=""
 												>
 													Select City
 												</option>
@@ -287,16 +287,18 @@
 								</div>
 							</div>
 							<div class="footer-submit">
-								<button type="submit" class="btn btn-primary">
+								<button
+									type="button"
+									class="btn btn-primary"
+									(click)="activeIndex = 1"
+								>
 									Next
 								</button>
 							</div>
-						</form>
+						</div>
 					</div>
-				</div>
-				<div class="sidebar-tab-block" *ngIf="activeIndex === 1">
-					<div class="patients-wrapper-block">
-						<form>
+					<div class="sidebar-tab-block" *ngIf="activeIndex === 1">
+						<div class="patients-wrapper-block">
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group-block">
@@ -308,6 +310,13 @@
 												type="text"
 												placeholder="Date of Birth"
 												class="formcontrol"
+												formControlName="dob"
+												[ngClass]="{
+													'invalid-control':
+														hasFormControlError(
+															'dob'
+														)
+												}"
 												bsDatepicker
 												[bsConfig]="{
 													customTodayClass:
@@ -320,6 +329,24 @@
 												class="icon-calendar-outline"
 											></i>
 										</div>
+										<ng-container
+											*ngIf="hasFormControlError('dob')"
+										>
+											<div
+												[@fadeInOut]
+												class="error-message"
+												*ngIf="
+													formcontrol['dob'].hasError(
+														'required'
+													)
+												"
+											>
+												<p>
+													Please Select Your Date Of
+													Birth
+												</p>
+											</div>
+										</ng-container>
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -330,9 +357,31 @@
 												type="text"
 												class="formcontrol"
 												placeholder="Enter Your Age"
+												formControlName="age"
+												[ngClass]="{
+													'invalid-control':
+														hasFormControlError(
+															'age'
+														)
+												}"
 												onkeydown="if(event.key===' '){event.preventDefault();}"
 											/>
 										</div>
+										<ng-container
+											*ngIf="hasFormControlError('age')"
+										>
+											<div
+												[@fadeInOut]
+												class="error-message"
+												*ngIf="
+													formcontrol['age'].hasError(
+														'required'
+													)
+												"
+											>
+												<p>Please Enter Your Age</p>
+											</div>
+										</ng-container>
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -341,11 +390,20 @@
 											>Blood Group <sup>*</sup></label
 										>
 										<div class="formcontrol-wrapper">
-											<select class="formcontrol">
+											<select
+												class="formcontrol"
+												formControlName="blood_group"
+												[ngClass]="{
+													'invalid-control':
+														hasFormControlError(
+															'blood_group'
+														)
+												}"
+											>
 												<option
 													disabled
 													selected
-													[value]="null"
+													value=""
 												>
 													Select Blood Group
 												</option>
@@ -362,6 +420,28 @@
 												class="icon-chevron-down-outline"
 											></i>
 										</div>
+										<ng-container
+											*ngIf="
+												hasFormControlError(
+													'blood_group'
+												)
+											"
+										>
+											<div
+												[@fadeInOut]
+												class="error-message"
+												*ngIf="
+													formcontrol[
+														'blood_group'
+													].hasError('required')
+												"
+											>
+												<p>
+													Please Select Your Blood
+													Group
+												</p>
+											</div>
+										</ng-container>
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -380,33 +460,72 @@
 													type="radio"
 													name="gender"
 													id="{{ data.label }}"
-													value="{{ data.label }}"
+													[value]="data.value"
+													formControlName="gender"
 												/>
 												<label for="{{ data.label }}">{{
 													data.label
 												}}</label>
 											</div>
+											<ng-container
+												*ngIf="
+													hasFormControlError(
+														'gender'
+													)
+												"
+											>
+												<div
+													[@fadeInOut]
+													class="error-message error-message-gender"
+													*ngIf="
+														formcontrol[
+															'gender'
+														].hasError('required')
+													"
+												>
+													<p>
+														Please Select Your
+														Gender
+													</p>
+												</div>
+											</ng-container>
 										</div>
 									</div>
 								</div>
-								<div class="col-md-12">
+								<div class="col-md-6">
 									<div class="form-group-block">
-										<label for=""
-											>Upload <sup>*</sup></label
-										>
-										<div class="formcontrol-wrapper">
-											<div
-												class="input-group custom-image-upload"
-											>
-												<label
-													for="imageUpload"
-													class="btn btn-primary"
-													>Uplaod Image</label
+										<div class="global-form-group">
+											<label>Upload</label>
+											<div class="formcontrol-wrapper">
+												<div
+													class="upload-wrap formcontrol"
 												>
-												<input
-													type="file"
-													id="imageUpload"
-												/>
+													<label for="inp">{{
+														imageFileName
+															? imageFileName
+															: 'Browse image'
+													}}</label>
+
+													<div class="upload-box">
+														<img
+															src="./assets/images/upload-icon.svg"
+															width="18px"
+															height="13px"
+															alt="upload file"
+															loading="lazy"
+														/>
+														<input
+															id="inp"
+															type="file"
+															accept="image/png, image/jpg, image/jpeg"
+															(change)="
+																onFileselect(
+																	$event
+																)
+															"
+														/>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -420,16 +539,18 @@
 								>
 									Previous
 								</button>
-								<button type="submit" class="btn btn-primary">
+								<button
+									type="button"
+									class="btn btn-primary"
+									(click)="activeIndex = 2"
+								>
 									Next
 								</button>
 							</div>
-						</form>
+						</div>
 					</div>
-				</div>
-				<div class="sidebar-tab-block" *ngIf="activeIndex === 2">
-					<div class="patients-wrapper-block">
-						<form>
+					<div class="sidebar-tab-block" *ngIf="activeIndex === 2">
+						<div class="patients-wrapper-block">
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group-block">
@@ -437,27 +558,58 @@
 											>Disease <sup>*</sup></label
 										>
 										<div class="formcontrol-wrapper">
-											<select class="formcontrol">
+											<select
+												class="formcontrol"
+												formControlName="service_name"
+												[ngClass]="{
+													'invalid-control':
+														hasFormControlError(
+															'service_name'
+														)
+												}"
+											>
 												<option
 													disabled
 													selected
-													[value]="null"
+													value=""
 												>
-													Select Disease
+													Select Service
 												</option>
 												<option
 													*ngFor="
-														let disease of diseases
+														let service of serviceList
 													"
-													[value]="disease.id"
+													[value]="service.id"
 												>
-													{{ disease.name }}
+													{{ service.name }}
 												</option>
 											</select>
 											<i
 												class="icon-chevron-down-outline"
 											></i>
 										</div>
+										<ng-container
+											*ngIf="
+												hasFormControlError(
+													'service_name'
+												)
+											"
+										>
+											<div
+												[@fadeInOut]
+												class="error-message"
+												*ngIf="
+													formcontrol[
+														'service_name'
+													].hasError('required')
+												"
+											>
+												<p>
+													Please Select Your Service
+													Name
+												</p>
+											</div>
+										</ng-container>
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -471,45 +623,105 @@
 										<div class="formcontrol-wrapper">
 											<div
 												class="custom-radio-button"
-												*ngFor="let item of visites"
+												*ngFor="let data of visites"
 											>
 												<input
 													type="radio"
-													name="visit"
-													id="{{ item.label }}"
-													value="{{ item.label }}"
+													name="visited"
+													id="{{ data.label }}"
+													[value]="data.value"
+													formControlName="visited"
+													(change)="
+														(onSelectValidation)
+													"
 												/>
-												<label for="{{ item.label }}">{{
-													item.label
+												<label for="{{ data.label }}">{{
+													data.label
 												}}</label>
 											</div>
+											<ng-container
+												*ngIf="
+													hasFormControlError(
+														'visited'
+													)
+												"
+											>
+												<div
+													[@fadeInOut]
+													class="error-message error-message-gender"
+													*ngIf="
+														formcontrol[
+															'visited'
+														].hasError('required')
+													"
+												>
+													<p>
+														Please Select Your Entry
+													</p>
+												</div>
+											</ng-container>
 										</div>
 									</div>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group-block">
-										<label for=""
-											>Previous Visit? <sup>*</sup></label
-										>
-										<div class="formcontrol-wrapper">
-											<input
-												type="text"
-												placeholder="Select Date"
-												class="formcontrol"
-												bsDatepicker
-												[bsConfig]="{
-													customTodayClass:
-														'custom-today-date',
-													dateInputFormat:
-														'DD/MM/YYYY'
-												}"
-											/>
-											<i
-												class="icon-calendar-outline"
-											></i>
+								<ng-container
+									*ngIf="formcontrol['visited'].value == 'Y'"
+								>
+									<div class="col-md-6">
+										<div class="form-group-block">
+											<label for=""
+												>Previous Visit?
+												<sup>*</sup></label
+											>
+
+											<div class="formcontrol-wrapper">
+												<input
+													type="text"
+													placeholder="Select Date"
+													class="formcontrol"
+													formControlName="visited_date"
+													[ngClass]="{
+														'invalid-control':
+															hasFormControlError(
+																'visited_date'
+															)
+													}"
+													bsDatepicker
+													[bsConfig]="{
+														customTodayClass:
+															'custom-today-date',
+														dateInputFormat:
+															'DD/MM/YYYY'
+													}"
+												/>
+												<i
+													class="icon-calendar-outline"
+												></i>
+											</div>
+											<ng-container
+												*ngIf="
+													hasFormControlError(
+														'visited_date'
+													)
+												"
+											>
+												<div
+													[@fadeInOut]
+													class="error-message"
+													*ngIf="
+														formcontrol[
+															'visited_date'
+														].hasError('required')
+													"
+												>
+													<p>
+														Please Select Visited
+														Date
+													</p>
+												</div>
+											</ng-container>
 										</div>
 									</div>
-								</div>
+								</ng-container>
 							</div>
 							<div class="footer-submit">
 								<button
@@ -523,9 +735,9 @@
 									Submit
 								</button>
 							</div>
-						</form>
+						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 		</div>
 	</div>

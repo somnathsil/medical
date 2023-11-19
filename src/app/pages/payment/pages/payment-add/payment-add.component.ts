@@ -17,12 +17,13 @@ import { fadeInOut } from '@app/shared/animations';
 import { IPaymentMode, IService } from '@app/shared/models';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { Subscription } from 'rxjs';
-import { Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 
 @Component({
 	selector: 'app-payment-add',
 	templateUrl: './payment-add.component.html',
 	styleUrls: ['./payment-add.component.scss'],
+	providers: [DatePipe],
 	animations: [fadeInOut]
 })
 export class PaymentAddComponent implements OnInit, AfterViewInit {
@@ -41,7 +42,8 @@ export class PaymentAddComponent implements OnInit, AfterViewInit {
 		private _router: Router,
 		private _http: HttpService,
 		private _toast: ToasterService,
-		private _location: Location
+		private _location: Location,
+		private _datePipe: DatePipe
 	) {}
 
 	ngOnInit(): void {
@@ -133,9 +135,11 @@ export class PaymentAddComponent implements OnInit, AfterViewInit {
 
 			// form is valid
 			this.isDisable = true;
+			let date = new Date(formValue.payment_date);
+			date.setDate(date.getDate() + 1);
 			let param: any = {
 				patient_name: formValue.patient_name,
-				payment_date: formValue.payment_date,
+				payment_date: this._datePipe.transform(date, 'MM-dd-yyyy'),
 				amount: formValue.total_amount,
 				contact: formValue.contact,
 				payment_mode: formValue.payment_mode,

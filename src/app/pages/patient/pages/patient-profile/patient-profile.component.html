@@ -1,95 +1,105 @@
 <div class="patient-profle-wrapper">
-	<div class="row">
-		<div class="col-md-6">
-			<div class="profile-block">
-				<div class="row">
-					<div class="col-md-4 text-center">
-						<div class="photo-block">
-							<img
-								src="./assets/images/profile-dafault.jpg"
-								alt=""
-							/>
+	<ng-container *ngFor="let item of patientDetails">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="profile-block">
+					<div class="row">
+						<div class="col-md-4 text-center">
+							<div class="photo-block">
+								<img
+									[src]="
+										item.image
+											? item.image
+											: './assets/images/profile-dafault.jpg'
+									"
+									alt=""
+								/>
+							</div>
+							<h5>{{ item.name }}</h5>
 						</div>
-						<h5>Sarah Lance</h5>
-					</div>
-					<div class="col-md-8">
-						<div class="patient-info">
-							<ul>
-								<li>
-									<div class="patient-info-heading">
-										Email:
-									</div>
-									<p>sarahlance@gmail.com</p>
-								</li>
-								<li>
-									<div class="patient-info-heading">
-										Phone:
-									</div>
-									<p>5544332211</p>
-								</li>
-								<li>
-									<div class="patient-info-heading">
-										City:
-									</div>
-									<p>Kolkata</p>
-								</li>
-								<li>
-									<div class="patient-info-heading">
-										Address:
-									</div>
-									<p>55th street, Queen City</p>
-								</li>
-							</ul>
+						<div class="col-md-8">
+							<div class="patient-info">
+								<ul>
+									<li>
+										<div class="patient-info-heading">
+											Email:
+										</div>
+										<p>{{ item.email }}</p>
+									</li>
+									<li>
+										<div class="patient-info-heading">
+											Phone:
+										</div>
+										<p>{{ item.contact }}</p>
+									</li>
+									<li>
+										<div class="patient-info-heading">
+											City:
+										</div>
+										<p>{{ item.city }}</p>
+									</li>
+									<li>
+										<div class="patient-info-heading">
+											Address:
+										</div>
+										<p>{{ item.address }}</p>
+									</li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="profile-block profile-block-gradient">
-				<div class="patient-info">
-					<ul>
-						<li>
-							<div class="patient-info-heading">Birth:</div>
-							<p>20th Jan, 1992</p>
-						</li>
-						<li>
-							<div class="patient-info-heading">Blood:</div>
-							<p>AB+</p>
-						</li>
-						<li>
-							<div class="patient-info-heading">Age:</div>
-							<p>47</p>
-						</li>
-						<li>
-							<div class="patient-info-heading">Gender:</div>
-							<p>Female</p>
-						</li>
-					</ul>
+			<div class="col-md-3">
+				<div class="profile-block profile-block-gradient">
+					<div class="patient-info">
+						<ul>
+							<li>
+								<div class="patient-info-heading">Birth:</div>
+								<p>{{ item.dob }}</p>
+							</li>
+							<li>
+								<div class="patient-info-heading">Blood:</div>
+								<p>{{ item.bloog_group }}</p>
+							</li>
+							<li>
+								<div class="patient-info-heading">Age:</div>
+								<p>{{ item.age }}</p>
+							</li>
+							<li>
+								<div class="patient-info-heading">Gender:</div>
+								<p>
+									{{ item.gender }}
+								</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="profile-block profile-block-gradient">
+					<div class="patient-info">
+						<ul>
+							<li>
+								<div class="patient-info-heading">Disease:</div>
+								<p>{{ item.service_name }}</p>
+							</li>
+							<li>
+								<div class="patient-info-heading">Visited:</div>
+								<p>{{ item.visited }}</p>
+							</li>
+							<li>
+								<div class="patient-info-heading">
+									Visit Time:
+								</div>
+								<p>{{ item.visited_date }}</p>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3">
-			<div class="profile-block profile-block-gradient">
-				<div class="patient-info">
-					<ul>
-						<li>
-							<div class="patient-info-heading">Disease:</div>
-							<p>Daibetes</p>
-						</li>
-						<li>
-							<div class="patient-info-heading">Problem:</div>
-							<p>12/8/2022</p>
-						</li>
-						<li>
-							<div class="patient-info-heading">Visied:</div>
-							<p>No</p>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
+	</ng-container>
 	<div class="row">
 		<div class="col-md-6">
 			<div class="patient-info-block">

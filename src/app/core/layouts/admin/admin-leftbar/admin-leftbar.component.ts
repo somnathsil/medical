@@ -98,7 +98,7 @@ export class AdminLeftbarComponent implements OnInit {
 			{
 				id: 9,
 				label: 'Services',
-				icon: 'icon-people-outline',
+				icon: 'icon-grid-outline',
 				routerLinkActive: 'active',
 				URl: '',
 				isSubMenuOpen: false,
@@ -118,7 +118,7 @@ export class AdminLeftbarComponent implements OnInit {
 			{
 				id: 5,
 				label: 'Admin Users',
-				icon: 'icon-person-outline',
+				icon: 'icon-person-add-outline',
 				routerLinkActive: 'active',
 				URl: '/admin-users',
 				isSubMenuOpen: false,

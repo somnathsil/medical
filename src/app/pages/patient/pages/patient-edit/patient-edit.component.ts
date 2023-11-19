@@ -91,8 +91,8 @@ export class PatientEditComponent implements OnInit {
 			{ id: 2, label: 'Female' }
 		];
 		this.visites = [
-			{ id: 1, label: 'Yes' },
-			{ id: 2, label: 'No' }
+			{ id: 1, label: 'Yes', value: 'Y' },
+			{ id: 2, label: 'No', value: 'N' }
 		];
 	}
 

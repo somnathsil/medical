@@ -61,4 +61,5 @@ export interface IBloodGroup {
 export interface IVisit {
 	id: number;
 	label: 'Yes' | 'No';
+	value: 'Y' | 'N';
 }
